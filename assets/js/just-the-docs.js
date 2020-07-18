@@ -53,7 +53,7 @@ function initNav() {
 
 function initSearch() {
   var request = new XMLHttpRequest();
-  request.open('GET', 'http://docs.virga.service.vpc-us-east-1.github.net/assets/js/search-data.json', true);
+  request.open('GET', 'https://notes.hamel.io/assets/js/search-data.json', true);
 
   request.onload = function(){
     if (request.status >= 200 && request.status < 400) {
@@ -430,7 +430,7 @@ jtd.getTheme = function() {
 
 jtd.setTheme = function(theme) {
   var cssFile = document.querySelector('[rel="stylesheet"]');
-  cssFile.setAttribute('href', 'http://docs.virga.service.vpc-us-east-1.github.net/assets/css/just-the-docs-' + theme + '.css');
+  cssFile.setAttribute('href', 'https://notes.hamel.io/assets/css/just-the-docs-' + theme + '.css');
 }
 
 // Document ready
