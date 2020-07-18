@@ -352,5 +352,23 @@
     "content": ". | Linux Utilities For Data Scientists . | Background | Managing Processes (ps, kill, pkill) . | Kill Single Process (ps, kill) | Killing Multiple Processes (pkill) | See Parent / Child Processes (pstree) | . | Bundling &amp; Archiving Files (tar) . | Sending An Archive To A Remote Machine | Moving Files In Different Directories Into An Archive | Unpacking &amp; Decompressing Archives | . | File Permissions . | Changing File Permissions | Changing Ownership | . | . | . ",
     "url": "https://notes.hamel.dev/docs/linux/linux.html",
     "relUrl": "/docs/linux/linux.html"
+  },"59": {
+    "doc": "OSX Shell Tips",
+    "title": "Key Repeat Rate",
+    "content": "Add days to your lifespan by Increasing the key repeat rate. Run the following in the terminal then restart. defaults write -g InitialKeyRepeat -int 13 # normal minimum is 15 (225 ms) defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms) . ",
+    "url": "https://notes.hamel.dev/docs/linux/osx.html#key-repeat-rate",
+    "relUrl": "/docs/linux/osx.html#key-repeat-rate"
+  },"60": {
+    "doc": "OSX Shell Tips",
+    "title": "My .zshrc file",
+    "content": "Stored at ~/.zshrc . I used to have ohmyzsh but it made my shell too slow. This is good enough for me. # #speed startup time https://medium.com/@dannysmith/little-thing-2-speeding-up-zsh-f1860390f92 autoload -Uz compinit for dump in ~/.zcompdump(N.mh+24); do compinit done compinit -C #### PROMPT='%(?.%F{green}√.%F{red}?%?)%f %B%F{157}%1~%f%b %F{231}%# ' autoload -Uz vcs_info precmd_vcs_info() { vcs_info } precmd_functions+=( precmd_vcs_info ) setopt prompt_subst RPROMPT=\\$vcs_info_msg_0_ zstyle ':vcs_info:git:*' formats '%F{141}(%b)%r%f' zstyle ':vcs_info:*' enable git alias ls=\"colorls\" alias python=\"python3\" # install jupyter kernel with pipenv function install-jupyter { if [ -n \"${PIPENV_ACTIVE+1}\" ]; then VENV_NAME=`echo ${VIRTUAL_ENV} | cut -d '/' -f 7` echo \"creating Jupyter kernel named $VENV_NAME\" pipenv install --skip-lock ipykernel python -m ipykernel install --user --name=$VENV_NAME fi } ## automatically activate pipenv shell upon cd function auto_pipenv_shell { if [ ! -n \"${PIPENV_ACTIVE+1}\" ]; then if [ -f \"Pipfile\" ] ; then pipenv shell fi fi } function cd { builtin cd \"$@\" auto_pipenv_shell } #extra stuff export CLICOLOR=1 export LSCOLORS=GxFxCxDxBxegedabagaced GREP_OPTIONS=\"--color=always\";export GREP_OPTIONS __git_files () { _wanted files expl 'local files' _files } . ",
+    "url": "https://notes.hamel.dev/docs/linux/osx.html#my-zshrc-file",
+    "relUrl": "/docs/linux/osx.html#my-zshrc-file"
+  },"61": {
+    "doc": "OSX Shell Tips",
+    "title": "OSX Shell Tips",
+    "content": " ",
+    "url": "https://notes.hamel.dev/docs/linux/osx.html",
+    "relUrl": "/docs/linux/osx.html"
   }
 }
