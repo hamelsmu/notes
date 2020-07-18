@@ -21,7 +21,7 @@
 title: Notes
 description: Hamel's Notes about random things
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://notes.hamel.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://notes.hamel.dev" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: hamelhusain
 github_username:  hamelsmu
 
@@ -37,7 +37,7 @@ aux_links:
     - "//github.com/hamelsmu/notes"
 
 heading_anchors: true
-footer_content: "Copyright &copy; 2020 Onwards, Hamel Husain."
+footer_content: "Copyright &copy; 2020 onwards, Hamel Husain."
 
 last_edit_timestamp: true
 last_edit_time_format: "%b %e %Y at %I:%M %p"
