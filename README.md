@@ -2,5 +2,7 @@
 
 ## https://notes.hamel.dev
 
-To Run: `docker-compose up`
+To run this site locally: 
+
+> docker-compose up
 
