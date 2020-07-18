@@ -1,9 +1,6 @@
-# Hamel's Notes
-
-## https://notes.hamel.dev
+# Hamel's Notes: https://notes.hamel.dev
 
 
-
-### Run this site locally: 
+## Run this site locally: 
 
 > docker-compose up
