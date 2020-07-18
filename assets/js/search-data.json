@@ -1,266 +1,356 @@
 {"0": {
+    "doc": "Docker",
+    "title": "Chapter 1",
+    "content": ". | Docker containers are faster than VMs to start, partly because they do NOT offer any hardware virtualization. | VMs provide hardware abstractions so you can run operating systems. | . | Docker uses Linux namespaces and cgropus . | Hamel: I don’t know what this is | . | . ",
+    "url": "https://notes.hamel.dev/docs/docker/Docker-In-Action.html#chapter-1",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-1"
+  },"1": {
+    "doc": "Docker",
+    "title": "Chapter 2",
+    "content": ". | Getting help: . | docker help cp | docker help run | . | Linking containers: docker run --link . | this is apparently deprecated per the docs | Opens a secure tunnel between two containers automatically | Also exposes environment variables and other things (see the docs) | . | docker cp copy files from a container to local filesystem . | Detach an interactive container: . | Hold down Control and press P then Q | . | Get logs docker logs &lt;container name&gt; . | Hamel: This is like kubectl logs | . | Run a new command in a running container docker exec . | docker exec &lt;container_name&gt; ps will run the ps command and emit that to stdout | . | Rename a container with docker rename &lt;current_name&gt; &lt;new_name&gt; . | docker exec run additional processes in an already running container . | docker create is the same as docker run except that the container is created in a stopped state. | docker run --read-only allows you to run a container in a read only state, which you only need to do in special circumstances (you probably never need to use this). You can make exceptions to the read only constraint with the -v flag: | . | Override the entrypoint using the --entrypoint flag (this is discussed in part 2 of the book). | . Injecting environment variables . With the --env or -e flags. A nice trick to see all the environment variables in a docker container is to use the Unix command env . Setting multiple environment variables: use \\ for multiline like this: . docker create \\ --env WORDPRESS_DB_HOST=&lt;my database hostname&gt; \\ --env WORDPRESS_DB_USER=site_admin \\ --env WORDPRESS_DB_PASSWORD=MeowMix42 \\ wordpress:4 . Automatically restarting containers . Docker uses an exponential backoff strategy - double the previous time waiting until restarting. docker run -d --restart always ... See these restart policies . | no | on-failure[:max-retries] | always | unless-stopped | . Removing containers vs. images . Containers are the actual instantiation of an image, just like how an object is an instantion of an instance of a class. docker rm: remove a container docker rmi: remove an image . ",
+    "url": "https://notes.hamel.dev/docs/docker/Docker-In-Action.html#chapter-2",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-2"
+  },"2": {
+    "doc": "Docker",
+    "title": "Chapter 3",
+    "content": ". | Two ways to publish an image . | Build locally, push image to registry | Make a Dockerfile and use DockerHub’s build system. This is preferred and considered to be safer, and DockerHub will mark your image as trusted if you do this because it is the only way to provide transparency to what is in your image. | . | Search dockerhub by keyword , sorted descending by stars . | docker search &lt;keyword&gt; | example: docker search postgres | . | Using Alternative registries . | docker pull quay.io/dockerinaction/ch3_hello_registry:latest | . | . Images as files . You can transport, save and load images as files! (You don’t have to push them to a registry). You can then load the image: . docker load -i myfile.tar . ",
+    "url": "https://notes.hamel.dev/docs/docker/Docker-In-Action.html#chapter-3",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-3"
+  },"3": {
+    "doc": "Docker",
+    "title": "Chapter 4 Persistent Storage &amp;. Shared State with Volumes",
+    "content": "-v and --volume are aliases . --volumes-from=\"&lt;container-name&gt;\" Mount all volumes from the given container . Different kind of Volumes . | Bind mount - this is what you always use | Docker managed volume (2 kinds) . | Anonymous | Named volume (a special case of Anonymous) | . | . Use volumes | Docker Documentation - Named vs. Anonymous volumes: article - Hamel: maybe? You might use named volumes to persist data between containers. To persist data with named volumes . Named volume is a kind of anonymous volume where the mount point is managed by Docker. Example of how you used a named volume: . | Start container with a named volume: docker run --name myDatabaseWithVolume -v appdata:/var/lib/mysql mysql save a table in the mysql database . | Start a new container with the same named volume docker run --name myDatabaseWithVolume2 -v appdata:/var/lib/mysql mysql You should be able to see the same table you created in the last container b/c data has been persisted. | . See where Docker anonymous volumes store information . Unlike a bind mount, where you explicitly name the host location, docker will manage the storage location of anonymous volumes. But how do you know where the files are stored on the host? . You can use docker inspect command filtered for the Volumes key to find the storage location on the host. Create a container with an anonymous volume. docker run -v /some/location --name cass-shared alpine . docker inspect -f \"\" cass-shared . This will output a json blob which will show the mount points. Other things you didn’t know about volumes . | when you mount a volume, it overrides any files already at that location . | You can mount specific files which avoid this | if you specify a host directory that doesn’t exist Docker will create it for you . | exception: If you are mounting a file instead of a directory and it doesn’t exist on the host, Docker will throw an error | . | . | you can mount a volume as read only -v /source:/destination:ro . | see docs (there is this optional third argument for volumes) | . | . The volumes-from flag . Allows you to share volumes with another container. When you use this flag, the same volumes are mounted into your container at the same location. Volumes are copied transitively, so this will automatically mount volumes that are also mounted this way from another container. Caveats - You cannot mount a shared volume to a different location within a container. This is a limitation of --volumes-from - If you have a collision in the destination mount point among several volumes-from only one volume will survive, which you can ascertain from docker inpsect - see above for how to use docker inspect - You cannot change the write permission of the volume, you inherit whatever the permission is in the source container. Cleaning up volumes . -v flag . docker rm -v will delete any managed volumes referenced by the target container . However, if you delete all containers but forget a -v flag you will be left with an orphaned volume. This is bad b/c it takes up disk space until cleaned up. You have to run complicated cleanup steps to get rid of orphans. Solution: There is none, its a good habit to use -v anytime you call docker rm . Hamel: this means that- . | Don’t use managed volumes unless you really need it | If you do use them, try to include makefiles that include -v as a part of things | . Advanced Volume Stuff . | You can have a volume container p. 72 so that you can reference --volume-from from all your containers. | Data-paced volume containers, you can pre-load volume containers with data p. 73 | You can change the behavior of currently running containers by mounting configuration files and application in volumes. In a way, Hamel | . ",
+    "url": "https://notes.hamel.dev/docs/docker/Docker-In-Action.html#chapter-4-persistent-storage--shared-state-with-volumes",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-4-persistent-storage--shared-state-with-volumes"
+  },"4": {
+    "doc": "Docker",
+    "title": "Chapter 5 Single Host Networking",
+    "content": ". | Terminology: . | protocols: tcp, http | interfaces: IP addresses | ports: you know what this means . | Customary ports: . | HTTP: 80 | MySQL: 3306 | Memcached: 11211 | . | . | . | . Discuss advanced networking and creating a network using the docker network command. Hamel: I don’t see an immediate use for this. | Special container networks: . | host . | docker run --network host allows you to pretend like the host is your local machine, and you can expose any port and that will bind to the host. | . | none . | docker run --network none closes all connection to the outside world. This is useful for security. | . | . | . exposing ports . -p 8080 This binds port 8080 to a random port on the host! you can find the port that the container is bound to by docker port &lt;image name&gt; example: docker run -p 8080 --name listener alpine docker port listener . This will give you output that looks like container --&gt; host (which is reverse the other nomenclature of host:container . -p 8080:8080 this binds the container’s port to the host’s port 8080 . -p 0.0.0.0:8080:8080/tcp same as above but specifies the interface and the tcp protocol. Syntax is -p &lt;host-interface&gt;:&lt;host-port&gt;:&lt;target-port&gt;/&lt;protocol&gt; . ",
+    "url": "https://notes.hamel.dev/docs/docker/Docker-In-Action.html#chapter-5-single-host-networking",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-5-single-host-networking"
+  },"5": {
+    "doc": "Docker",
+    "title": "Chapter 6 Isolation",
+    "content": "Limit resources: Memory, CPU, . | -m or --memory . | where unit = b, k, m or g | memory limits are not reservations, just caps | . | --cpu-shares . | is a weight you set that is used to calculate % of CPU usage allowed | % is calculated as weight / (sum of all weights) | only enforced when there is contention for a CPU | . | --cpuset-cpus : limits process to a specific CPU . | docker run -d --cpuset-cpus 0 Restricts to CPU number 0 | Can specify a list or 0,1,2 or a range 0-2 | . | --device . | mount your webcam: docker run --device /dev/video0:/dev/video0 | . | Shared memory : Hamel this was too advanced for me | . Running as a user . | You can only inspect the default run-as User by creating or pulling the image . | see p. 113 | . | Change run-as user . | docker run --user nobody | The user has to exist in the image when doing this or you will get an error. The user will not be created automatically for you. | See available users: . | docker run --rm busybox:latest awk -F: '$0=$1' /etc/passwd | . | . | . Privileged Containers: TRY NOT TO DO THIS . | This is how you run Docker-in-Docker | Priviliged containers have root privileges on the host. | --privilged on docker create or docker run | . ",
+    "url": "https://notes.hamel.dev/docs/docker/Docker-In-Action.html#chapter-6-isolation",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-6-isolation"
+  },"6": {
+    "doc": "Docker",
+    "title": "Chapter 7 packaging software",
+    "content": "Aside: cleaning up your docker environment . docker image prune -a and docker container prune . Recovering changes to a stopped container . I always thought you have to commit changes in order to preserve changes to an image you made in a container. This is not true (although committing changes is a good idea). Any changes you make to a container is saved even if the container is exited . To recover changes to a container . | Find the container (if you didn’t name it with docker run --name it will be named for you), using docker ps -a | Start the container using docker start -ai &lt;container_name&gt; the -ai flags mean to attach and run interactively | Now you are in the container you can verify that everything you installed is still there! | . Note: if you run your container initially with docker run --rm this automatically removes your container upon exit, so this might not be recommended as your changes are not recoverable if you forget to commit . Seeing changes to a container from the base image . docker diff &lt;container name&gt; will output a long list of of file changes: - A: file added - D: file deleted - C: file changed . Other tricks . You can override the entry point to the container permanently by using the --entrypoint flag: docker run --entrypoint . Understanding Images &amp; Layers . | files are stored in a Union file system, so they are stored in specific layers. The file system you are seeing as an end user are a union of all the layers. Each time a change is made to a union file system, that change is recorded on a new layer on top of all of the others. The “union” of all of those layers, or top-down view, is what the container (and user) sees when accessing the file system. | This means if you are not careful you can bloat the file system by making a bunch of unnecessary changes to add/delete files. | . | docker commit commits the top-layer changes to an image, meaning all the files changes are saved. | . See image size with . docker images. Even though you remove a file, the image size will increase! This is because of the Union File System . See size of all layers . docker history &lt;image name&gt; . flatten an image This is kind of complicated, you can do this by exporting and importing the filesystem into a base image See pg. 140. BUT there is an experimental feature called docker build --squash -t &lt;image&gt; .You can enable experimental features by following these instructions: dockerd Docker Documentation. For Mac, you can turn on experimental features by setting experimental: true in `settings&gt; Command Line &gt; enable experimental . ",
+    "url": "https://notes.hamel.dev/docs/docker/Docker-In-Action.html#chapter-7-packaging-software",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-7-packaging-software"
+  },"7": {
+    "doc": "Docker",
+    "title": "Chapter 8 Build Automation",
+    "content": ". | use .dockerignore to prevent certain files from being copied | You can set multiple environment variables at once in Dockerfile | You can use environment variables in the LABEL command . | The metadata makes it clear that the environment variable substitution works. You can use this form of substitution in the ENV, ADD, COPY, WORKDIR, VOLUME, EXPOSE, and USER instructions. | . | . ENV APPROOT \"/app\" APP \"mailer.sh\" VERSION \"0.6\" LABEL base.name \"Mailer Archetype\" base.version \"${VERSION}\" . | view metadata using the command docker inspect &lt;image name&gt; | . ENTRYPOINT something arugment vs. ENTRYPOINT [“something”, “argument”] . TLDR; use the ugly list approach . There are two instruction forms shell form and exec form docker - Dockerfile CMD shell versus exec form - Stack Overflow . The ENTRYPOINT instruction has two forms: the shell form and an exec form. The shell form looks like a shell command with whitespace-delimited arguments. The exec form is a string array where the first value is the command to execute and the remaining values are arguments. Most importantly, if the shell form is used for ENTRYPOINT, then all other arguments provided by the CMD instruction or at runtime as extra arguments to docker run will be ignored. This makes the shell form of ENTRYPOINT less flexible. Other commands can use the exec form too! You must use the exec form when any of the arguments contain a whitespace: . FROM dockerinaction/mailer-base:0.6 COPY [\"./log-impl\", \"${APPROOT}\"] RUN chmod a+x ${APPROOT}/${APP} &amp;&amp; \\ chown example:example /var/log USER example:example VOLUME [\"/var/log\"] # each value in this array will be created as a new volume definition CMD [\"/var/log/mailer.log\"] . Note: you usually don’t want to specify a volume at build time. CMD vs. ENTRYPOINT (You should really try to always use both!) . CMD is actually an argument list for the ENTRYPOINT. | Logically when you run a container it runs as &lt;default shell program&gt; ENTRYPOINT CMD | You can override the ENTRYPOINT with docker run --entrypoint, and you can override commands by just passing commands to docker run : docker run &lt;image name&gt; &lt;command&gt; | . FROM ubuntu ENTRYPOINT [ \"ls\" ] CMD [\"-lah\"] . As you can see using ENTRYPOINT as well as CMD separately provides your downstream users with the most flexibility. COPY vs ADD . Use COPY. ADD has additional functionality like ability to download from urls and decompress files, which proved opaque over time and you shouldn’t use it. ONBUILD . The ONBUILD instruction defines instructions to execute if the resulting image is used as a base for another build. those ONBUILD instructions are executed after the FROM instruction and before the next instruction in a Dockerfile. FROM busybox:latest WORKDIR /app RUN touch /app/base-evidence ONBUILD RUN ls -al /app . Other Stuff . | You should always validate the presence of required environment variables in a startup shell script like entrypoint.sh | . Docker Digests . Reference the exact SHA of a Container which is the only way to guarantee the image you are referencing has not changed. @ symbol followed by the digest. Hamel: doesn’t look like a good way to find history of digests, but you can see the current SHA when you use docker pull , you can see the SHA as well if you call docker images --digests . FROM debian@sha256:d5e87cfcb730... ",
+    "url": "https://notes.hamel.dev/docs/docker/Docker-In-Action.html#chapter-8-build-automation",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-8-build-automation"
+  },"8": {
+    "doc": "Docker",
+    "title": "Chapter 10 (skipped Ch 9)",
+    "content": ". | You can run your own customized registry. Simplest version can be hosted from a Docker Container! | . # start a local registry on port 5000 docker run -d --name personal_registry \\ -p 5000:5000 --restart=always \\ registry:2 # push an image to the registry (using the same image that created the registry for convenience) docker tag registry:2 localhost:5000/distribution:2 docker push localhost:5000/distribution:2 . Note that docker push syntax is actually docker push &lt;registry url&gt;/org/repo . This chapter discusses many more things which are skipped: - Centralized registries - Enhancements - Durable blog storage - Integrating through notifications . ",
+    "url": "https://notes.hamel.dev/docs/docker/Docker-In-Action.html#chapter-10-skipped-ch-9",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-10-skipped-ch-9"
+  },"9": {
+    "doc": "Docker",
+    "title": "Chapter 11 Docker Compose",
+    "content": "Docker compose for fastpages: . version: \"3\" services: fastpages: &amp;fastpages working_dir: /data environment: - INPUT_BOOL_SAVE_MARKDOWN=false build: context: ./_action_files dockerfile: ./Dockerfile image: fastpages-dev logging: driver: json-file options: max-size: 50m stdin_open: true tty: true volumes: - .:/data/ converter: &lt;&lt;: *fastpages command: /fastpages/action_entrypoint.sh watcher: &lt;&lt;: *fastpages command: watchmedo shell-command --command /fastpages/action_entrypoint.sh --pattern *.ipynb --recursive --drop jekyll: working_dir: /data image: hamelsmu/fastpages-jekyll restart: unless-stopped ports: - \"4000:4000\" volumes: - .:/data/ command: &gt; bash -c \"gem install bundler &amp;&amp; jekyll serve --trace --strict_front_matter\" . The above uses YAML anchors: YAML anchors - Atlassian Documentation . Start a particular service: docker-compose up &lt;service name&gt; Rebuild a service docker-compose build &lt;service name&gt; . You can express dependencies with depends_on which is useful for compose to know which services to restart or start in a specified order. See examples of Docker Compose files on p 243 . Scaling Up w/Docker Compose . That’s right you don’t need docker swarm. This example uses ch11_coffee_api/docker-compose.yml at master · dockerinaction/ch11_coffee_api · GitHub . | Get list of containers that are currently providing the service. | . docker-compose ps coffee . Name Command State Ports ---------------------------------------------------------------------------- ch11_coffee_api_coffee_1 ./entrypoint.sh Up 0.0.0.0:32768-&gt;3000/tcp . | Scale it up with docker-compose up --scale | . docker-compose up --scale coffee=5 . When you run docker-compose ps coffee: . docker-compose ps coffee  ✔ Name Command State Ports ---------------------------------------------------------------------------- ch11_coffee_api_coffee_1 ./entrypoint.sh Up 0.0.0.0:32768-&gt;3000/tcp ch11_coffee_api_coffee_2 ./entrypoint.sh Up 0.0.0.0:32769-&gt;3000/tcp ch11_coffee_api_coffee_3 ./entrypoint.sh Up 0.0.0.0:32771-&gt;3000/tcp ch11_coffee_api_coffee_4 ./entrypoint.sh Up 0.0.0.0:32770-&gt;3000/tcp ch11_coffee_api_coffee_5 ./entrypoint.sh Up 0.0.0.0:32772-&gt;3000/tcp . Note that the coffee service binds to port 0 on your host, which is an ephemeral port, which just means that your host machine assigns the service to a random port. This is required if you plan on using docker compose up --scale . The service was bound to port 0 on the host with . coffee: build: ./coffee user: 777:777 restart: always expose: - 3000 ports: - \"0:3000\" ... | Load balancer | . Problem with this kind of scaling is you don’t know the ports in advance , and you don’t want to hit these individual endpoints, you need a load balancer. This blog post shows you how to luse NGINX as a load balancer. You will need something like this in your compose file . nginx: image: nginx:latest volumes: - ./nginx.conf:/etc/nginx/nginx.conf:ro depends_on: - pspdfkit ports: - \"4000:4000\" . Templating Docker Compose Files . You can read about this here: Share Compose configurations between files and projects | Docker Documentation, allows you to override certain things from a base compose file. ",
+    "url": "https://notes.hamel.dev/docs/docker/Docker-In-Action.html#chapter-11-docker-compose",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-11-docker-compose"
+  },"10": {
+    "doc": "Docker",
+    "title": "Chapter 12 Clusters w/Machine &amp; Swarm",
+    "content": "Hamel: I skipped this completely . ",
+    "url": "https://notes.hamel.dev/docs/docker/Docker-In-Action.html#chapter-12-clusters-wmachine--swarm",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-12-clusters-wmachine--swarm"
+  },"11": {
+    "doc": "Docker",
+    "title": "Docker",
+    "content": "Notes from the book Docker In Action . | Chapter 1 | Chapter 2 . | Injecting environment variables | Automatically restarting containers | Removing containers vs. images | . | Chapter 3 . | Images as files | . | Chapter 4 Persistent Storage &amp;. Shared State with Volumes . | Different kind of Volumes | To persist data with named volumes | See where Docker anonymous volumes store information | Other things you didn’t know about volumes | The volumes-from flag | Cleaning up volumes | Advanced Volume Stuff | . | Chapter 5 Single Host Networking . | exposing ports | . | Chapter 6 Isolation . | Limit resources: Memory, CPU, | Running as a user | Privileged Containers: TRY NOT TO DO THIS | . | Chapter 7 packaging software . | Recovering changes to a stopped container | Seeing changes to a container from the base image | Other tricks | Understanding Images &amp; Layers | . | Chapter 8 Build Automation . | ENTRYPOINT something arugment vs. ENTRYPOINT [“something”, “argument”] | CMD vs. ENTRYPOINT (You should really try to always use both!) | COPY vs ADD | ONBUILD | Other Stuff | Docker Digests | . | Chapter 10 (skipped Ch 9) | Chapter 11 Docker Compose . | Scaling Up w/Docker Compose | Templating Docker Compose Files | . | Chapter 12 Clusters w/Machine &amp; Swarm | . ",
+    "url": "https://notes.hamel.dev/docs/docker/Docker-In-Action.html",
+    "relUrl": "/docs/docker/Docker-In-Action.html"
+  },"12": {
     "doc": "About",
     "title": "About",
-    "content": "These docs are hosted at www.github.com/hamelsmu/notes . You can find more information about the author here. ",
-    "url": "https://notes.hamel.io/about/",
+    "content": "These docs are hosted on GitHub: hamelsmu/notes. You can find more information about the author here. ",
+    "url": "https://notes.hamel.dev/about/",
     "relUrl": "/about/"
-  },"1": {
+  },"13": {
     "doc": "Bash Scripting Class",
     "title": "Bash Scripting Class Linux Academy",
-    "content": "Link to class. Link to GitHub repo https://github.com/hamelsmu/bash_scripting/find/master . | Bash Scripting Class Linux Academy . | History of Bash | Bash Configuration . | .bash_profile | .bashrc | .bash_history | .bash_logout | . | Shell Scripts . | chmod u+x | Introduction | Using Variables on The Command Line . | Using Substitution with backticks | . | Using Variables in Scripts | Command Subsitution | Exit Status . | Using exit statues in a shell script | . | Arithmetic Operations | . | Global and Local Environment Variables | Special Characters: Quotes &amp; Escapes | . | Using dev/null | The Read Statement | Shell Expansion | Types of Variables . | Readonly Variables | Types of Variables | Arrays . | Iterating Through Arrays | Passing Variables to Scripts at the Command Line | . | Conditionals . | The if statement | If/Then/Else | . | Aside: Output Streams | For Loop | Case Statement | While Loop | Execution Operators | . | Input/Output . | Reading Files | File Descriptors | Delimiters (IFS) | Traps and Signals | . | Debugging Shell Scripts | Error Handling | Functions . | structure of functions in a shell script | Scope | Functions With Parameters | Nested Functions | Function Return and Exit | . | Interactive Menus . | Infobox | Msgbox | Menus | . | . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#bash-scripting-class-linux-academy",
+    "content": ". | Link to class. | Link to GitHub repo | . | Bash Scripting Class Linux Academy . | History of Bash | Bash Configuration . | .bash_profile | .bashrc | .bash_history | .bash_logout | . | Shell Scripts . | chmod u+x | Introduction | Using Variables on The Command Line . | Using Substitution with backticks | . | Using Variables in Scripts | Command Subsitution | Exit Status . | Using exit statues in a shell script | . | Arithmetic Operations | . | Global and Local Environment Variables | Special Characters: Quotes &amp; Escapes | . | Using dev/null | The Read Statement | Shell Expansion | Types of Variables . | Readonly Variables | Types of Variables | . | Arrays . | Iterating Through Arrays | Passing Variables to Scripts at the Command Line | . | Conditionals . | The if statement | If/Then/Else | . | Aside: Output Streams | Control Flow . | For Loop | Case Statement | While Loop | . | Execution Operators | Input/Output . | Reading Files | File Descriptors | Delimiters (IFS) | Traps and Signals | . | Debugging Shell Scripts | Error Handling | Functions . | structure of functions in a shell script | Scope | Functions With Parameters | Nested Functions | Function Return and Exit | . | Interactive Menus . | Infobox | Msgbox | Menus | . | . ",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#bash-scripting-class-linux-academy",
     "relUrl": "/docs/linux/bash_scripting.html#bash-scripting-class-linux-academy"
-  },"2": {
+  },"14": {
     "doc": "Bash Scripting Class",
     "title": "History of Bash",
     "content": ". | was originally a program called bin/sh | Bourne Shell: introduced more advanced structure into the shell. | Bourne Again Shell (Bash): Second iteration of Bourne Shell. | . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#history-of-bash",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#history-of-bash",
     "relUrl": "/docs/linux/bash_scripting.html#history-of-bash"
-  },"3": {
+  },"15": {
     "doc": "Bash Scripting Class",
     "title": "Bash Configuration",
     "content": "ls -a ~/ | grep bash  .bash_history  .bash_profile  .bash_profile.backup  .bash_profile.bensherman  .bash_profile_copy  .bash_sessions/  git-completion.bash .bash_profile . | .bash_profile: executed when you login -&gt; configures the shell when you get an initial command prompt. This is different than .bashrc. | commonly loads the ~/.bashrc file as well. | bin is traditionally the folder for binaries. | bash_profile is designed to run when you login, so if you change it will not refresh until you login next time. | .bashrc . | .bashrc it is executed simply before the command shell comes up, does not have to wait until you login. | etc/bashrc are system bashrc files which is like a “template” for user bashrc files. Anytime a new user is created, it inherits from this template and sometimes automated customizations are applied. This is usually done by simply importing etc/bashrc from each user’s bashrc file: . | env will list all env variables. | to apply .bashrc you just have to run the command bash as it will start another shell from your current one. However, if you run bash you can now exit without closing the shell, because a shell is running inside another shell. | .bash_history . | ~/.bash_history contains lots of history. By default will only capture last 100 but you can change this setting. | you can exlude something from saving to history (like passwords) by using an ignorespace | the environment variable HIST_CONTROL can be used to control how much history to keep and settings about what should not be logged. One way to turn off loggin is: export HISTCONTROL=$HISTCONTROL:ignorespace . this allow you to skip logging by adding a space to the the beginning of any command. If you want to see what is in HIST_CONTROL you will see: . &gt; cat ~/.bash_history | grep HISTCONTROL HISTCONTROL=ignoredups:ignorespace . ignoredups was already set to this variable. | .bash_logout . | Doesn’t always exist on a system. in most cases the contents of the ~/.bash_logout will be empty or contain a comment. | The role of this file is to execute things when you exit the shell. If you close the shell it will not work, you have to do a clean exit instead. | Common use is to use this to clear out ~/.bashrc with the original to clear out any changes the user may have made. You can accomplish this by copying a backup: . cp ~/.bashrc.original ~/.bashrc . | . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#bash-configuration",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#bash-configuration",
     "relUrl": "/docs/linux/bash_scripting.html#bash-configuration"
-  },"4": {
+  },"16": {
     "doc": "Bash Scripting Class",
     "title": "Shell Scripts",
     "content": "Put your shell scripts in a folder you can find them. We can put them in ~/bin: . &gt; mkdir bin . Make sure in ~/.bash_profile you have: . PATH=$PATH:$HOME/bin export PATH . chmod u+x . | To make test.sh executable run command chmod u+x test.sh | . You can also run chmod 755 . Introduction . | See these notes on what makes a shell script, accessing environment variables. | . Using Variables on The Command Line . | can use any name that is not an environment variable (check with env). | by convention variable names in ALLCAPS. &gt; FIRSTNAME=\"Hamel\" . - No space b/w = and value. - Good idea to __always__ put value in double quotes `\"`, although this is not required in every case. | As a practice you want to use export command to set is as an environment variable. This makes the variable available to any subprocess that starts from the shell. Read more about this here. &gt; export FIRSTNAME &gt; echo \"Hello, $FIRSTNAME\" \"Hello Hamel\" &gt; export FIRSTNAME=\"Hamel\" # do this in one step . The above example could work without export, too just reinforcing that its a good idea to use this as a habit. You can do this in one step: . | . Using Substitution with backticks . &gt; export TODAYSDATE=`date` # executes date command . Using Variables in Scripts . | Illustrative script varexample.sh . MYUSERNAME='hamel' MYPASSWORD='password' STARTOFSCRIPT=`date` echo \"My login name for this app is $MYUSERNAME\" echo \"My login password for this app is $MYPASSWORD\" echo \"I started this script at $STARTOFSCRIPT\" ENDOFSCRIPT=`date` echo \"I ended the script at $ENDOFSCRIPT\" . | These variables only live within the sub-shell that executes the script. | . Command Subsitution . | Method 1 (Static): Assign command result to variable. Only runs the command at time of variable assignment. | . TODAYSDATE=`date` USERFILES=`find /home -user user` # find all directories owned by the user \"user\" echo \"Today's Date: $TODAYSDATE\" echo \"All files owned by USER: $USERFILES\" . | Method 2: Use an alias, which allows you to run a command every time you call the alias. For aliases to work this way you must use the shopt command, which allows aliases to be useable in shell scripts. Technically referred to as “expanding aliases within a subshell”. | . #!/bin/bash shopt -s expand_aliases # notice that we don't use backticks here because the command we want to execute is put in \"..\" alias TODAY=\"date\" alias UFILES=\"find /home -user user\" A=`TODAY` #Executes the command date B=`UFILES`#Executes the command echo \"With Alias, TODAY is: $A\" echo \"With Alias, UFILES is: $B\" . Exit Status . | Value = 0 means everything is ok | Value != 0 means something is wrong. | See last exit status w/ the $? command: | . &gt; ls &gt; echo $? 0 . Using exit statues in a shell script . | Unlike python, shell scripts will continue executing even if there is an error. You can prevent this by using set -e | . set -e # means exit the shell if there is an error, don't continue. Arithmetic Operations . expr 1 + 2 expr 2 \\* 2 # you have to escape the * expr \\( 2 + 2 \\) \\* 4 # you must also escape the ( ) . | Caveat: You need a space on each side of the operator. | . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#shell-scripts",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#shell-scripts",
     "relUrl": "/docs/linux/bash_scripting.html#shell-scripts"
-  },"5": {
+  },"17": {
     "doc": "Bash Scripting Class",
     "title": "Global and Local Environment Variables",
     "content": ". | env and printenv will tell you your global vars | set will give you things from your session. This will also usually contain everything from your global scope. set is a superset of env. | Reserved names: see study guide or google it. | . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#global-and-local-environment-variables",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#global-and-local-environment-variables",
     "relUrl": "/docs/linux/bash_scripting.html#global-and-local-environment-variables"
-  },"6": {
+  },"18": {
     "doc": "Bash Scripting Class",
     "title": "Special Characters: Quotes &amp; Escapes",
     "content": ". | $ escapes a single character. | single quotes '..' treats something as a string, escapes the whole thing | double quotes do not escape anything. | . &gt; echo \"\\$COL\" # this will escape the $ $COL &gt; echo '$COL' # single quotes escape things, means the literal string $COL &gt; echo \"$COL\" # does not escape anything 250 &gt; echo \"The date is: `date`\" # command substitution with bacticks The date is Mon Jul 25 . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#special-characters-quotes--escapes",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#special-characters-quotes--escapes",
     "relUrl": "/docs/linux/bash_scripting.html#special-characters-quotes--escapes"
-  },"7": {
+  },"19": {
     "doc": "Bash Scripting Class",
     "title": "Using dev/null",
     "content": "For when you put output somewhere other than the background. /dev/null is a device, everything is a file in linux. Everything you write to dev/null just dissapears. For example: . #!/bin/bash #redirect to dev/null example echo \"This is going to the blackhole.\" &gt;&gt; /dev/null . Note &gt;&gt; (append) or &gt; (overwrite) will work for dev/null, although out of habit in other scenarios it is better to append when unsure using &gt;&gt;. ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#using-devnull",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#using-devnull",
     "relUrl": "/docs/linux/bash_scripting.html#using-devnull"
-  },"8": {
+  },"20": {
     "doc": "Bash Scripting Class",
     "title": "The Read Statement",
     "content": "note the backticks and the expr command . echo \"Enter Your First Name: \" read FIRSTNAME echo \"Enter Your Last Name\" read LASTNAME echo \"Your Full Name is $FIRSTNAME $LASTNAME\" echo \"Enter Your Age: \" read USERAGE echo \"In 10 Years, You will be `expr $USERAGE + 10` years old.\" . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#the-read-statement",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#the-read-statement",
     "relUrl": "/docs/linux/bash_scripting.html#the-read-statement"
-  },"9": {
+  },"21": {
     "doc": "Bash Scripting Class",
     "title": "Shell Expansion",
     "content": "&gt; echo sh{ot,oot,ort} shot shoot short &gt; echo st{il,al}l still stall &gt; echo \"$[ 2 * 2 ]\" 4 # set and display var at same time &gt; echo \"${VARNAME:=something}\" something &gt; echo $VARNAME something # will print any environment variable that starts with HO &gt; echo \"${!HO*}\" OME HOSTNAME HOSTTYPE . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#shell-expansion",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#shell-expansion",
     "relUrl": "/docs/linux/bash_scripting.html#shell-expansion"
-  },"10": {
+  },"22": {
     "doc": "Bash Scripting Class",
     "title": "Types of Variables",
     "content": "Variables are declared implicitly, and the value will implicitly determine what kind of variable it is. However, it could be useful to explicitly define the type. # an integer variable MYVAR=4 # use command substitution &gt; echo `expr $MYVAR + 5` 9 . Show the type of the variable, using decalre -p . MYVAR=4 # this shows you MYVAR is a string &gt; declare -p MYVAR declare -- MYVAR=\"4\" . Interpreting the output of declare -p: -- tells you that this variable is not strongly typed and its type has not been declared. Set the type of the variable, using decalre -i notice how the value is converted to zero when setting NEWVAR to a string when you have declared it as an integer. &gt; declare -i NEWVAR=10 &gt; declare -p NEWVAR declare -i NEWVAR=\"10\" &gt; NEWVAR=\"Hello\" &gt; echo $NEWVAR 0 . Notice in the output instead of -- we have -i which means this variable is an integer. Readonly Variables . &gt; declare -r READONLY=\"This is a string we cannot overwrite\" &gt; declare -p READONLY declare -r READONLY=\"This is a string we cannot overwrite\" . The -r in the output confirms this is a readonly variable. Equivalent to declare -r, using the readonly command: . readonly MYREADONLY=\"This String\" . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#types-of-variables",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#types-of-variables",
     "relUrl": "/docs/linux/bash_scripting.html#types-of-variables"
-  },"11": {
+  },"23": {
     "doc": "Bash Scripting Class",
     "title": "Types of Variables",
     "content": "# declare int variable: &gt; declare -i NEWVAR=10 # inpsect type of NEWVAR &gt; declare -p NEWVAR declare -i NEWVAR=\"10\" # declare readonly variable &gt; declare -r READONLY=\"This is something we cannot overwrite\" # try to cancel READONLY type &gt; declare +r READONLY ### will result in an error . Variables in bash are implicitly typed, the type will be inferred from the value you assign. | determine the type of a variable: declare -p $MYVAR | declare variable as integer: declare -i NEWVAR=10 . | If you explicitly declare a variable as an int but assign it to a string, it will implicitly convert the value to 0. | . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#types-of-variables-1",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#types-of-variables-1",
     "relUrl": "/docs/linux/bash_scripting.html#types-of-variables-1"
-  },"12": {
+  },"24": {
     "doc": "Bash Scripting Class",
     "title": "Arrays",
     "content": "Indexing starts at zero. Notice that arrays are space-delimited., this is a strange thing if you are used to arrays w/commas. You can have spaces in values if you enclose the spaces in double-quotes. # notice no commas just spaces! &gt; MYARRAY=(“First” “Second” “Third”) &gt; echo ${MYARRAY[2]} “Third” . Iterating Through Arrays . See ./array.sh . #!/bin/bash # simple array list and loop for display SERVERLIST=(“websrv01” “websrv02” “websrv03”) COUNT=0 for INDEX in ${SERVERLIST[@]}; do echo “Processing Server: ${SERVERLIST[COUNT]}” COUNT=“`expr $COUNT + 1 `” done . You cannot decrease the size of the array, you can only increase the size of the array. Passing Variables to Scripts at the Command Line . see ./cli_args.sh . echo “The following item was passed to the script at run time $1” . The arguments go from 1-n (starts at 1). if you have an argument that contains a space, then you wan to enclose this in quotes, otherwhise space is seen as a delimiter. ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#arrays",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#arrays",
     "relUrl": "/docs/linux/bash_scripting.html#arrays"
-  },"13": {
+  },"25": {
     "doc": "Bash Scripting Class",
     "title": "Conditionals",
-    "content": "The if statement . 3 echo “Guess the Secret Number” echo “======================“ echo “” echo “Enter a Number Between 1 and 5” read GUESS if [ $GUESS -eq 3 ] then echo “You guessed the Correct Number!” fi . Test if a file exists iffileexists.sh . FILENAME=$1 echo “Testing for the existence of a file called $FILENAME” if [ -a $FILENAME ] then echo “$FILENAME does exist!” fi # negation operator if [! -a $FILENAME ] then echo “$FILENAME does not exist!” fi # test multiple expressions in if statement if [ -f $FILENAME ] &amp;&amp; [ -R $FILENAME] then echo “File $FILENAME exists and is readable.” fi . -a is the same as -f w.r.t. testing for the existence of a file. If/Then/Else . echo “Enter a number between 1 and 3:” read VALUE # use semicolons for readability if [ “$VALUE” -eq “1” ]; then echo “You entered $VALUE” fi . Using an OR statement: . # another variation if [ “$VALUE” -eq “1” ] || [ “$VALUE” -eq “2” ] || [ “$VALUE” -eq “3” ]; then echo “You entered $VALUE” else echo “You didn’t follow directions!” fi . Redirect errors to /dev/null . if [ “$VALUE” -eq “1” ] 2&gt;/dev/null || [ “$VALUE” -eq “2” ] 2&gt;/dev/null || [ “$VALUE” -eq “3” ] 2&gt;/dev/null; then echo “You entered $VALUE” else echo “You didn’t follow directions!” fi if [ “$VALUE” -eq “1” ] 2&gt;/dev/null; then echo “You entered #1” elif “ \"$VAL”E\" -e“ ”2\" ] 2&gt;/dev/null; then ech“ \"You entered ”2\" elif “ \"$VAL”E\" -e“ ”3\" ] 2&gt;/dev/null; then ech“ \"You entered ”3\" else ech“ \"You di’n't follow direction”!\" fi . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#conditionals",
+    "content": " ",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#conditionals",
     "relUrl": "/docs/linux/bash_scripting.html#conditionals"
-  },"14": {
+  },"26": {
+    "doc": "Bash Scripting Class",
+    "title": "The if statement",
+    "content": "3 echo “Guess the Secret Number” echo “======================“ echo “” echo “Enter a Number Between 1 and 5” read GUESS if [ $GUESS -eq 3 ] then echo “You guessed the Correct Number!” fi . Test if a file exists iffileexists.sh . FILENAME=$1 echo “Testing for the existence of a file called $FILENAME” if [ -a $FILENAME ] then echo “$FILENAME does exist!” fi # negation operator if [! -a $FILENAME ] then echo “$FILENAME does not exist!” fi # test multiple expressions in if statement if [ -f $FILENAME ] &amp;&amp; [ -R $FILENAME] then echo “File $FILENAME exists and is readable.” fi . -a is the same as -f w.r.t. testing for the existence of a file. ",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#the-if-statement",
+    "relUrl": "/docs/linux/bash_scripting.html#the-if-statement"
+  },"27": {
+    "doc": "Bash Scripting Class",
+    "title": "If/Then/Else",
+    "content": "echo “Enter a number between 1 and 3:” read VALUE # use semicolons for readability if [ “$VALUE” -eq “1” ]; then echo “You entered $VALUE” fi . Using an OR statement: . # another variation if [ “$VALUE” -eq “1” ] || [ “$VALUE” -eq “2” ] || [ “$VALUE” -eq “3” ]; then echo “You entered $VALUE” else echo “You didn’t follow directions!” fi . Redirect errors to /dev/null . if [ “$VALUE” -eq “1” ] 2&gt;/dev/null || [ “$VALUE” -eq “2” ] 2&gt;/dev/null || [ “$VALUE” -eq “3” ] 2&gt;/dev/null; then echo “You entered $VALUE” else echo “You didn’t follow directions!” fi if [ “$VALUE” -eq “1” ] 2&gt;/dev/null; then echo “You entered #1” elif “ \"$VAL”E\" -e“ ”2\" ] 2&gt;/dev/null; then ech“ \"You entered ”2\" elif “ \"$VAL”E\" -e“ ”3\" ] 2&gt;/dev/null; then ech“ \"You entered ”3\" else ech“ \"You di’n't follow direction”!\" fi . ",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#ifthenelse",
+    "relUrl": "/docs/linux/bash_scripting.html#ifthenelse"
+  },"28": {
     "doc": "Bash Scripting Class",
     "title": "Aside: Output Streams",
     "content": "https://askubuntu.com/questions/625224/how-to-redirect-stderr-to-a-file . 1: stdout . 2: stderr . error messages are printed to standard error. The classic redirection operator (command &gt; file) only redirects standard output, so standard error is still shown on the terminal. To redirect stderr as well, you have a few choices: . # Redirect stdout to one file and stderr to another file: command &gt; out 2&gt;error # Redirect stderr to stdout (&amp;1), and then redirect stdout to a file: command &gt;out 2&gt;&amp;1 # Redirect both to a file (this isn’t supported by all shells, bash and zsh support it, for example, but sh and ksh do not) command &amp;&gt; out . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#aside-output-streams",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#aside-output-streams",
     "relUrl": "/docs/linux/bash_scripting.html#aside-output-streams"
-  },"15": {
+  },"29": {
+    "doc": "Bash Scripting Class",
+    "title": "Control Flow",
+    "content": " ",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#control-flow",
+    "relUrl": "/docs/linux/bash_scripting.html#control-flow"
+  },"30": {
     "doc": "Bash Scripting Class",
     "title": "For Loop",
     "content": "#!/bin/bash echo “List all the shell scripts contents of the directory” SHELLSCRIPTS=`ls *.sh` # alternate using for loop for FILE in *.sh; do echo “$FILE” done . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#for-loop",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#for-loop",
     "relUrl": "/docs/linux/bash_scripting.html#for-loop"
-  },"16": {
+  },"31": {
     "doc": "Bash Scripting Class",
     "title": "Case Statement",
     "content": "#!/bin/bash echo “1) Choice 2” echo “2) Choice 2” echo “3) Choice 3” echo “Enter Choice:” read MENUCHOICE case $MENUCHOICE in 1) echo “You have choosen the first option”;; 2) echo “You have chosen the second option”;; 3) echo “You have selected the third option”;; *) echo “You have choosen unwisely”;; . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#case-statement",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#case-statement",
     "relUrl": "/docs/linux/bash_scripting.html#case-statement"
-  },"17": {
+  },"32": {
     "doc": "Bash Scripting Class",
     "title": "While Loop",
     "content": "#!/bin/bash echo “Enter number of times to display message:” read NUM COUNT=1 # -le means less than or equal to while [ $COUNT -le $NUM ] do echo “Hello World $COUNT” COUNT=“`expr $COUNT + 1`” done . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#while-loop",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#while-loop",
     "relUrl": "/docs/linux/bash_scripting.html#while-loop"
-  },"18": {
+  },"33": {
     "doc": "Bash Scripting Class",
     "title": "Execution Operators",
     "content": "the file super duper does not exist . rm superduper 2&gt; /dev/null &amp;&amp; echo \"File was deleted\" . The echo will only execute if the rm command was successful and exits without errors. Therefore, in this case the echo statement will not be triggered. rm superduper 2&gt; /dev/null &amp;&amp; echo \"File was deleted\" || echo \"File does not exit\" . | Because of short-circuiting rules, the second statement of the OR |   | will not trigger unless the left hand side is false. | . | &amp;&amp; : and | || : or | . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#execution-operators",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#execution-operators",
     "relUrl": "/docs/linux/bash_scripting.html#execution-operators"
-  },"19": {
+  },"34": {
     "doc": "Bash Scripting Class",
     "title": "Input/Output",
     "content": " ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#inputoutput",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#inputoutput",
     "relUrl": "/docs/linux/bash_scripting.html#inputoutput"
-  },"20": {
+  },"35": {
     "doc": "Bash Scripting Class",
     "title": "Reading Files",
     "content": "echo “Enter a filename” read FILE while read -r SUPERHERO; do echo “Superhero Name: $SUPERHERO” done &lt; “$FILE” . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#reading-files",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#reading-files",
     "relUrl": "/docs/linux/bash_scripting.html#reading-files"
-  },"21": {
+  },"36": {
     "doc": "Bash Scripting Class",
     "title": "File Descriptors",
     "content": "Use a number &gt;= 3 for file descriptors. 0 - stdin 1 - stdout 2 - stderr . /dev/null -&gt; generic place where you can redirect streams into nothing. #!/bin/bash echo “Enter file name: “ read FILE # &lt; means readonly, &gt; means write only, &lt;&gt; means allow read &amp; write # assign file descriptor to filename exec 5&lt;&gt;$FILE while read -r SUPERHERO; do echo “Superhero Name: $SUPERHERO” done &lt;&amp;5 #use &amp; to reference the file descriptor # append to end of file. echo \"File Was Read On: `date`\" &gt;&amp;5 # close file descriptor exec 5&gt;&amp;- . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#file-descriptors",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#file-descriptors",
     "relUrl": "/docs/linux/bash_scripting.html#file-descriptors"
-  },"22": {
+  },"37": {
     "doc": "Bash Scripting Class",
     "title": "Delimiters (IFS)",
     "content": "IFS - Internal Field Seperator Default is a space . # this will return a space echo $IFS . echo \"Enter filename to parse: \" read FILE # spacedelim.txt # https://stackoverflow.com/questions/24337385/bash-preserve-string-with-spaces-input-on-command-line while read -r CPU MEM DISK; do echo \"CPU: $CPU\" echo \"Memory: $MEM\" echo \"Disk: $DISK\" done &lt;\"$FILE\" . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#delimiters-ifs",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#delimiters-ifs",
     "relUrl": "/docs/linux/bash_scripting.html#delimiters-ifs"
-  },"23": {
+  },"38": {
     "doc": "Bash Scripting Class",
     "title": "Traps and Signals",
     "content": "https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html . | cntrl+c = SIGINT | cntrl+z = SIGTSTP | kill command (without -9 flag) = SIGTERM | kill -9 = SIGKILL; this signal is not sent to the process, it is just killed. | . clear # first argument is what to exexute trap 'echo \" - Please Press Q to Exit.\"' SIGINT SIGTERM SIGTSTP # cntrl+c = SIGINT # cntrl+z = SIGTSTP (Suspend, send to background) while [ \"$CHOICE\" != \"Q\" ] &amp;&amp; [ \"$CHOICE\" != \"q\" ]; do echo \"Main Menu\" echo \"=======\" echo \"1) Choice One\" echo \"2) Choice Two\" echo \"3) Choice Three\" echo \"Q) Quit\" read CHOICE clear done . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#traps-and-signals",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#traps-and-signals",
     "relUrl": "/docs/linux/bash_scripting.html#traps-and-signals"
-  },"24": {
+  },"39": {
     "doc": "Bash Scripting Class",
     "title": "Debugging Shell Scripts",
     "content": "bash -x will run a shell script in debug mode. google this to figure out how to interpret output of debugging. ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#debugging-shell-scripts",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#debugging-shell-scripts",
     "relUrl": "/docs/linux/bash_scripting.html#debugging-shell-scripts"
-  },"25": {
+  },"40": {
     "doc": "Bash Scripting Class",
     "title": "Error Handling",
     "content": "$? contains the status code of the last command. What if you have the code: . #!/bin/bash echo \"Change to a directory and list the contents\" DIRECTORY=\"$1\" cd $DIRECTORY # DANGER: the below command will still run even if the previous command failed! rm * . Solution: . DIRECTORY=\"$1\" cd $DIRECTORY if [ $? -eq \"0\" ]; then echo \"Changed directory successfully into $DIRECTORY\" else echo \"Cannot change driectories, exiting with error.\" exit 111 # you can exit with any code you want! fi . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#error-handling",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#error-handling",
     "relUrl": "/docs/linux/bash_scripting.html#error-handling"
-  },"26": {
+  },"41": {
     "doc": "Bash Scripting Class",
     "title": "Functions",
     "content": "funcExample () { echo \"We are inside the function\" } #call the function funcExample . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#functions",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#functions",
     "relUrl": "/docs/linux/bash_scripting.html#functions"
-  },"27": {
+  },"42": {
     "doc": "Bash Scripting Class",
     "title": "structure of functions in a shell script",
     "content": "Unlike python, you must define your functions before you call them. ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#structure-of-functions-in-a-shell-script",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#structure-of-functions-in-a-shell-script",
     "relUrl": "/docs/linux/bash_scripting.html#structure-of-functions-in-a-shell-script"
-  },"28": {
+  },"43": {
     "doc": "Bash Scripting Class",
     "title": "Scope",
     "content": "setting a variable within a function defines that variable globally after that function is called!!! . GLOBALVAR=“Globally Visible” # sample function for function variable scope funcExample () { # local LOCALVAR=“Locally Visible” echo “From within the function, the variable’s value is set to $LOCALVAR …” } # script start echo “this happens before the function call” echo “” echo “Local Variable = $LOCALVAR after the function call.” echo “Global Variable = $GLOBALVAR (before the function call).” funcExample echo “this happens after the function call” echo “Local Variable = $LOCALVAR after the function call.” echo “Global Variable = $GLOBALVAR (before the function call).” . Output of above code: .  ./scope.sh this happens before the function call Local Variable = after the function call. Global Variable = Globally Visible (before the function call). From within the function, the variable’s value is set to Locally Visible … this happens after the function call Local Variable = Locally Visible after the function call. Global Variable = Globally Visible (before the function call). ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#scope",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#scope",
     "relUrl": "/docs/linux/bash_scripting.html#scope"
-  },"29": {
+  },"44": {
     "doc": "Bash Scripting Class",
     "title": "Functions With Parameters",
     "content": "# global USERNAME=$1 funcAgeInDays () { echo “Hello $USERNAME, You are $1 Years old.” echo “That makes you approx `expr 365 \\* $1` days old” } #script - start read -r -p “Enter your age:” AGE # pass in arguments like this funcAgeInDays $AGE . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#functions-with-parameters",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#functions-with-parameters",
     "relUrl": "/docs/linux/bash_scripting.html#functions-with-parameters"
-  },"30": {
+  },"45": {
     "doc": "Bash Scripting Class",
     "title": "Nested Functions",
     "content": "Author of course uses this for organization purposes. When you call a function if it has nested functions the functions defined within will be exposed to the script also. # global GENDER=$1 funcHuman () { ARMS=2 LEGS=2 funcMale () { BEARD=1 echo “This man has $ARMS arms and $LEGS legs with $BEARD beard” } funcFemale () { BEARD=0 echo “This woman has $ARMS arms and $LEGS legs with $BEARD beard” } } # script start clear # determine the actual gender and display the characteristics. if [ “$GENDER” == “male” ]; then funcHuman funcMale # this function is available after the parent function is called. else funcHuman funcFemale fi . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#nested-functions",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#nested-functions",
     "relUrl": "/docs/linux/bash_scripting.html#nested-functions"
-  },"31": {
+  },"46": {
     "doc": "Bash Scripting Class",
     "title": "Function Return and Exit",
     "content": "This allows you to get arguments from the command line and then exit with a proper code and also use function returns inside scripts. # demo of return values and testing results YES=0 NO=1 FIRST=$1 SECOND=$2 THIRD=$3 # function definitions funcCheckParams () { # did we get three # -z equivalent to isnull (in this case means not-null b/c of !) if [ ! -z “$THIRD” ]; then echo “We got three params” return $YES else echo “We did not get three params” return $NO fi } # script start funcCheckParams # the return value from the function gets stored in $? RETURN_VALS=$? if [ “$RETURN_VALS” -eq “$YES” ]; then echo “We received three params and they are:” echo “Param 1: $FIRST” echo “Param 2: $SECOND” echo “Param 3: $THIRD” else echo “Usage: funcreturn.sh [param1] [param2] [param3]” exit 1 fi . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#function-return-and-exit",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#function-return-and-exit",
     "relUrl": "/docs/linux/bash_scripting.html#function-return-and-exit"
-  },"32": {
+  },"47": {
     "doc": "Bash Scripting Class",
     "title": "Interactive Menus",
     "content": " ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#interactive-menus",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#interactive-menus",
     "relUrl": "/docs/linux/bash_scripting.html#interactive-menus"
-  },"33": {
+  },"48": {
     "doc": "Bash Scripting Class",
     "title": "Infobox",
     "content": "Dissappears unless you sleep (see below). Does not come with any buttons. see exercises/26_dialog.sh . # globals INFOBOX=${INFOBOX=dialog} TITLE=“Default” MESSAGE=“Something to say” XCOORD=10 YCOORD=20 funcDisplayInfoBox () { $INFOBOX —title “$1” —infobox “$2” “$3” “$4” sleep “$5” } . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#infobox",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#infobox",
     "relUrl": "/docs/linux/bash_scripting.html#infobox"
-  },"34": {
+  },"49": {
     "doc": "Bash Scripting Class",
     "title": "Msgbox",
     "content": "Msgbox - dissapears unless you sleep pass --msgbox argument, comes with default ok button and stays on screen. see exercises/27_msgbox.sh . # global MSGBOX=${MSGBOX=dialog} TITLE=“Default” MESSAGE=“Some Message” XCOORD=10 YCOORD=20 funcDisplayMsgBox () { $MSGBOX —title “$1” —msgbox “$2” “$3” “$4” } . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#msgbox",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#msgbox",
     "relUrl": "/docs/linux/bash_scripting.html#msgbox"
-  },"35": {
+  },"50": {
     "doc": "Bash Scripting Class",
     "title": "Menus",
     "content": "See pdf notes/scripts . ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#menus",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#menus",
     "relUrl": "/docs/linux/bash_scripting.html#menus"
-  },"36": {
+  },"51": {
     "doc": "Bash Scripting Class",
     "title": "Bash Scripting Class",
     "content": " ",
-    "url": "https://notes.hamel.io/docs/linux/bash_scripting.html",
+    "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html",
     "relUrl": "/docs/linux/bash_scripting.html"
-  },"37": {
+  },"52": {
     "doc": "Linux & Bash Scripting",
     "title": "Linux & Bash Scripting",
     "content": " ",
-    "url": "https://notes.hamel.io/docs/linux/",
+    "url": "https://notes.hamel.dev/docs/linux/",
     "relUrl": "/docs/linux/"
-  },"38": {
-    "doc": "Useful Linux Utilities",
+  },"53": {
+    "doc": "Processes, Permissions and Moving Data",
     "title": "Linux Utilities For Data Scientists",
     "content": "My personal notes on underrated Linux utilities that are useful when working on machine learning projects. Photo by Arget on Unsplash . ",
-    "url": "https://notes.hamel.io/docs/linux/linux.html#linux-utilities-for-data-scientists",
+    "url": "https://notes.hamel.dev/docs/linux/linux.html#linux-utilities-for-data-scientists",
     "relUrl": "/docs/linux/linux.html#linux-utilities-for-data-scientists"
-  },"39": {
-    "doc": "Useful Linux Utilities",
+  },"54": {
+    "doc": "Processes, Permissions and Moving Data",
     "title": "Background",
-    "content": "Knowing your way around the Linux operating system is essential for being an effective data scientist. Many data scientists learn Linux tools as a necessity of having to install and run code, use remote machines, and other tasks. However, there are several utilities and concepts that I find data scientists often struggle with. This post takes a tour through some of these utilities. Some of these may be already familiar to you, and some may not. This post only focuses on a few things that I have found data scientists struggle with, based upon my personal experience. This may be very different for you! . This blog post assumes existing familiarity with navigating the file system, ssh, copying files, and stdout in Linux. ",
-    "url": "https://notes.hamel.io/docs/linux/linux.html#background",
+    "content": "These are tools that I use often as a Data Scientist and that I find especially useful. Files associated with this tutorial can be found here. ",
+    "url": "https://notes.hamel.dev/docs/linux/linux.html#background",
     "relUrl": "/docs/linux/linux.html#background"
-  },"40": {
-    "doc": "Useful Linux Utilities",
+  },"55": {
+    "doc": "Processes, Permissions and Moving Data",
     "title": "Managing Processes (ps, kill, pkill)",
     "content": "Kill Single Process (ps, kill) . A common scenario is that you might run a python script to train a model: . $ python train.py . Let’s say you want to kill this script for whatever reason. You might not always be able to type Cntrl + C to stop it, especially if this process is running in the background. (Aside: A way make a program run in the background is with a &amp; for example:$ python train.py &amp; ) . In order to find this running program, you can use the command ps . $ ps Gives you basic information (good enough most of the time) . Flags: . | -e Allows you to see all running processes including from other users . | -f Allows you to see additional information about each process . | . In order to kill the process you will want to identify it’s PID for example, if the PID is 501 you can kill this process with the command: . $ kill 501 . Killing Multiple Processes (pkill) . If you use process-based threading in python with a library like multi-processing, python will instantiate many processes for you. This is common thing to do in python for a task like data processing. Let’s consider the below example. When you run this in the background it will produce 8 processes: . from multiprocessing import Pool from time import sleep def f(x): sleep(1000) # simulate some computation return x*x if __name__ == '__main__': with Pool(8) as p: print(p.map(f, range(8))) . $ python train_multi.py &amp; . After a few seconds, calling the command ps will yield something like this: . PID TTY TIME CMD 3982 ttys002 0:00.09 ...MacOS/Python train_multi.py 4219 ttys002 0:00.00 ...MacOS/Python train_multi.py 4220 ttys002 0:00.00 ...MacOS/Python train_multi.py 4221 ttys002 0:00.00 ...MacOS/Python train_multi.py 4222 ttys002 0:00.00 ...MacOS/Python train_multi.py 4223 ttys002 0:00.00 ...MacOS/Python train_multi.py 4224 ttys002 0:00.00 ...MacOS/Python train_multi.py 4225 ttys002 0:00.00 ...MacOS/Python train_multi.py 4226 ttys002 0:00.00 ...MacOS/Python train_multi.py . You can find all processes with the file train_multi.py with the pkill command and the -f flag: . See Parent / Child Processes (pstree) . pstree is also a helpful utility to see parent/child relationships between processes. You can install pstree on a mac with brew install pstree . In the above example, there are 8 sub-processes created by one python process. Running the command . $ pstree -s train_multi.py . Will show the process hierarchy. The -s flag allows you to filter parents and descendants of processes containing a string in their command. In the below example, PID 41592 will kill all the 8 child processes seen below . ",
-    "url": "https://notes.hamel.io/docs/linux/linux.html#managing-processes-ps-kill-pkill",
+    "url": "https://notes.hamel.dev/docs/linux/linux.html#managing-processes-ps-kill-pkill",
     "relUrl": "/docs/linux/linux.html#managing-processes-ps-kill-pkill"
-  },"41": {
-    "doc": "Useful Linux Utilities",
+  },"56": {
+    "doc": "Processes, Permissions and Moving Data",
     "title": "Bundling &amp; Archiving Files (tar)",
     "content": "You commonly want to package a bunch of files together, such as a collection of photos or CSVs, and optionally compress these with its directory structure intact. A common tool for this is tar . This is how you would bundle and compress a directory of CSV files: . Sending An Archive To A Remote Machine . It is often the case you want to send data to a remote machine. The below command creates a directory called data , compresses all files in a local folder named csv_data , with the exception of the sub-directory csv_data/intermediate_files without creating any temporary files locally: . Optionally, create the directory on the remote machine: . Then, stream the archive directly to remote. Note that providing a — instead of a destination filename allows tar to write to a stream (stdout) that can be sent directly to the remote server. Moving Files In Different Directories Into An Archive . If your files exist in sibling directories, rather than under one parent directory you can use find along with tar . Suppose you want to archive all csv files relative to a directory: . When you archive files on the fly above with find you cannot compress the files until the archive is finished being built, therefore you have to compress the tar file with the gzip command: . $ gzip data.tar . Tip: some people like to use locate with updatedb instead of find. There are tradeoffs so make sure you read the documentation carefully! . Unpacking &amp; Decompressing Archives . You can decompress and unpack a tar file, for example data.tar.gz with the following command: . $ tar -xzvf data.tar.gz . If the data is not compressed, you can leave out the -z flag: . $ tar -xvf data.tar . ",
-    "url": "https://notes.hamel.io/docs/linux/linux.html#bundling--archiving-files-tar",
+    "url": "https://notes.hamel.dev/docs/linux/linux.html#bundling--archiving-files-tar",
     "relUrl": "/docs/linux/linux.html#bundling--archiving-files-tar"
-  },"42": {
-    "doc": "Useful Linux Utilities",
+  },"57": {
+    "doc": "Processes, Permissions and Moving Data",
     "title": "File Permissions",
     "content": "Before we begin, we must introduce some nomenclature: . If you run the command ls -a you will see something similar to the below output for all of your files in the current directory. The file permissions are shown in three-character groupings for three different groups (nine characters total). These three groups are the owner , group , and other users. In this case, the owner name is hamel and the group name is staff . For the owner, the file permissions are rwx which means that the owner has read r , write w , and execute x permissions. For the group, the file permissions are r-x which means the group has read and execute permissions, but not write permissions. A group is a collection of users with common permissions. Finally, all other users have file permissions of r– which means only read permissions. Changing File Permissions . There are several ways to change file permissions. Method 1: Using Characters and +, - . Refer to the nomenclature above to follow along . | chmod o-r csvfiles.tar.gz . Removes - the ability of other users o to read r the file. | chmod g+w csvfiles.tar.gz . Adds + the ability of the group g to write w to the file. | chmod u+x csvfiles.tar.gz . Adds + the ability of the owner u to execute x the file. | chomd a+x csvfiles.tar.gz . Adds + the ability of all users a to execute x the file. | . Method 2: using numbers . This method works by adding up the numbers corresponding to the permissions separately for each user group (owner, group, others). For example: . | chmod 777 csvfiles.tar.gz . This gives all users the ability to read (4), write( 2), and execute (1) files. In other words 4+2+1 = 7, for the owner, group and other users. | chmod 732 csvfiles.tar.gz . This gives the owner the ability to read, write and execute ( 4+2+1=7), the group the ability to write and execute (2+1=3) and all other users only the ability to write (2). | . Changing Ownership . You can change the owner or group assigned to a file like this: . chown newuser:newgroup file . The :newgroup is optional, if you do not specify that the group will stay the same. ",
-    "url": "https://notes.hamel.io/docs/linux/linux.html#file-permissions",
+    "url": "https://notes.hamel.dev/docs/linux/linux.html#file-permissions",
     "relUrl": "/docs/linux/linux.html#file-permissions"
-  },"43": {
-    "doc": "Useful Linux Utilities",
-    "title": "Useful Linux Utilities",
+  },"58": {
+    "doc": "Processes, Permissions and Moving Data",
+    "title": "Processes, Permissions and Moving Data",
     "content": ". | Linux Utilities For Data Scientists . | Background | Managing Processes (ps, kill, pkill) . | Kill Single Process (ps, kill) | Killing Multiple Processes (pkill) | See Parent / Child Processes (pstree) | . | Bundling &amp; Archiving Files (tar) . | Sending An Archive To A Remote Machine | Moving Files In Different Directories Into An Archive | Unpacking &amp; Decompressing Archives | . | File Permissions . | Changing File Permissions | Changing Ownership | . | . | . ",
-    "url": "https://notes.hamel.io/docs/linux/linux.html",
+    "url": "https://notes.hamel.dev/docs/linux/linux.html",
     "relUrl": "/docs/linux/linux.html"
   }
 }
