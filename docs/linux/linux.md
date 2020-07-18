@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Useful Linux Utilities
+title: Processes, Permissions and Moving Data
 parent: Linux & Bash Scripting
 nav_order: 3
 ---
@@ -22,11 +22,9 @@ My personal notes on underrated Linux utilities that are useful when working on 
 
 ## Background
 
-Knowing your way around the Linux operating system is essential for being an effective data scientist. Many data scientists learn Linux tools as a necessity of having to install and run code, use remote machines, and other tasks. However, there are several utilities and concepts that I find data scientists often struggle with.
+These are tools that I use often as a Data Scientist and that I find especially useful.
 
-This post takes a tour through some of these utilities. Some of these may be already familiar to you, and some may not. This post only focuses on a few things that I have found data scientists struggle with, based upon my personal experience. This may be very different for you!
-
-This blog post assumes existing familiarity with navigating the file system, ssh, copying files, and [stdout](https://www.howtogeek.com/435903/what-are-stdin-stdout-and-stderr-on-linux/) in Linux.
+Files associated with this tutorial can be found [here](https://github.com/hamelsmu/notes/tree/master/docs/linux/_reference_files).
 
 ## Managing Processes (ps, kill, pkill)
 

@@ -6,10 +6,8 @@ nav_order: 3
 ---
 
 # Bash Scripting Class Linux Academy
-[Link](https://linuxacademy.com/linux/training/course/name/the-system-administrators-guidep-to-bash-scripting) to class.
-[Link](https://github.com/hamelsmu/bash_scripting) to GitHub repo
-https://github.com/hamelsmu/bash_scripting/find/master
-
+- [Link](https://linuxacademy.com/linux/training/course/name/the-system-administrators-guidep-to-bash-scripting) to class.
+- [Link](https://github.com/hamelsmu/bash_scripting) to GitHub repo
 
 <details open markdown="block">
   <summary>
@@ -390,7 +388,7 @@ Variables in bash are implicitly typed, the type will be inferred from the value
 - If you explicitly declare a variable as an int but assign it to a string, it will implicitly convert the value to `0`.
 
 
-## Arrays
+# Arrays
 
 Indexing **starts at zero.**  Notice that arrays are **space-delimited.**, this is a strange thing if you are used to arrays w/commas.
 
@@ -435,9 +433,9 @@ The arguments go from 1-n (starts at 1).
 if you have an argument that contains a space, then you wan to enclose this in quotes, otherwhise space is seen as a delimiter.
 
 
-## Conditionals
+# Conditionals
 
-### The if statement
+## The if statement
 
 ```bash
 3
@@ -481,7 +479,7 @@ fi
 
 `-a` is the same as `-f` w.r.t. testing for the existence of a file.
 
-### If/Then/Else
+## If/Then/Else
 
 ```bash
 echo “Enter a number between 1 and 3:”
@@ -524,7 +522,7 @@ else
 fi
 ```
 
-## Aside: Output Streams
+# Aside: Output Streams
 
 https://askubuntu.com/questions/625224/how-to-redirect-stderr-to-a-file
 
@@ -545,6 +543,8 @@ command >out 2>&1
 # Redirect both to a file (this isn’t supported by all shells, bash and zsh support it, for example, but sh and ksh do not)
 command &> out
 ```
+
+# Control Flow
 
 ## For Loop
 
@@ -601,7 +601,7 @@ do
 done
 ```
 
-## Execution Operators
+# Execution Operators
 
 the file super duper does not exist
 
