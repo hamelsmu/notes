@@ -1,5 +1,5 @@
 # Hamel's Notes
 
-## https://notes.hamel.io
+## notes.hamel.io
 
 To Run: `docker-compose up`
