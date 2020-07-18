@@ -1,280 +1,262 @@
 {"0": {
     "doc": "About",
     "title": "About",
-    "content": "This docs site contains varous documents relevant to Virga and includes tutorials, FAQs, and other references. These docs are maintained by the Data Science Foundations Team. ",
+    "content": "These docs are hosted at www.github.com/hamelsmu/notes . You can find more information about the author here. ",
     "url": "https://notes.hamel.io/about/",
     "relUrl": "/about/"
   },"1": {
-    "doc": "About",
-    "title": "Contributing",
-    "content": "The source for these docs are hosted at github/virga/documentation-site. We welcome contributions. Changes to this documentation are automatically deployed to Virga using self-hosted actions that are also running on Virga. You can see the Actions workflow that deploys these docs here. ",
-    "url": "https://notes.hamel.io/about/#contributing",
-    "relUrl": "/about/#contributing"
-  },"2": {
-    "doc": "About",
-    "title": "Adding A New Doc",
-    "content": "It can be helpful to look at the docs folder for examples. To create a new doc, write your documentation in GitHub flavored markdown, and place the appropriate front-matter the top of your markdown file. A minimal example of front matter is below: . --- layout: default title: Service Level Agreement nav_order: 3 --- . More information about the front matter options as well as other customizations are illustrated in these docs, especially the section on navigation structure. ",
-    "url": "https://notes.hamel.io/about/#adding-a-new-doc",
-    "relUrl": "/about/#adding-a-new-doc"
-  },"3": {
-    "doc": "About",
-    "title": "Editing A Document",
-    "content": "To Edit a document make changes to the markdown in an existing markdown file in the docs folder. ",
-    "url": "https://notes.hamel.io/about/#editing-a-document",
-    "relUrl": "/about/#editing-a-document"
-  },"4": {
     "doc": "Bash Scripting Class",
     "title": "Bash Scripting Class Linux Academy",
     "content": "Link to class. Link to GitHub repo https://github.com/hamelsmu/bash_scripting/find/master . | Bash Scripting Class Linux Academy . | History of Bash | Bash Configuration . | .bash_profile | .bashrc | .bash_history | .bash_logout | . | Shell Scripts . | chmod u+x | Introduction | Using Variables on The Command Line . | Using Substitution with backticks | . | Using Variables in Scripts | Command Subsitution | Exit Status . | Using exit statues in a shell script | . | Arithmetic Operations | . | Global and Local Environment Variables | Special Characters: Quotes &amp; Escapes | . | Using dev/null | The Read Statement | Shell Expansion | Types of Variables . | Readonly Variables | Types of Variables | Arrays . | Iterating Through Arrays | Passing Variables to Scripts at the Command Line | . | Conditionals . | The if statement | If/Then/Else | . | Aside: Output Streams | For Loop | Case Statement | While Loop | Execution Operators | . | Input/Output . | Reading Files | File Descriptors | Delimiters (IFS) | Traps and Signals | . | Debugging Shell Scripts | Error Handling | Functions . | structure of functions in a shell script | Scope | Functions With Parameters | Nested Functions | Function Return and Exit | . | Interactive Menus . | Infobox | Msgbox | Menus | . | . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#bash-scripting-class-linux-academy",
     "relUrl": "/docs/linux/bash_scripting.html#bash-scripting-class-linux-academy"
-  },"5": {
+  },"2": {
     "doc": "Bash Scripting Class",
     "title": "History of Bash",
     "content": ". | was originally a program called bin/sh | Bourne Shell: introduced more advanced structure into the shell. | Bourne Again Shell (Bash): Second iteration of Bourne Shell. | . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#history-of-bash",
     "relUrl": "/docs/linux/bash_scripting.html#history-of-bash"
-  },"6": {
+  },"3": {
     "doc": "Bash Scripting Class",
     "title": "Bash Configuration",
     "content": "ls -a ~/ | grep bash  .bash_history  .bash_profile  .bash_profile.backup  .bash_profile.bensherman  .bash_profile_copy  .bash_sessions/  git-completion.bash .bash_profile . | .bash_profile: executed when you login -&gt; configures the shell when you get an initial command prompt. This is different than .bashrc. | commonly loads the ~/.bashrc file as well. | bin is traditionally the folder for binaries. | bash_profile is designed to run when you login, so if you change it will not refresh until you login next time. | .bashrc . | .bashrc it is executed simply before the command shell comes up, does not have to wait until you login. | etc/bashrc are system bashrc files which is like a “template” for user bashrc files. Anytime a new user is created, it inherits from this template and sometimes automated customizations are applied. This is usually done by simply importing etc/bashrc from each user’s bashrc file: . | env will list all env variables. | to apply .bashrc you just have to run the command bash as it will start another shell from your current one. However, if you run bash you can now exit without closing the shell, because a shell is running inside another shell. | .bash_history . | ~/.bash_history contains lots of history. By default will only capture last 100 but you can change this setting. | you can exlude something from saving to history (like passwords) by using an ignorespace | the environment variable HIST_CONTROL can be used to control how much history to keep and settings about what should not be logged. One way to turn off loggin is: export HISTCONTROL=$HISTCONTROL:ignorespace . this allow you to skip logging by adding a space to the the beginning of any command. If you want to see what is in HIST_CONTROL you will see: . &gt; cat ~/.bash_history | grep HISTCONTROL HISTCONTROL=ignoredups:ignorespace . ignoredups was already set to this variable. | .bash_logout . | Doesn’t always exist on a system. in most cases the contents of the ~/.bash_logout will be empty or contain a comment. | The role of this file is to execute things when you exit the shell. If you close the shell it will not work, you have to do a clean exit instead. | Common use is to use this to clear out ~/.bashrc with the original to clear out any changes the user may have made. You can accomplish this by copying a backup: . cp ~/.bashrc.original ~/.bashrc . | . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#bash-configuration",
     "relUrl": "/docs/linux/bash_scripting.html#bash-configuration"
-  },"7": {
+  },"4": {
     "doc": "Bash Scripting Class",
     "title": "Shell Scripts",
     "content": "Put your shell scripts in a folder you can find them. We can put them in ~/bin: . &gt; mkdir bin . Make sure in ~/.bash_profile you have: . PATH=$PATH:$HOME/bin export PATH . chmod u+x . | To make test.sh executable run command chmod u+x test.sh | . You can also run chmod 755 . Introduction . | See these notes on what makes a shell script, accessing environment variables. | . Using Variables on The Command Line . | can use any name that is not an environment variable (check with env). | by convention variable names in ALLCAPS. &gt; FIRSTNAME=\"Hamel\" . - No space b/w = and value. - Good idea to __always__ put value in double quotes `\"`, although this is not required in every case. | As a practice you want to use export command to set is as an environment variable. This makes the variable available to any subprocess that starts from the shell. Read more about this here. &gt; export FIRSTNAME &gt; echo \"Hello, $FIRSTNAME\" \"Hello Hamel\" &gt; export FIRSTNAME=\"Hamel\" # do this in one step . The above example could work without export, too just reinforcing that its a good idea to use this as a habit. You can do this in one step: . | . Using Substitution with backticks . &gt; export TODAYSDATE=`date` # executes date command . Using Variables in Scripts . | Illustrative script varexample.sh . MYUSERNAME='hamel' MYPASSWORD='password' STARTOFSCRIPT=`date` echo \"My login name for this app is $MYUSERNAME\" echo \"My login password for this app is $MYPASSWORD\" echo \"I started this script at $STARTOFSCRIPT\" ENDOFSCRIPT=`date` echo \"I ended the script at $ENDOFSCRIPT\" . | These variables only live within the sub-shell that executes the script. | . Command Subsitution . | Method 1 (Static): Assign command result to variable. Only runs the command at time of variable assignment. | . TODAYSDATE=`date` USERFILES=`find /home -user user` # find all directories owned by the user \"user\" echo \"Today's Date: $TODAYSDATE\" echo \"All files owned by USER: $USERFILES\" . | Method 2: Use an alias, which allows you to run a command every time you call the alias. For aliases to work this way you must use the shopt command, which allows aliases to be useable in shell scripts. Technically referred to as “expanding aliases within a subshell”. | . #!/bin/bash shopt -s expand_aliases # notice that we don't use backticks here because the command we want to execute is put in \"..\" alias TODAY=\"date\" alias UFILES=\"find /home -user user\" A=`TODAY` #Executes the command date B=`UFILES`#Executes the command echo \"With Alias, TODAY is: $A\" echo \"With Alias, UFILES is: $B\" . Exit Status . | Value = 0 means everything is ok | Value != 0 means something is wrong. | See last exit status w/ the $? command: | . &gt; ls &gt; echo $? 0 . Using exit statues in a shell script . | Unlike python, shell scripts will continue executing even if there is an error. You can prevent this by using set -e | . set -e # means exit the shell if there is an error, don't continue. Arithmetic Operations . expr 1 + 2 expr 2 \\* 2 # you have to escape the * expr \\( 2 + 2 \\) \\* 4 # you must also escape the ( ) . | Caveat: You need a space on each side of the operator. | . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#shell-scripts",
     "relUrl": "/docs/linux/bash_scripting.html#shell-scripts"
-  },"8": {
+  },"5": {
     "doc": "Bash Scripting Class",
     "title": "Global and Local Environment Variables",
     "content": ". | env and printenv will tell you your global vars | set will give you things from your session. This will also usually contain everything from your global scope. set is a superset of env. | Reserved names: see study guide or google it. | . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#global-and-local-environment-variables",
     "relUrl": "/docs/linux/bash_scripting.html#global-and-local-environment-variables"
-  },"9": {
+  },"6": {
     "doc": "Bash Scripting Class",
     "title": "Special Characters: Quotes &amp; Escapes",
     "content": ". | $ escapes a single character. | single quotes '..' treats something as a string, escapes the whole thing | double quotes do not escape anything. | . &gt; echo \"\\$COL\" # this will escape the $ $COL &gt; echo '$COL' # single quotes escape things, means the literal string $COL &gt; echo \"$COL\" # does not escape anything 250 &gt; echo \"The date is: `date`\" # command substitution with bacticks The date is Mon Jul 25 . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#special-characters-quotes--escapes",
     "relUrl": "/docs/linux/bash_scripting.html#special-characters-quotes--escapes"
-  },"10": {
+  },"7": {
     "doc": "Bash Scripting Class",
     "title": "Using dev/null",
     "content": "For when you put output somewhere other than the background. /dev/null is a device, everything is a file in linux. Everything you write to dev/null just dissapears. For example: . #!/bin/bash #redirect to dev/null example echo \"This is going to the blackhole.\" &gt;&gt; /dev/null . Note &gt;&gt; (append) or &gt; (overwrite) will work for dev/null, although out of habit in other scenarios it is better to append when unsure using &gt;&gt;. ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#using-devnull",
     "relUrl": "/docs/linux/bash_scripting.html#using-devnull"
-  },"11": {
+  },"8": {
     "doc": "Bash Scripting Class",
     "title": "The Read Statement",
     "content": "note the backticks and the expr command . echo \"Enter Your First Name: \" read FIRSTNAME echo \"Enter Your Last Name\" read LASTNAME echo \"Your Full Name is $FIRSTNAME $LASTNAME\" echo \"Enter Your Age: \" read USERAGE echo \"In 10 Years, You will be `expr $USERAGE + 10` years old.\" . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#the-read-statement",
     "relUrl": "/docs/linux/bash_scripting.html#the-read-statement"
-  },"12": {
+  },"9": {
     "doc": "Bash Scripting Class",
     "title": "Shell Expansion",
     "content": "&gt; echo sh{ot,oot,ort} shot shoot short &gt; echo st{il,al}l still stall &gt; echo \"$[ 2 * 2 ]\" 4 # set and display var at same time &gt; echo \"${VARNAME:=something}\" something &gt; echo $VARNAME something # will print any environment variable that starts with HO &gt; echo \"${!HO*}\" OME HOSTNAME HOSTTYPE . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#shell-expansion",
     "relUrl": "/docs/linux/bash_scripting.html#shell-expansion"
-  },"13": {
+  },"10": {
     "doc": "Bash Scripting Class",
     "title": "Types of Variables",
     "content": "Variables are declared implicitly, and the value will implicitly determine what kind of variable it is. However, it could be useful to explicitly define the type. # an integer variable MYVAR=4 # use command substitution &gt; echo `expr $MYVAR + 5` 9 . Show the type of the variable, using decalre -p . MYVAR=4 # this shows you MYVAR is a string &gt; declare -p MYVAR declare -- MYVAR=\"4\" . Interpreting the output of declare -p: -- tells you that this variable is not strongly typed and its type has not been declared. Set the type of the variable, using decalre -i notice how the value is converted to zero when setting NEWVAR to a string when you have declared it as an integer. &gt; declare -i NEWVAR=10 &gt; declare -p NEWVAR declare -i NEWVAR=\"10\" &gt; NEWVAR=\"Hello\" &gt; echo $NEWVAR 0 . Notice in the output instead of -- we have -i which means this variable is an integer. Readonly Variables . &gt; declare -r READONLY=\"This is a string we cannot overwrite\" &gt; declare -p READONLY declare -r READONLY=\"This is a string we cannot overwrite\" . The -r in the output confirms this is a readonly variable. Equivalent to declare -r, using the readonly command: . readonly MYREADONLY=\"This String\" . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#types-of-variables",
     "relUrl": "/docs/linux/bash_scripting.html#types-of-variables"
-  },"14": {
+  },"11": {
     "doc": "Bash Scripting Class",
     "title": "Types of Variables",
     "content": "# declare int variable: &gt; declare -i NEWVAR=10 # inpsect type of NEWVAR &gt; declare -p NEWVAR declare -i NEWVAR=\"10\" # declare readonly variable &gt; declare -r READONLY=\"This is something we cannot overwrite\" # try to cancel READONLY type &gt; declare +r READONLY ### will result in an error . Variables in bash are implicitly typed, the type will be inferred from the value you assign. | determine the type of a variable: declare -p $MYVAR | declare variable as integer: declare -i NEWVAR=10 . | If you explicitly declare a variable as an int but assign it to a string, it will implicitly convert the value to 0. | . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#types-of-variables-1",
     "relUrl": "/docs/linux/bash_scripting.html#types-of-variables-1"
-  },"15": {
+  },"12": {
     "doc": "Bash Scripting Class",
     "title": "Arrays",
     "content": "Indexing starts at zero. Notice that arrays are space-delimited., this is a strange thing if you are used to arrays w/commas. You can have spaces in values if you enclose the spaces in double-quotes. # notice no commas just spaces! &gt; MYARRAY=(“First” “Second” “Third”) &gt; echo ${MYARRAY[2]} “Third” . Iterating Through Arrays . See ./array.sh . #!/bin/bash # simple array list and loop for display SERVERLIST=(“websrv01” “websrv02” “websrv03”) COUNT=0 for INDEX in ${SERVERLIST[@]}; do echo “Processing Server: ${SERVERLIST[COUNT]}” COUNT=“`expr $COUNT + 1 `” done . You cannot decrease the size of the array, you can only increase the size of the array. Passing Variables to Scripts at the Command Line . see ./cli_args.sh . echo “The following item was passed to the script at run time $1” . The arguments go from 1-n (starts at 1). if you have an argument that contains a space, then you wan to enclose this in quotes, otherwhise space is seen as a delimiter. ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#arrays",
     "relUrl": "/docs/linux/bash_scripting.html#arrays"
-  },"16": {
+  },"13": {
     "doc": "Bash Scripting Class",
     "title": "Conditionals",
     "content": "The if statement . 3 echo “Guess the Secret Number” echo “======================“ echo “” echo “Enter a Number Between 1 and 5” read GUESS if [ $GUESS -eq 3 ] then echo “You guessed the Correct Number!” fi . Test if a file exists iffileexists.sh . FILENAME=$1 echo “Testing for the existence of a file called $FILENAME” if [ -a $FILENAME ] then echo “$FILENAME does exist!” fi # negation operator if [! -a $FILENAME ] then echo “$FILENAME does not exist!” fi # test multiple expressions in if statement if [ -f $FILENAME ] &amp;&amp; [ -R $FILENAME] then echo “File $FILENAME exists and is readable.” fi . -a is the same as -f w.r.t. testing for the existence of a file. If/Then/Else . echo “Enter a number between 1 and 3:” read VALUE # use semicolons for readability if [ “$VALUE” -eq “1” ]; then echo “You entered $VALUE” fi . Using an OR statement: . # another variation if [ “$VALUE” -eq “1” ] || [ “$VALUE” -eq “2” ] || [ “$VALUE” -eq “3” ]; then echo “You entered $VALUE” else echo “You didn’t follow directions!” fi . Redirect errors to /dev/null . if [ “$VALUE” -eq “1” ] 2&gt;/dev/null || [ “$VALUE” -eq “2” ] 2&gt;/dev/null || [ “$VALUE” -eq “3” ] 2&gt;/dev/null; then echo “You entered $VALUE” else echo “You didn’t follow directions!” fi if [ “$VALUE” -eq “1” ] 2&gt;/dev/null; then echo “You entered #1” elif “ \"$VAL”E\" -e“ ”2\" ] 2&gt;/dev/null; then ech“ \"You entered ”2\" elif “ \"$VAL”E\" -e“ ”3\" ] 2&gt;/dev/null; then ech“ \"You entered ”3\" else ech“ \"You di’n't follow direction”!\" fi . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#conditionals",
     "relUrl": "/docs/linux/bash_scripting.html#conditionals"
-  },"17": {
+  },"14": {
     "doc": "Bash Scripting Class",
     "title": "Aside: Output Streams",
     "content": "https://askubuntu.com/questions/625224/how-to-redirect-stderr-to-a-file . 1: stdout . 2: stderr . error messages are printed to standard error. The classic redirection operator (command &gt; file) only redirects standard output, so standard error is still shown on the terminal. To redirect stderr as well, you have a few choices: . # Redirect stdout to one file and stderr to another file: command &gt; out 2&gt;error # Redirect stderr to stdout (&amp;1), and then redirect stdout to a file: command &gt;out 2&gt;&amp;1 # Redirect both to a file (this isn’t supported by all shells, bash and zsh support it, for example, but sh and ksh do not) command &amp;&gt; out . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#aside-output-streams",
     "relUrl": "/docs/linux/bash_scripting.html#aside-output-streams"
-  },"18": {
+  },"15": {
     "doc": "Bash Scripting Class",
     "title": "For Loop",
     "content": "#!/bin/bash echo “List all the shell scripts contents of the directory” SHELLSCRIPTS=`ls *.sh` # alternate using for loop for FILE in *.sh; do echo “$FILE” done . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#for-loop",
     "relUrl": "/docs/linux/bash_scripting.html#for-loop"
-  },"19": {
+  },"16": {
     "doc": "Bash Scripting Class",
     "title": "Case Statement",
     "content": "#!/bin/bash echo “1) Choice 2” echo “2) Choice 2” echo “3) Choice 3” echo “Enter Choice:” read MENUCHOICE case $MENUCHOICE in 1) echo “You have choosen the first option”;; 2) echo “You have chosen the second option”;; 3) echo “You have selected the third option”;; *) echo “You have choosen unwisely”;; . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#case-statement",
     "relUrl": "/docs/linux/bash_scripting.html#case-statement"
-  },"20": {
+  },"17": {
     "doc": "Bash Scripting Class",
     "title": "While Loop",
     "content": "#!/bin/bash echo “Enter number of times to display message:” read NUM COUNT=1 # -le means less than or equal to while [ $COUNT -le $NUM ] do echo “Hello World $COUNT” COUNT=“`expr $COUNT + 1`” done . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#while-loop",
     "relUrl": "/docs/linux/bash_scripting.html#while-loop"
-  },"21": {
+  },"18": {
     "doc": "Bash Scripting Class",
     "title": "Execution Operators",
     "content": "the file super duper does not exist . rm superduper 2&gt; /dev/null &amp;&amp; echo \"File was deleted\" . The echo will only execute if the rm command was successful and exits without errors. Therefore, in this case the echo statement will not be triggered. rm superduper 2&gt; /dev/null &amp;&amp; echo \"File was deleted\" || echo \"File does not exit\" . | Because of short-circuiting rules, the second statement of the OR |   | will not trigger unless the left hand side is false. | . | &amp;&amp; : and | || : or | . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#execution-operators",
     "relUrl": "/docs/linux/bash_scripting.html#execution-operators"
-  },"22": {
+  },"19": {
     "doc": "Bash Scripting Class",
     "title": "Input/Output",
     "content": " ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#inputoutput",
     "relUrl": "/docs/linux/bash_scripting.html#inputoutput"
-  },"23": {
+  },"20": {
     "doc": "Bash Scripting Class",
     "title": "Reading Files",
     "content": "echo “Enter a filename” read FILE while read -r SUPERHERO; do echo “Superhero Name: $SUPERHERO” done &lt; “$FILE” . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#reading-files",
     "relUrl": "/docs/linux/bash_scripting.html#reading-files"
-  },"24": {
+  },"21": {
     "doc": "Bash Scripting Class",
     "title": "File Descriptors",
     "content": "Use a number &gt;= 3 for file descriptors. 0 - stdin 1 - stdout 2 - stderr . /dev/null -&gt; generic place where you can redirect streams into nothing. #!/bin/bash echo “Enter file name: “ read FILE # &lt; means readonly, &gt; means write only, &lt;&gt; means allow read &amp; write # assign file descriptor to filename exec 5&lt;&gt;$FILE while read -r SUPERHERO; do echo “Superhero Name: $SUPERHERO” done &lt;&amp;5 #use &amp; to reference the file descriptor # append to end of file. echo \"File Was Read On: `date`\" &gt;&amp;5 # close file descriptor exec 5&gt;&amp;- . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#file-descriptors",
     "relUrl": "/docs/linux/bash_scripting.html#file-descriptors"
-  },"25": {
+  },"22": {
     "doc": "Bash Scripting Class",
     "title": "Delimiters (IFS)",
     "content": "IFS - Internal Field Seperator Default is a space . # this will return a space echo $IFS . echo \"Enter filename to parse: \" read FILE # spacedelim.txt # https://stackoverflow.com/questions/24337385/bash-preserve-string-with-spaces-input-on-command-line while read -r CPU MEM DISK; do echo \"CPU: $CPU\" echo \"Memory: $MEM\" echo \"Disk: $DISK\" done &lt;\"$FILE\" . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#delimiters-ifs",
     "relUrl": "/docs/linux/bash_scripting.html#delimiters-ifs"
-  },"26": {
+  },"23": {
     "doc": "Bash Scripting Class",
     "title": "Traps and Signals",
     "content": "https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html . | cntrl+c = SIGINT | cntrl+z = SIGTSTP | kill command (without -9 flag) = SIGTERM | kill -9 = SIGKILL; this signal is not sent to the process, it is just killed. | . clear # first argument is what to exexute trap 'echo \" - Please Press Q to Exit.\"' SIGINT SIGTERM SIGTSTP # cntrl+c = SIGINT # cntrl+z = SIGTSTP (Suspend, send to background) while [ \"$CHOICE\" != \"Q\" ] &amp;&amp; [ \"$CHOICE\" != \"q\" ]; do echo \"Main Menu\" echo \"=======\" echo \"1) Choice One\" echo \"2) Choice Two\" echo \"3) Choice Three\" echo \"Q) Quit\" read CHOICE clear done . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#traps-and-signals",
     "relUrl": "/docs/linux/bash_scripting.html#traps-and-signals"
-  },"27": {
+  },"24": {
     "doc": "Bash Scripting Class",
     "title": "Debugging Shell Scripts",
     "content": "bash -x will run a shell script in debug mode. google this to figure out how to interpret output of debugging. ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#debugging-shell-scripts",
     "relUrl": "/docs/linux/bash_scripting.html#debugging-shell-scripts"
-  },"28": {
+  },"25": {
     "doc": "Bash Scripting Class",
     "title": "Error Handling",
     "content": "$? contains the status code of the last command. What if you have the code: . #!/bin/bash echo \"Change to a directory and list the contents\" DIRECTORY=\"$1\" cd $DIRECTORY # DANGER: the below command will still run even if the previous command failed! rm * . Solution: . DIRECTORY=\"$1\" cd $DIRECTORY if [ $? -eq \"0\" ]; then echo \"Changed directory successfully into $DIRECTORY\" else echo \"Cannot change driectories, exiting with error.\" exit 111 # you can exit with any code you want! fi . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#error-handling",
     "relUrl": "/docs/linux/bash_scripting.html#error-handling"
-  },"29": {
+  },"26": {
     "doc": "Bash Scripting Class",
     "title": "Functions",
     "content": "funcExample () { echo \"We are inside the function\" } #call the function funcExample . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#functions",
     "relUrl": "/docs/linux/bash_scripting.html#functions"
-  },"30": {
+  },"27": {
     "doc": "Bash Scripting Class",
     "title": "structure of functions in a shell script",
     "content": "Unlike python, you must define your functions before you call them. ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#structure-of-functions-in-a-shell-script",
     "relUrl": "/docs/linux/bash_scripting.html#structure-of-functions-in-a-shell-script"
-  },"31": {
+  },"28": {
     "doc": "Bash Scripting Class",
     "title": "Scope",
     "content": "setting a variable within a function defines that variable globally after that function is called!!! . GLOBALVAR=“Globally Visible” # sample function for function variable scope funcExample () { # local LOCALVAR=“Locally Visible” echo “From within the function, the variable’s value is set to $LOCALVAR …” } # script start echo “this happens before the function call” echo “” echo “Local Variable = $LOCALVAR after the function call.” echo “Global Variable = $GLOBALVAR (before the function call).” funcExample echo “this happens after the function call” echo “Local Variable = $LOCALVAR after the function call.” echo “Global Variable = $GLOBALVAR (before the function call).” . Output of above code: .  ./scope.sh this happens before the function call Local Variable = after the function call. Global Variable = Globally Visible (before the function call). From within the function, the variable’s value is set to Locally Visible … this happens after the function call Local Variable = Locally Visible after the function call. Global Variable = Globally Visible (before the function call). ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#scope",
     "relUrl": "/docs/linux/bash_scripting.html#scope"
-  },"32": {
+  },"29": {
     "doc": "Bash Scripting Class",
     "title": "Functions With Parameters",
     "content": "# global USERNAME=$1 funcAgeInDays () { echo “Hello $USERNAME, You are $1 Years old.” echo “That makes you approx `expr 365 \\* $1` days old” } #script - start read -r -p “Enter your age:” AGE # pass in arguments like this funcAgeInDays $AGE . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#functions-with-parameters",
     "relUrl": "/docs/linux/bash_scripting.html#functions-with-parameters"
-  },"33": {
+  },"30": {
     "doc": "Bash Scripting Class",
     "title": "Nested Functions",
     "content": "Author of course uses this for organization purposes. When you call a function if it has nested functions the functions defined within will be exposed to the script also. # global GENDER=$1 funcHuman () { ARMS=2 LEGS=2 funcMale () { BEARD=1 echo “This man has $ARMS arms and $LEGS legs with $BEARD beard” } funcFemale () { BEARD=0 echo “This woman has $ARMS arms and $LEGS legs with $BEARD beard” } } # script start clear # determine the actual gender and display the characteristics. if [ “$GENDER” == “male” ]; then funcHuman funcMale # this function is available after the parent function is called. else funcHuman funcFemale fi . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#nested-functions",
     "relUrl": "/docs/linux/bash_scripting.html#nested-functions"
-  },"34": {
+  },"31": {
     "doc": "Bash Scripting Class",
     "title": "Function Return and Exit",
     "content": "This allows you to get arguments from the command line and then exit with a proper code and also use function returns inside scripts. # demo of return values and testing results YES=0 NO=1 FIRST=$1 SECOND=$2 THIRD=$3 # function definitions funcCheckParams () { # did we get three # -z equivalent to isnull (in this case means not-null b/c of !) if [ ! -z “$THIRD” ]; then echo “We got three params” return $YES else echo “We did not get three params” return $NO fi } # script start funcCheckParams # the return value from the function gets stored in $? RETURN_VALS=$? if [ “$RETURN_VALS” -eq “$YES” ]; then echo “We received three params and they are:” echo “Param 1: $FIRST” echo “Param 2: $SECOND” echo “Param 3: $THIRD” else echo “Usage: funcreturn.sh [param1] [param2] [param3]” exit 1 fi . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#function-return-and-exit",
     "relUrl": "/docs/linux/bash_scripting.html#function-return-and-exit"
-  },"35": {
+  },"32": {
     "doc": "Bash Scripting Class",
     "title": "Interactive Menus",
     "content": " ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#interactive-menus",
     "relUrl": "/docs/linux/bash_scripting.html#interactive-menus"
-  },"36": {
+  },"33": {
     "doc": "Bash Scripting Class",
     "title": "Infobox",
     "content": "Dissappears unless you sleep (see below). Does not come with any buttons. see exercises/26_dialog.sh . # globals INFOBOX=${INFOBOX=dialog} TITLE=“Default” MESSAGE=“Something to say” XCOORD=10 YCOORD=20 funcDisplayInfoBox () { $INFOBOX —title “$1” —infobox “$2” “$3” “$4” sleep “$5” } . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#infobox",
     "relUrl": "/docs/linux/bash_scripting.html#infobox"
-  },"37": {
+  },"34": {
     "doc": "Bash Scripting Class",
     "title": "Msgbox",
     "content": "Msgbox - dissapears unless you sleep pass --msgbox argument, comes with default ok button and stays on screen. see exercises/27_msgbox.sh . # global MSGBOX=${MSGBOX=dialog} TITLE=“Default” MESSAGE=“Some Message” XCOORD=10 YCOORD=20 funcDisplayMsgBox () { $MSGBOX —title “$1” —msgbox “$2” “$3” “$4” } . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#msgbox",
     "relUrl": "/docs/linux/bash_scripting.html#msgbox"
-  },"38": {
+  },"35": {
     "doc": "Bash Scripting Class",
     "title": "Menus",
     "content": "See pdf notes/scripts . ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html#menus",
     "relUrl": "/docs/linux/bash_scripting.html#menus"
-  },"39": {
+  },"36": {
     "doc": "Bash Scripting Class",
     "title": "Bash Scripting Class",
     "content": " ",
     "url": "https://notes.hamel.io/docs/linux/bash_scripting.html",
     "relUrl": "/docs/linux/bash_scripting.html"
-  },"40": {
+  },"37": {
     "doc": "Linux & Bash Scripting",
     "title": "Linux & Bash Scripting",
     "content": " ",
     "url": "https://notes.hamel.io/docs/linux/",
     "relUrl": "/docs/linux/"
-  },"41": {
+  },"38": {
     "doc": "Useful Linux Utilities",
     "title": "Linux Utilities For Data Scientists",
     "content": "My personal notes on underrated Linux utilities that are useful when working on machine learning projects. Photo by Arget on Unsplash . ",
     "url": "https://notes.hamel.io/docs/linux/linux.html#linux-utilities-for-data-scientists",
     "relUrl": "/docs/linux/linux.html#linux-utilities-for-data-scientists"
-  },"42": {
+  },"39": {
     "doc": "Useful Linux Utilities",
     "title": "Background",
     "content": "Knowing your way around the Linux operating system is essential for being an effective data scientist. Many data scientists learn Linux tools as a necessity of having to install and run code, use remote machines, and other tasks. However, there are several utilities and concepts that I find data scientists often struggle with. This post takes a tour through some of these utilities. Some of these may be already familiar to you, and some may not. This post only focuses on a few things that I have found data scientists struggle with, based upon my personal experience. This may be very different for you! . This blog post assumes existing familiarity with navigating the file system, ssh, copying files, and stdout in Linux. ",
     "url": "https://notes.hamel.io/docs/linux/linux.html#background",
     "relUrl": "/docs/linux/linux.html#background"
-  },"43": {
+  },"40": {
     "doc": "Useful Linux Utilities",
     "title": "Managing Processes (ps, kill, pkill)",
     "content": "Kill Single Process (ps, kill) . A common scenario is that you might run a python script to train a model: . $ python train.py . Let’s say you want to kill this script for whatever reason. You might not always be able to type Cntrl + C to stop it, especially if this process is running in the background. (Aside: A way make a program run in the background is with a &amp; for example:$ python train.py &amp; ) . In order to find this running program, you can use the command ps . $ ps Gives you basic information (good enough most of the time) . Flags: . | -e Allows you to see all running processes including from other users . | -f Allows you to see additional information about each process . | . In order to kill the process you will want to identify it’s PID for example, if the PID is 501 you can kill this process with the command: . $ kill 501 . Killing Multiple Processes (pkill) . If you use process-based threading in python with a library like multi-processing, python will instantiate many processes for you. This is common thing to do in python for a task like data processing. Let’s consider the below example. When you run this in the background it will produce 8 processes: . from multiprocessing import Pool from time import sleep def f(x): sleep(1000) # simulate some computation return x*x if __name__ == '__main__': with Pool(8) as p: print(p.map(f, range(8))) . $ python train_multi.py &amp; . After a few seconds, calling the command ps will yield something like this: . PID TTY TIME CMD 3982 ttys002 0:00.09 ...MacOS/Python train_multi.py 4219 ttys002 0:00.00 ...MacOS/Python train_multi.py 4220 ttys002 0:00.00 ...MacOS/Python train_multi.py 4221 ttys002 0:00.00 ...MacOS/Python train_multi.py 4222 ttys002 0:00.00 ...MacOS/Python train_multi.py 4223 ttys002 0:00.00 ...MacOS/Python train_multi.py 4224 ttys002 0:00.00 ...MacOS/Python train_multi.py 4225 ttys002 0:00.00 ...MacOS/Python train_multi.py 4226 ttys002 0:00.00 ...MacOS/Python train_multi.py . You can find all processes with the file train_multi.py with the pkill command and the -f flag: . See Parent / Child Processes (pstree) . pstree is also a helpful utility to see parent/child relationships between processes. You can install pstree on a mac with brew install pstree . In the above example, there are 8 sub-processes created by one python process. Running the command . $ pstree -s train_multi.py . Will show the process hierarchy. The -s flag allows you to filter parents and descendants of processes containing a string in their command. In the below example, PID 41592 will kill all the 8 child processes seen below . ",
     "url": "https://notes.hamel.io/docs/linux/linux.html#managing-processes-ps-kill-pkill",
     "relUrl": "/docs/linux/linux.html#managing-processes-ps-kill-pkill"
-  },"44": {
+  },"41": {
     "doc": "Useful Linux Utilities",
     "title": "Bundling &amp; Archiving Files (tar)",
     "content": "You commonly want to package a bunch of files together, such as a collection of photos or CSVs, and optionally compress these with its directory structure intact. A common tool for this is tar . This is how you would bundle and compress a directory of CSV files: . Sending An Archive To A Remote Machine . It is often the case you want to send data to a remote machine. The below command creates a directory called data , compresses all files in a local folder named csv_data , with the exception of the sub-directory csv_data/intermediate_files without creating any temporary files locally: . Optionally, create the directory on the remote machine: . Then, stream the archive directly to remote. Note that providing a — instead of a destination filename allows tar to write to a stream (stdout) that can be sent directly to the remote server. Moving Files In Different Directories Into An Archive . If your files exist in sibling directories, rather than under one parent directory you can use find along with tar . Suppose you want to archive all csv files relative to a directory: . When you archive files on the fly above with find you cannot compress the files until the archive is finished being built, therefore you have to compress the tar file with the gzip command: . $ gzip data.tar . Tip: some people like to use locate with updatedb instead of find. There are tradeoffs so make sure you read the documentation carefully! . Unpacking &amp; Decompressing Archives . You can decompress and unpack a tar file, for example data.tar.gz with the following command: . $ tar -xzvf data.tar.gz . If the data is not compressed, you can leave out the -z flag: . $ tar -xvf data.tar . ",
     "url": "https://notes.hamel.io/docs/linux/linux.html#bundling--archiving-files-tar",
     "relUrl": "/docs/linux/linux.html#bundling--archiving-files-tar"
-  },"45": {
+  },"42": {
     "doc": "Useful Linux Utilities",
     "title": "File Permissions",
     "content": "Before we begin, we must introduce some nomenclature: . If you run the command ls -a you will see something similar to the below output for all of your files in the current directory. The file permissions are shown in three-character groupings for three different groups (nine characters total). These three groups are the owner , group , and other users. In this case, the owner name is hamel and the group name is staff . For the owner, the file permissions are rwx which means that the owner has read r , write w , and execute x permissions. For the group, the file permissions are r-x which means the group has read and execute permissions, but not write permissions. A group is a collection of users with common permissions. Finally, all other users have file permissions of r– which means only read permissions. Changing File Permissions . There are several ways to change file permissions. Method 1: Using Characters and +, - . Refer to the nomenclature above to follow along . | chmod o-r csvfiles.tar.gz . Removes - the ability of other users o to read r the file. | chmod g+w csvfiles.tar.gz . Adds + the ability of the group g to write w to the file. | chmod u+x csvfiles.tar.gz . Adds + the ability of the owner u to execute x the file. | chomd a+x csvfiles.tar.gz . Adds + the ability of all users a to execute x the file. | . Method 2: using numbers . This method works by adding up the numbers corresponding to the permissions separately for each user group (owner, group, others). For example: . | chmod 777 csvfiles.tar.gz . This gives all users the ability to read (4), write( 2), and execute (1) files. In other words 4+2+1 = 7, for the owner, group and other users. | chmod 732 csvfiles.tar.gz . This gives the owner the ability to read, write and execute ( 4+2+1=7), the group the ability to write and execute (2+1=3) and all other users only the ability to write (2). | . Changing Ownership . You can change the owner or group assigned to a file like this: . chown newuser:newgroup file . The :newgroup is optional, if you do not specify that the group will stay the same. ",
     "url": "https://notes.hamel.io/docs/linux/linux.html#file-permissions",
     "relUrl": "/docs/linux/linux.html#file-permissions"
-  },"46": {
+  },"43": {
     "doc": "Useful Linux Utilities",
     "title": "Useful Linux Utilities",
     "content": ". | Linux Utilities For Data Scientists . | Background | Managing Processes (ps, kill, pkill) . | Kill Single Process (ps, kill) | Killing Multiple Processes (pkill) | See Parent / Child Processes (pstree) | . | Bundling &amp; Archiving Files (tar) . | Sending An Archive To A Remote Machine | Moving Files In Different Directories Into An Archive | Unpacking &amp; Decompressing Archives | . | File Permissions . | Changing File Permissions | Changing Ownership | . | . | . ",
