@@ -5,9 +5,7 @@ nav_order: 4
 has_children: true
 ---
 
-# Gentle Introduction To GitHub Actions For Data Scientists
-
-Here are some resources:
+# A Gentle Introduction
 
 - [Getting started talk](https://youtu.be/S-kn4mmlxFU)
 - [Blog Post](https://fastpages.fast.ai/actions/markdown/2020/03/06/fastpages-actions.html)
