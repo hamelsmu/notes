@@ -91,7 +91,7 @@
   },"15": {
     "doc": "Bash Scripting Class",
     "title": "Bash Configuration",
-    "content": "ls -a ~/ | grep bash  .bash_history  .bash_profile  .bash_profile.backup  .bash_profile.bensherman  .bash_profile_copy  .bash_sessions/  git-completion.bash .bash_profile . | .bash_profile: executed when you login -&gt; configures the shell when you get an initial command prompt. This is different than .bashrc. | commonly loads the ~/.bashrc file as well. | bin is traditionally the folder for binaries. | bash_profile is designed to run when you login, so if you change it will not refresh until you login next time. | .bashrc . | .bashrc it is executed simply before the command shell comes up, does not have to wait until you login. | etc/bashrc are system bashrc files which is like a “template” for user bashrc files. Anytime a new user is created, it inherits from this template and sometimes automated customizations are applied. This is usually done by simply importing etc/bashrc from each user’s bashrc file: . | env will list all env variables. | to apply .bashrc you just have to run the command bash as it will start another shell from your current one. However, if you run bash you can now exit without closing the shell, because a shell is running inside another shell. | .bash_history . | ~/.bash_history contains lots of history. By default will only capture last 100 but you can change this setting. | you can exlude something from saving to history (like passwords) by using an ignorespace | the environment variable HIST_CONTROL can be used to control how much history to keep and settings about what should not be logged. One way to turn off loggin is: export HISTCONTROL=$HISTCONTROL:ignorespace . this allow you to skip logging by adding a space to the the beginning of any command. If you want to see what is in HIST_CONTROL you will see: . &gt; cat ~/.bash_history | grep HISTCONTROL HISTCONTROL=ignoredups:ignorespace . ignoredups was already set to this variable. | .bash_logout . | Doesn’t always exist on a system. in most cases the contents of the ~/.bash_logout will be empty or contain a comment. | The role of this file is to execute things when you exit the shell. If you close the shell it will not work, you have to do a clean exit instead. | Common use is to use this to clear out ~/.bashrc with the original to clear out any changes the user may have made. You can accomplish this by copying a backup: . cp ~/.bashrc.original ~/.bashrc . | . ",
+    "content": "ls -a ~/ | grep bash  .bash_history  .bash_profile  .bash_profile.backup  .bash_profile.bensherman  .bash_profile_copy  .bash_sessions/  git-completion.bash .bash_profile . | .bash_profile: executed when you login -&gt; configures the shell when you get an initial command prompt. This is different than .bashrc. | commonly loads the ~/.bashrc file as well. | bin is traditionally the folder for binaries. | bash_profile is designed to run when you login, so if you change it will not refresh until you login next time. | .bashrc . | .bashrc it is executed simply before the command shell comes up, does not have to wait until you login. | etc/bashrc are system bashrc files which is like a “template” for user bashrc files. Anytime a new user is created, it inherits from this template and sometimes automated customizations are applied. This is usually done by simply importing etc/bashrc from each user’s bashrc file. | env will list all env variables. | to apply .bashrc you just have to run the command bash as it will start another shell from your current one. However, if you run bash you can now exit without closing the shell, because a shell is running inside another shell. | .bash_history . | ~/.bash_history contains lots of history. By default will only capture last 100 but you can change this setting. | you can exlude something from saving to history (like passwords) by using an ignorespace | the environment variable HIST_CONTROL can be used to control how much history to keep and settings about what should not be logged. One way to turn off loggin is: export HISTCONTROL=$HISTCONTROL:ignorespace . this allow you to skip logging by adding a space to the the beginning of any command. If you want to see what is in HIST_CONTROL you will see: . &gt; cat ~/.bash_history | grep HISTCONTROL HISTCONTROL=ignoredups:ignorespace . ignoredups was already set to this variable. | .bash_logout . | Doesn’t always exist on a system. in most cases the contents of the ~/.bash_logout will be empty or contain a comment. | The role of this file is to execute things when you exit the shell. If you close the shell it will not work, you have to do a clean exit instead. | Common use is to use this to clear out ~/.bashrc with the original to clear out any changes the user may have made. You can accomplish this by copying a backup: . cp ~/.bashrc.original ~/.bashrc . | . ",
     "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#bash-configuration",
     "relUrl": "/docs/linux/bash_scripting.html#bash-configuration"
   },"16": {
@@ -311,64 +311,88 @@
     "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html",
     "relUrl": "/docs/linux/bash_scripting.html"
   },"52": {
+    "doc": "Jupyter",
+    "title": "Jupyter",
+    "content": " ",
+    "url": "https://notes.hamel.dev/docs/jupyter/",
+    "relUrl": "/docs/jupyter/"
+  },"53": {
     "doc": "Linux & Bash Scripting",
     "title": "Linux & Bash Scripting",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/linux/",
     "relUrl": "/docs/linux/"
-  },"53": {
+  },"54": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "Linux Utilities For Data Scientists",
     "content": "My personal notes on underrated Linux utilities that are useful when working on machine learning projects. Photo by Arget on Unsplash . ",
     "url": "https://notes.hamel.dev/docs/linux/linux.html#linux-utilities-for-data-scientists",
     "relUrl": "/docs/linux/linux.html#linux-utilities-for-data-scientists"
-  },"54": {
+  },"55": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "Background",
     "content": "These are tools that I use often as a Data Scientist and that I find especially useful. Files associated with this tutorial can be found here. ",
     "url": "https://notes.hamel.dev/docs/linux/linux.html#background",
     "relUrl": "/docs/linux/linux.html#background"
-  },"55": {
+  },"56": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "Managing Processes (ps, kill, pkill)",
     "content": "Kill Single Process (ps, kill) . A common scenario is that you might run a python script to train a model: . $ python train.py . Let’s say you want to kill this script for whatever reason. You might not always be able to type Cntrl + C to stop it, especially if this process is running in the background. (Aside: A way make a program run in the background is with a &amp; for example:$ python train.py &amp; ) . In order to find this running program, you can use the command ps . $ ps Gives you basic information (good enough most of the time) . Flags: . | -e Allows you to see all running processes including from other users . | -f Allows you to see additional information about each process . | . In order to kill the process you will want to identify it’s PID for example, if the PID is 501 you can kill this process with the command: . $ kill 501 . Killing Multiple Processes (pkill) . If you use process-based threading in python with a library like multi-processing, python will instantiate many processes for you. This is common thing to do in python for a task like data processing. Let’s consider the below example. When you run this in the background it will produce 8 processes: . from multiprocessing import Pool from time import sleep def f(x): sleep(1000) # simulate some computation return x*x if __name__ == '__main__': with Pool(8) as p: print(p.map(f, range(8))) . $ python train_multi.py &amp; . After a few seconds, calling the command ps will yield something like this: . PID TTY TIME CMD 3982 ttys002 0:00.09 ...MacOS/Python train_multi.py 4219 ttys002 0:00.00 ...MacOS/Python train_multi.py 4220 ttys002 0:00.00 ...MacOS/Python train_multi.py 4221 ttys002 0:00.00 ...MacOS/Python train_multi.py 4222 ttys002 0:00.00 ...MacOS/Python train_multi.py 4223 ttys002 0:00.00 ...MacOS/Python train_multi.py 4224 ttys002 0:00.00 ...MacOS/Python train_multi.py 4225 ttys002 0:00.00 ...MacOS/Python train_multi.py 4226 ttys002 0:00.00 ...MacOS/Python train_multi.py . You can find all processes with the file train_multi.py with the pkill command and the -f flag: . See Parent / Child Processes (pstree) . pstree is also a helpful utility to see parent/child relationships between processes. You can install pstree on a mac with brew install pstree . In the above example, there are 8 sub-processes created by one python process. Running the command . $ pstree -s train_multi.py . Will show the process hierarchy. The -s flag allows you to filter parents and descendants of processes containing a string in their command. In the below example, PID 41592 will kill all the 8 child processes seen below . ",
     "url": "https://notes.hamel.dev/docs/linux/linux.html#managing-processes-ps-kill-pkill",
     "relUrl": "/docs/linux/linux.html#managing-processes-ps-kill-pkill"
-  },"56": {
+  },"57": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "Bundling &amp; Archiving Files (tar)",
     "content": "You commonly want to package a bunch of files together, such as a collection of photos or CSVs, and optionally compress these with its directory structure intact. A common tool for this is tar . This is how you would bundle and compress a directory of CSV files: . Sending An Archive To A Remote Machine . It is often the case you want to send data to a remote machine. The below command creates a directory called data , compresses all files in a local folder named csv_data , with the exception of the sub-directory csv_data/intermediate_files without creating any temporary files locally: . Optionally, create the directory on the remote machine: . Then, stream the archive directly to remote. Note that providing a — instead of a destination filename allows tar to write to a stream (stdout) that can be sent directly to the remote server. Moving Files In Different Directories Into An Archive . If your files exist in sibling directories, rather than under one parent directory you can use find along with tar . Suppose you want to archive all csv files relative to a directory: . When you archive files on the fly above with find you cannot compress the files until the archive is finished being built, therefore you have to compress the tar file with the gzip command: . $ gzip data.tar . Tip: some people like to use locate with updatedb instead of find. There are tradeoffs so make sure you read the documentation carefully! . Unpacking &amp; Decompressing Archives . You can decompress and unpack a tar file, for example data.tar.gz with the following command: . $ tar -xzvf data.tar.gz . If the data is not compressed, you can leave out the -z flag: . $ tar -xvf data.tar . ",
     "url": "https://notes.hamel.dev/docs/linux/linux.html#bundling--archiving-files-tar",
     "relUrl": "/docs/linux/linux.html#bundling--archiving-files-tar"
-  },"57": {
+  },"58": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "File Permissions",
     "content": "Before we begin, we must introduce some nomenclature: . If you run the command ls -a you will see something similar to the below output for all of your files in the current directory. The file permissions are shown in three-character groupings for three different groups (nine characters total). These three groups are the owner , group , and other users. In this case, the owner name is hamel and the group name is staff . For the owner, the file permissions are rwx which means that the owner has read r , write w , and execute x permissions. For the group, the file permissions are r-x which means the group has read and execute permissions, but not write permissions. A group is a collection of users with common permissions. Finally, all other users have file permissions of r– which means only read permissions. Changing File Permissions . There are several ways to change file permissions. Method 1: Using Characters and +, - . Refer to the nomenclature above to follow along . | chmod o-r csvfiles.tar.gz . Removes - the ability of other users o to read r the file. | chmod g+w csvfiles.tar.gz . Adds + the ability of the group g to write w to the file. | chmod u+x csvfiles.tar.gz . Adds + the ability of the owner u to execute x the file. | chomd a+x csvfiles.tar.gz . Adds + the ability of all users a to execute x the file. | . Method 2: using numbers . This method works by adding up the numbers corresponding to the permissions separately for each user group (owner, group, others). For example: . | chmod 777 csvfiles.tar.gz . This gives all users the ability to read (4), write( 2), and execute (1) files. In other words 4+2+1 = 7, for the owner, group and other users. | chmod 732 csvfiles.tar.gz . This gives the owner the ability to read, write and execute ( 4+2+1=7), the group the ability to write and execute (2+1=3) and all other users only the ability to write (2). | . Changing Ownership . You can change the owner or group assigned to a file like this: . chown newuser:newgroup file . The :newgroup is optional, if you do not specify that the group will stay the same. ",
     "url": "https://notes.hamel.dev/docs/linux/linux.html#file-permissions",
     "relUrl": "/docs/linux/linux.html#file-permissions"
-  },"58": {
+  },"59": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "Processes, Permissions and Moving Data",
     "content": ". | Linux Utilities For Data Scientists . | Background | Managing Processes (ps, kill, pkill) . | Kill Single Process (ps, kill) | Killing Multiple Processes (pkill) | See Parent / Child Processes (pstree) | . | Bundling &amp; Archiving Files (tar) . | Sending An Archive To A Remote Machine | Moving Files In Different Directories Into An Archive | Unpacking &amp; Decompressing Archives | . | File Permissions . | Changing File Permissions | Changing Ownership | . | . | . ",
     "url": "https://notes.hamel.dev/docs/linux/linux.html",
     "relUrl": "/docs/linux/linux.html"
-  },"59": {
+  },"60": {
     "doc": "OSX Shell Tips",
     "title": "Key Repeat Rate",
     "content": "Add days to your lifespan by Increasing the key repeat rate. Run the following in the terminal then restart. defaults write -g InitialKeyRepeat -int 13 # normal minimum is 15 (225 ms) defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms) . ",
     "url": "https://notes.hamel.dev/docs/linux/osx.html#key-repeat-rate",
     "relUrl": "/docs/linux/osx.html#key-repeat-rate"
-  },"60": {
+  },"61": {
     "doc": "OSX Shell Tips",
     "title": "My .zshrc file",
     "content": "Stored at ~/.zshrc . I used to have ohmyzsh but it made my shell too slow. This is good enough for me. # #speed startup time https://medium.com/@dannysmith/little-thing-2-speeding-up-zsh-f1860390f92 autoload -Uz compinit for dump in ~/.zcompdump(N.mh+24); do compinit done compinit -C #### PROMPT='%(?.%F{green}√.%F{red}?%?)%f %B%F{157}%1~%f%b %F{231}%# ' autoload -Uz vcs_info precmd_vcs_info() { vcs_info } precmd_functions+=( precmd_vcs_info ) setopt prompt_subst RPROMPT=\\$vcs_info_msg_0_ zstyle ':vcs_info:git:*' formats '%F{141}(%b)%r%f' zstyle ':vcs_info:*' enable git alias ls=\"colorls\" alias python=\"python3\" # install jupyter kernel with pipenv function install-jupyter { if [ -n \"${PIPENV_ACTIVE+1}\" ]; then VENV_NAME=`echo ${VIRTUAL_ENV} | cut -d '/' -f 7` echo \"creating Jupyter kernel named $VENV_NAME\" pipenv install --skip-lock ipykernel python -m ipykernel install --user --name=$VENV_NAME fi } ## automatically activate pipenv shell upon cd function auto_pipenv_shell { if [ ! -n \"${PIPENV_ACTIVE+1}\" ]; then if [ -f \"Pipfile\" ] ; then pipenv shell fi fi } function cd { builtin cd \"$@\" auto_pipenv_shell } #extra stuff export CLICOLOR=1 export LSCOLORS=GxFxCxDxBxegedabagaced GREP_OPTIONS=\"--color=always\";export GREP_OPTIONS __git_files () { _wanted files expl 'local files' _files } . ",
     "url": "https://notes.hamel.dev/docs/linux/osx.html#my-zshrc-file",
     "relUrl": "/docs/linux/osx.html#my-zshrc-file"
-  },"61": {
+  },"62": {
     "doc": "OSX Shell Tips",
     "title": "OSX Shell Tips",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/linux/osx.html",
     "relUrl": "/docs/linux/osx.html"
+  },"63": {
+    "doc": "Remote Browser For Jupyter",
+    "title": "Background",
+    "content": "It is very common to connect to a remote Jupyter server with your local browser. However, if you lose connection with your remote server, logs printed to the screen may stop streaming. This is common when training deep learning models where training runs can last days or weeks where progress bars are printed to the screen in a notebook. To avoid the issue with your browser loosing connection you can run the browser remotely on the same machine as the Jupyter server, even if your remote server does not have a desktop/GUI interface. ",
+    "url": "https://notes.hamel.dev/docs/jupyter/remote_browser.html#background",
+    "relUrl": "/docs/jupyter/remote_browser.html#background"
+  },"64": {
+    "doc": "Remote Browser For Jupyter",
+    "title": "fast.ai",
+    "content": "The below youtube link, from fastai Lesson 10 Part 2 (2018) will walk you through how to accomplish this. ",
+    "url": "https://notes.hamel.dev/docs/jupyter/remote_browser.html#fastai",
+    "relUrl": "/docs/jupyter/remote_browser.html#fastai"
+  },"65": {
+    "doc": "Remote Browser For Jupyter",
+    "title": "Remote Browser For Jupyter",
+    "content": " ",
+    "url": "https://notes.hamel.dev/docs/jupyter/remote_browser.html",
+    "relUrl": "/docs/jupyter/remote_browser.html"
   }
 }
