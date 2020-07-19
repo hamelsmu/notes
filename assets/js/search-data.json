@@ -324,10 +324,10 @@
     "relUrl": "/docs/linux/"
   },"54": {
     "doc": "GitHub Actions",
-    "title": "Gentle Introduction To GitHub Actions For Data Scientists",
-    "content": "Here are some resources: . | Getting started talk | Blog Post | . ",
-    "url": "https://notes.hamel.dev/docs/actions/#gentle-introduction-to-github-actions-for-data-scientists",
-    "relUrl": "/docs/actions/#gentle-introduction-to-github-actions-for-data-scientists"
+    "title": "A Gentle Introduction",
+    "content": ". | Getting started talk | Blog Post | . ",
+    "url": "https://notes.hamel.dev/docs/actions/#a-gentle-introduction",
+    "relUrl": "/docs/actions/#a-gentle-introduction"
   },"55": {
     "doc": "GitHub Actions",
     "title": "Going Deeper",
