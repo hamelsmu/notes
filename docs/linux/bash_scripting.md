@@ -42,8 +42,6 @@ ls -a ~/ | grep bash
 - `.bash_profile`: executed when you `login` -> configures the shell when you get an initial command prompt.  This is different than `.bashrc`.  
 - commonly loads the `~/.bashrc` file as well. 
 
-    ![](images/bash_profile.png)
-
 - `bin` is traditionally the folder for binaries.
 
 - `bash_profile` is designed to run when you login, so if you change it will not refresh until you login next time.  
@@ -53,9 +51,7 @@ ls -a ~/ | grep bash
 
 - `.bashrc` it is executed simply before the command shell comes up, does not have to wait until you login.
 
-- `etc/bashrc` are system bashrc files which is like a "template" for user bashrc files.  Anytime a new user is created, it inherits from this template and sometimes automated customizations are applied.  This is usually done by simply importing `etc/bashrc` from each user's `bashrc` file:
-
-    ![](images/bashrc.png)
+- `etc/bashrc` are system bashrc files which is like a "template" for user bashrc files.  Anytime a new user is created, it inherits from this template and sometimes automated customizations are applied.  This is usually done by simply importing `etc/bashrc` from each user's `bashrc` file.
 
 - `env` will list all env variables.
 
