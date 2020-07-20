@@ -311,144 +311,228 @@
     "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html",
     "relUrl": "/docs/linux/bash_scripting.html"
   },"52": {
-    "doc": "Jupyter",
-    "title": "Jupyter",
-    "content": " ",
-    "url": "https://notes.hamel.dev/docs/jupyter/",
-    "relUrl": "/docs/jupyter/"
+    "doc": "Bash Script Cookbook",
+    "title": "A Cookbook of Shell Scripts - Wicked Shell Scripts, 2d Edition",
+    "content": "You should browse the table of contents of this book and use the shell scripts contained within off the shelf if possible. | GitHub: https://github.com/hamelsmu/wicked_cool_shell_scripts_2e/ | Link to book on GitHub: https://github.com/hamelsmu/wicked_cool_shell_scripts_2e/blob/master/WickedCoolShellScripts2E.pdf | Book: https://nostarch.com/wcss2 | . ",
+    "url": "https://notes.hamel.dev/docs/linux/cookbook.html#a-cookbook-of-shell-scripts---wicked-shell-scripts-2d-edition",
+    "relUrl": "/docs/linux/cookbook.html#a-cookbook-of-shell-scripts---wicked-shell-scripts-2d-edition"
   },"53": {
-    "doc": "Linux & Bash Scripting",
-    "title": "Linux & Bash Scripting",
-    "content": " ",
-    "url": "https://notes.hamel.dev/docs/linux/",
-    "relUrl": "/docs/linux/"
+    "doc": "Bash Script Cookbook",
+    "title": "Things Learned From The Cookbook",
+    "content": "In addition to just using the library of shell scripts, I also learned the following bash tidbits from this book. ",
+    "url": "https://notes.hamel.dev/docs/linux/cookbook.html#things-learned-from-the-cookbook",
+    "relUrl": "/docs/linux/cookbook.html#things-learned-from-the-cookbook"
   },"54": {
+    "doc": "Bash Script Cookbook",
+    "title": "shift  and $#  pop args off and count args",
+    "content": "shift.sh . #!/bin/bash while (( $# )); do echo \"process args: $1\" shift done . Results in: . $ ./shift.sh foo bar bash process args: foo process args: bar process args: bash . Using shift for CLI options: . #!/bin/bash # newquota--A frontend to quota that works with full-word flags a la GNU # quota has three possible flags, -g, -v, and -q, but this script # allows them to be '--group', '--verbose', and '--quiet' too: flags=\"\" realquota=\"$(which quota)\" while [ $# -gt 0 ] do case $1 in --help) echo \"Usage: $0 [--group --verbose --quiet -gvq]\" &gt;&amp;2 exit 1 ;; --group ) flags=\"$flags -g\"; shift ;; --verbose) flags=\"$flags -v\"; shift ;; --quiet) flags=\"$flags -q\"; shift ;; --) shift; break ;; *) break; # done with 'while' loop! esac done exec $realquota $flags \"$@\" . ",
+    "url": "https://notes.hamel.dev/docs/linux/cookbook.html#shift--and---pop-args-off-and-count-args",
+    "relUrl": "/docs/linux/cookbook.html#shift--and---pop-args-off-and-count-args"
+  },"55": {
+    "doc": "Bash Script Cookbook",
+    "title": "$* collect all arguments",
+    "content": "shift2.sh . #!/bin/bash for var in $*; do echo $var done . Results in: . $ ./shift2.sh foo bar bash process args: foo process args: bar process args: bash . ",
+    "url": "https://notes.hamel.dev/docs/linux/cookbook.html#-collect-all-arguments",
+    "relUrl": "/docs/linux/cookbook.html#-collect-all-arguments"
+  },"56": {
+    "doc": "Bash Script Cookbook",
+    "title": "Multi Option Case Statement",
+    "content": "while read command args do case $command in quit|exit) exit 0 ;; help|\\?) show_help ;; scale) scale=$args ;; *) scriptbc -p $scale \"$command\" \"$args\" ;; esac /bin/echo -n \"calc&gt; \" done . Another example of case statement . case $1 in 1 ) month=\"Jan\" ;; 2 ) month=\"Feb\" ;; 3 ) month=\"Mar\" ;; 4 ) month=\"Apr\" ;; 5 ) month=\"May\" ;; 6 ) month=\"Jun\" ;; 7 ) month=\"Jul\" ;; 8 ) month=\"Aug\" ;; 9 ) month=\"Sep\" ;; 10) month=\"Oct\" ;; 11) month=\"Nov\" ;; 12) month=\"Dec\" ;; * ) echo \"$0: Unknown numeric month value $1\" &gt;&amp;2; exit 1 esac return 0 . ",
+    "url": "https://notes.hamel.dev/docs/linux/cookbook.html#multi-option-case-statement",
+    "relUrl": "/docs/linux/cookbook.html#multi-option-case-statement"
+  },"57": {
+    "doc": "Bash Script Cookbook",
+    "title": "Collecting stdout with -",
+    "content": "echo \"Enter something: \" | cat - . ",
+    "url": "https://notes.hamel.dev/docs/linux/cookbook.html#collecting-stdout-with--",
+    "relUrl": "/docs/linux/cookbook.html#collecting-stdout-with--"
+  },"58": {
+    "doc": "Bash Script Cookbook",
+    "title": "Formatting Long Lines fmt",
+    "content": "Will make lines no longer than 30 characters, not cutting off any words. fmt -w30 long_text.txt . ",
+    "url": "https://notes.hamel.dev/docs/linux/cookbook.html#formatting-long-lines-fmt",
+    "relUrl": "/docs/linux/cookbook.html#formatting-long-lines-fmt"
+  },"59": {
+    "doc": "Bash Script Cookbook",
+    "title": "IFS - Internal Field Seperator",
+    "content": "Sets the internal delimiter . ifs_variable.sh . #!/bin/bash IFS=\":\" var='a:b-c~d' for n in $var do echo \"$n\" done . Results in . $ ./1/ifs_variable.sh a b-c~d . IFS in Great Expectations Action . I’m using this in the Great Expectations Action to parse a list of arguments given as a string to an input . # Loop through checkpoints STATUS=0 IFS=',' for c in $INPUT_CHECKPOINTS;do echo \"\" echo \"Validating Checkpoint: ${c}\" if ! great_expectations checkpoint run $c; then STATUS=1 fi done . IFS for iterating through $PATH . #!/bin/bash IFS=\":\" for directory in $PATH ; do echo $directory done . IFS: Double vs. Single Quotes . With double quotes the outcome of the command expansion would be fed as one parameter to the source command. Without quotes it would be broken up into multiple parameters, depending on the value of IFS which contains space, TAB and newline by default. var=\"some value\" # $var fed into cmd as one parameter cmd \"$var\" # $var is fed into cmd as two parameters # delimted by the default IFS character, space cmd '$var' . ",
+    "url": "https://notes.hamel.dev/docs/linux/cookbook.html#ifs---internal-field-seperator",
+    "relUrl": "/docs/linux/cookbook.html#ifs---internal-field-seperator"
+  },"60": {
+    "doc": "Bash Script Cookbook",
+    "title": "$RANDOM",
+    "content": "echo $RANDOM will print out a random number . ",
+    "url": "https://notes.hamel.dev/docs/linux/cookbook.html#random",
+    "relUrl": "/docs/linux/cookbook.html#random"
+  },"61": {
+    "doc": "Bash Script Cookbook",
+    "title": "Debugging Shell Scripts -x",
+    "content": "Debug a script: . bash -x myscript.sh . OR, within a script: . set -x # start debugging ./myscript.sh set +x # stop debugging . All variables will be substituted and lines that are run will be printed to screen, showing the control flow of the program . ",
+    "url": "https://notes.hamel.dev/docs/linux/cookbook.html#debugging-shell-scripts--x",
+    "relUrl": "/docs/linux/cookbook.html#debugging-shell-scripts--x"
+  },"62": {
+    "doc": "Bash Script Cookbook",
+    "title": "Sourcing files with . ",
+    "content": "So you can “import” scripts . myscript.sh # is equivalent to source myscript.sh . ",
+    "url": "https://notes.hamel.dev/docs/linux/cookbook.html#sourcing-files-with--",
+    "relUrl": "/docs/linux/cookbook.html#sourcing-files-with--"
+  },"63": {
+    "doc": "Bash Script Cookbook",
+    "title": "Using functions to set exit codes",
+    "content": "validAlphaNum() { # Validate arg: returns 0 if all upper+lower+digits, 1 otherwise. # Remove all unacceptable chars. validchars=\"$(echo $1 | sed -e 's/[^[:alnum:]]//g')\" if [ \"$validchars\" = \"$1\" ] ; then return 0 else return 1 fi } exit validAlphaNum . ",
+    "url": "https://notes.hamel.dev/docs/linux/cookbook.html#using-functions-to-set-exit-codes",
+    "relUrl": "/docs/linux/cookbook.html#using-functions-to-set-exit-codes"
+  },"64": {
+    "doc": "Bash Script Cookbook",
+    "title": "Know if someone running the script directly with  $BASH_SOURCE",
+    "content": "The variable $BASH_SOURCE can let you differentiate between when a script is run standalone vs when its invoked from another script: . if [ \"$BASH_SOURCE\" = \"$0\" ] . ",
+    "url": "https://notes.hamel.dev/docs/linux/cookbook.html#know-if-someone-running-the-script-directly-with--bash_source",
+    "relUrl": "/docs/linux/cookbook.html#know-if-someone-running-the-script-directly-with--bash_source"
+  },"65": {
+    "doc": "Bash Script Cookbook",
+    "title": "xargs",
+    "content": "https://www.cyberciti.biz/faq/linux-unix-bsd-xargs-construct-argument-lists-utility/ . &gt; echo 1 2 3 4 | xargs -n2 -I {} echo hello {} world hello 1 2 world hello 3 4 world . ",
+    "url": "https://notes.hamel.dev/docs/linux/cookbook.html#xargs",
+    "relUrl": "/docs/linux/cookbook.html#xargs"
+  },"66": {
+    "doc": "Bash Script Cookbook",
+    "title": "Bash Script Cookbook",
+    "content": " ",
+    "url": "https://notes.hamel.dev/docs/linux/cookbook.html",
+    "relUrl": "/docs/linux/cookbook.html"
+  },"67": {
     "doc": "GitHub Actions",
     "title": "GitHub Actions",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/actions/",
     "relUrl": "/docs/actions/"
-  },"55": {
-    "doc": "Processes, Permissions and Moving Data",
-    "title": "Linux Utilities For Data Scientists",
+  },"68": {
+    "doc": "Linux & Bash Scripting",
+    "title": "Linux & Bash Scripting",
     "content": "My personal notes on underrated Linux utilities that are useful when working on machine learning projects. Photo by Arget on Unsplash . ",
-    "url": "https://notes.hamel.dev/docs/linux/linux.html#linux-utilities-for-data-scientists",
-    "relUrl": "/docs/linux/linux.html#linux-utilities-for-data-scientists"
-  },"56": {
+    "url": "https://notes.hamel.dev/docs/linux/",
+    "relUrl": "/docs/linux/"
+  },"69": {
+    "doc": "Jupyter",
+    "title": "Jupyter",
+    "content": " ",
+    "url": "https://notes.hamel.dev/docs/jupyter/",
+    "relUrl": "/docs/jupyter/"
+  },"70": {
     "doc": "Processes, Permissions and Moving Data",
-    "title": "Background",
-    "content": "These are tools that I use often as a Data Scientist and that I find especially useful. Files associated with this tutorial can be found here. ",
-    "url": "https://notes.hamel.dev/docs/linux/linux.html#background",
-    "relUrl": "/docs/linux/linux.html#background"
-  },"57": {
+    "title": "References",
+    "content": "Files associated with this tutorial can be found here. ",
+    "url": "https://notes.hamel.dev/docs/linux/linux.html#references",
+    "relUrl": "/docs/linux/linux.html#references"
+  },"71": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "Managing Processes (ps, kill, pkill)",
     "content": "Kill Single Process (ps, kill) . A common scenario is that you might run a python script to train a model: . $ python train.py . Let’s say you want to kill this script for whatever reason. You might not always be able to type Cntrl + C to stop it, especially if this process is running in the background. (Aside: A way make a program run in the background is with a &amp; for example:$ python train.py &amp; ) . In order to find this running program, you can use the command ps . $ ps Gives you basic information (good enough most of the time) . Flags: . | -e Allows you to see all running processes including from other users . | -f Allows you to see additional information about each process . | . In order to kill the process you will want to identify it’s PID for example, if the PID is 501 you can kill this process with the command: . $ kill 501 . Killing Multiple Processes (pkill) . If you use process-based threading in python with a library like multi-processing, python will instantiate many processes for you. This is common thing to do in python for a task like data processing. Let’s consider the below example. When you run this in the background it will produce 8 processes: . from multiprocessing import Pool from time import sleep def f(x): sleep(1000) # simulate some computation return x*x if __name__ == '__main__': with Pool(8) as p: print(p.map(f, range(8))) . $ python train_multi.py &amp; . After a few seconds, calling the command ps will yield something like this: . PID TTY TIME CMD 3982 ttys002 0:00.09 ...MacOS/Python train_multi.py 4219 ttys002 0:00.00 ...MacOS/Python train_multi.py 4220 ttys002 0:00.00 ...MacOS/Python train_multi.py 4221 ttys002 0:00.00 ...MacOS/Python train_multi.py 4222 ttys002 0:00.00 ...MacOS/Python train_multi.py 4223 ttys002 0:00.00 ...MacOS/Python train_multi.py 4224 ttys002 0:00.00 ...MacOS/Python train_multi.py 4225 ttys002 0:00.00 ...MacOS/Python train_multi.py 4226 ttys002 0:00.00 ...MacOS/Python train_multi.py . You can find all processes with the file train_multi.py with the pkill command and the -f flag: . See Parent / Child Processes (pstree) . pstree is also a helpful utility to see parent/child relationships between processes. You can install pstree on a mac with brew install pstree . In the above example, there are 8 sub-processes created by one python process. Running the command . $ pstree -s train_multi.py . Will show the process hierarchy. The -s flag allows you to filter parents and descendants of processes containing a string in their command. In the below example, PID 41592 will kill all the 8 child processes seen below . ",
     "url": "https://notes.hamel.dev/docs/linux/linux.html#managing-processes-ps-kill-pkill",
     "relUrl": "/docs/linux/linux.html#managing-processes-ps-kill-pkill"
-  },"58": {
+  },"72": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "Bundling &amp; Archiving Files (tar)",
     "content": "You commonly want to package a bunch of files together, such as a collection of photos or CSVs, and optionally compress these with its directory structure intact. A common tool for this is tar . This is how you would bundle and compress a directory of CSV files: . Sending An Archive To A Remote Machine . It is often the case you want to send data to a remote machine. The below command creates a directory called data , compresses all files in a local folder named csv_data , with the exception of the sub-directory csv_data/intermediate_files without creating any temporary files locally: . Optionally, create the directory on the remote machine: . Then, stream the archive directly to remote. Note that providing a — instead of a destination filename allows tar to write to a stream (stdout) that can be sent directly to the remote server. Moving Files In Different Directories Into An Archive . If your files exist in sibling directories, rather than under one parent directory you can use find along with tar . Suppose you want to archive all csv files relative to a directory: . When you archive files on the fly above with find you cannot compress the files until the archive is finished being built, therefore you have to compress the tar file with the gzip command: . $ gzip data.tar . Tip: some people like to use locate with updatedb instead of find. There are tradeoffs so make sure you read the documentation carefully! . Unpacking &amp; Decompressing Archives . You can decompress and unpack a tar file, for example data.tar.gz with the following command: . $ tar -xzvf data.tar.gz . If the data is not compressed, you can leave out the -z flag: . $ tar -xvf data.tar . ",
     "url": "https://notes.hamel.dev/docs/linux/linux.html#bundling--archiving-files-tar",
     "relUrl": "/docs/linux/linux.html#bundling--archiving-files-tar"
-  },"59": {
+  },"73": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "File Permissions",
     "content": "Before we begin, we must introduce some nomenclature: . If you run the command ls -a you will see something similar to the below output for all of your files in the current directory. The file permissions are shown in three-character groupings for three different groups (nine characters total). These three groups are the owner , group , and other users. In this case, the owner name is hamel and the group name is staff . For the owner, the file permissions are rwx which means that the owner has read r , write w , and execute x permissions. For the group, the file permissions are r-x which means the group has read and execute permissions, but not write permissions. A group is a collection of users with common permissions. Finally, all other users have file permissions of r– which means only read permissions. Changing File Permissions . There are several ways to change file permissions. Method 1: Using Characters and +, - . Refer to the nomenclature above to follow along . | chmod o-r csvfiles.tar.gz . Removes - the ability of other users o to read r the file. | chmod g+w csvfiles.tar.gz . Adds + the ability of the group g to write w to the file. | chmod u+x csvfiles.tar.gz . Adds + the ability of the owner u to execute x the file. | chomd a+x csvfiles.tar.gz . Adds + the ability of all users a to execute x the file. | . Method 2: using numbers . This method works by adding up the numbers corresponding to the permissions separately for each user group (owner, group, others). For example: . | chmod 777 csvfiles.tar.gz . This gives all users the ability to read (4), write( 2), and execute (1) files. In other words 4+2+1 = 7, for the owner, group and other users. | chmod 732 csvfiles.tar.gz . This gives the owner the ability to read, write and execute ( 4+2+1=7), the group the ability to write and execute (2+1=3) and all other users only the ability to write (2). | . Changing Ownership . You can change the owner or group assigned to a file like this: . chown newuser:newgroup file . The :newgroup is optional, if you do not specify that the group will stay the same. ",
     "url": "https://notes.hamel.dev/docs/linux/linux.html#file-permissions",
     "relUrl": "/docs/linux/linux.html#file-permissions"
-  },"60": {
+  },"74": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "Processes, Permissions and Moving Data",
-    "content": ". | Linux Utilities For Data Scientists . | Background | Managing Processes (ps, kill, pkill) . | Kill Single Process (ps, kill) | Killing Multiple Processes (pkill) | See Parent / Child Processes (pstree) | . | Bundling &amp; Archiving Files (tar) . | Sending An Archive To A Remote Machine | Moving Files In Different Directories Into An Archive | Unpacking &amp; Decompressing Archives | . | File Permissions . | Changing File Permissions | Changing Ownership | . | . | . ",
+    "content": ". | References | Managing Processes (ps, kill, pkill) . | Kill Single Process (ps, kill) | Killing Multiple Processes (pkill) | See Parent / Child Processes (pstree) | . | Bundling &amp; Archiving Files (tar) . | Sending An Archive To A Remote Machine | Moving Files In Different Directories Into An Archive | Unpacking &amp; Decompressing Archives | . | File Permissions . | Changing File Permissions | Changing Ownership | . | . ",
     "url": "https://notes.hamel.dev/docs/linux/linux.html",
     "relUrl": "/docs/linux/linux.html"
-  },"61": {
+  },"75": {
     "doc": "ocotokit.js",
     "title": "Introduction",
     "content": "ocotokit.js is a javascript library that can help you interact with the GitHub API in a easy manner. Some javascript knowledge is helpful, but not required for many simple tasks. You can use the octokit.js client along with the github-script action to quickly interface with the GitHub API to do useful things in Actions (like commenting on an issue.) . It is helpful to install node.js when developing scripts that interface with the GitHub API so you can test them locally. ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html#introduction",
     "relUrl": "/docs/actions/ocotkit.html#introduction"
-  },"62": {
+  },"76": {
     "doc": "ocotokit.js",
     "title": "Example Octokit Scripts",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html#example-octokit-scripts",
     "relUrl": "/docs/actions/ocotkit.html#example-octokit-scripts"
-  },"63": {
+  },"77": {
     "doc": "ocotokit.js",
     "title": "Example 1: Create A Comment On A PR",
     "content": "Let’s say you want to programatically make a comment on a pull request with a url that includes the branch name, but you are only given the pull request number. We first lookup the branch name associated with the pull request and pass that to the method call that makes an issue comment: . //Instantiate octokit client const { Octokit } = require(\"@octokit/rest\"); const octokit = new Octokit({ auth: \"&lt;YOUR_PERSONAL_ACCESS_TOKEN&gt;\", }); //Take an action (create a comment) triggered by an issue comment // Get information about the pr octokit.pulls.get({ owner: 'hamelsmu', repo: 'test_html', pull_number: 1 }).then( (pr) =&gt; { // use the branch name from the pr to make a pr comment var BRANCH_NAME = pr.data.head.ref octokit.issues.createComment({ issue_number: 1, owner: 'hamelsmu', repo: 'test_html', body: `[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/hamelsmu/test_html/${BRANCH_NAME}) :point_left: Launch a binder notebook on this branch` }) }) . ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html#example-1-create-a-comment-on-a-pr",
     "relUrl": "/docs/actions/ocotkit.html#example-1-create-a-comment-on-a-pr"
-  },"64": {
+  },"78": {
     "doc": "ocotokit.js",
     "title": "Example 2: Issue Comment",
     "content": "This is a simple example of how you can create an issue comment. //Instantiate octokit client const { Octokit } = require(\"@octokit/rest\"); const octokit = new Octokit({ auth: \"&lt;YOUR_PERSONAL_ACCESS_TOKEN&gt;\", }); // Create an issue commment var BRANCH_NAME = 'hamelsmu-patch-1' octokit.issues.createComment({ issue_number: 1, owner: 'hamelsmu', repo: 'test_html', body: `[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/hamelsmu/test_html/${BRANCH_NAME}) :point_left: Launch a binder notebook on this branch` }) . ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html#example-2-issue-comment",
     "relUrl": "/docs/actions/ocotkit.html#example-2-issue-comment"
-  },"65": {
+  },"79": {
     "doc": "ocotokit.js",
     "title": "MyBinder.org",
     "content": "The examples above were adapted to write these docs for mybinder.org. ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html#mybinderorg",
     "relUrl": "/docs/actions/ocotkit.html#mybinderorg"
-  },"66": {
+  },"80": {
     "doc": "ocotokit.js",
     "title": "ocotokit.js",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html",
     "relUrl": "/docs/actions/ocotkit.html"
-  },"67": {
+  },"81": {
     "doc": "OSX Shell Tips",
     "title": "Key Repeat Rate",
     "content": "Add days to your lifespan by Increasing the key repeat rate. Run the following in the terminal then restart. defaults write -g InitialKeyRepeat -int 13 # normal minimum is 15 (225 ms) defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms) . ",
     "url": "https://notes.hamel.dev/docs/linux/osx.html#key-repeat-rate",
     "relUrl": "/docs/linux/osx.html#key-repeat-rate"
-  },"68": {
+  },"82": {
     "doc": "OSX Shell Tips",
     "title": "My .zshrc file",
     "content": "Stored at ~/.zshrc . I used to have ohmyzsh but it made my shell too slow. This is good enough for me. # #speed startup time https://medium.com/@dannysmith/little-thing-2-speeding-up-zsh-f1860390f92 autoload -Uz compinit for dump in ~/.zcompdump(N.mh+24); do compinit done compinit -C #### PROMPT='%(?.%F{green}√.%F{red}?%?)%f %B%F{157}%1~%f%b %F{231}%# ' autoload -Uz vcs_info precmd_vcs_info() { vcs_info } precmd_functions+=( precmd_vcs_info ) setopt prompt_subst RPROMPT=\\$vcs_info_msg_0_ zstyle ':vcs_info:git:*' formats '%F{141}(%b)%r%f' zstyle ':vcs_info:*' enable git alias ls=\"colorls\" alias python=\"python3\" # install jupyter kernel with pipenv function install-jupyter { if [ -n \"${PIPENV_ACTIVE+1}\" ]; then VENV_NAME=`echo ${VIRTUAL_ENV} | cut -d '/' -f 7` echo \"creating Jupyter kernel named $VENV_NAME\" pipenv install --skip-lock ipykernel python -m ipykernel install --user --name=$VENV_NAME fi } ## automatically activate pipenv shell upon cd function auto_pipenv_shell { if [ ! -n \"${PIPENV_ACTIVE+1}\" ]; then if [ -f \"Pipfile\" ] ; then pipenv shell fi fi } function cd { builtin cd \"$@\" auto_pipenv_shell } #extra stuff export CLICOLOR=1 export LSCOLORS=GxFxCxDxBxegedabagaced GREP_OPTIONS=\"--color=always\";export GREP_OPTIONS __git_files () { _wanted files expl 'local files' _files } . ",
     "url": "https://notes.hamel.dev/docs/linux/osx.html#my-zshrc-file",
     "relUrl": "/docs/linux/osx.html#my-zshrc-file"
-  },"69": {
+  },"83": {
     "doc": "OSX Shell Tips",
     "title": "OSX Shell Tips",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/linux/osx.html",
     "relUrl": "/docs/linux/osx.html"
-  },"70": {
+  },"84": {
     "doc": "Remote Browser For Jupyter",
     "title": "Background",
     "content": "It is very common to connect to a remote Jupyter server with your local browser. However, if you lose connection with your remote server, logs printed to the screen may stop streaming. This is common when training deep learning models where training runs can last days or weeks where progress bars are printed to the screen in a notebook. To avoid the issue with your browser loosing connection you can run the browser remotely on the same machine as the Jupyter server, even if your remote server does not have a desktop/GUI interface. ",
     "url": "https://notes.hamel.dev/docs/jupyter/remote_browser.html#background",
     "relUrl": "/docs/jupyter/remote_browser.html#background"
-  },"71": {
+  },"85": {
     "doc": "Remote Browser For Jupyter",
     "title": "fast.ai",
     "content": "The below youtube link, from fastai Lesson 10 Part 2 (2018) will walk you through how to accomplish this. ",
     "url": "https://notes.hamel.dev/docs/jupyter/remote_browser.html#fastai",
     "relUrl": "/docs/jupyter/remote_browser.html#fastai"
-  },"72": {
+  },"86": {
     "doc": "Remote Browser For Jupyter",
     "title": "Remote Browser For Jupyter",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/jupyter/remote_browser.html",
     "relUrl": "/docs/jupyter/remote_browser.html"
-  },"73": {
+  },"87": {
     "doc": "Resources",
     "title": "Introduction",
     "content": "These are resources that can help you get started with GitHub Actions: . | Talk: Getting started with Actions | Blog: An Intro To Actions For Data Scientists | . ",
     "url": "https://notes.hamel.dev/docs/actions/resources.html#introduction",
     "relUrl": "/docs/actions/resources.html#introduction"
-  },"74": {
+  },"88": {
     "doc": "Resources",
     "title": "Going Deeper",
     "content": "Once you have a basic understanding, these resources can help you learn more. | See mlops-github.com for a collection of resources specifically targeted at Data Scientists using GitHub Actions. | Actions official documentation. | . ",
     "url": "https://notes.hamel.dev/docs/actions/resources.html#going-deeper",
     "relUrl": "/docs/actions/resources.html#going-deeper"
-  },"75": {
+  },"89": {
     "doc": "Resources",
     "title": "Resources",
     "content": " ",
