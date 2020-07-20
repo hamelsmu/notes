@@ -7,7 +7,7 @@ nav_order: 99
 
 # Key Repeat Rate
 
-Add days to your lifespan by Increasing the key repeat rate. Run the following in the terminal then restart.
+Add days to your lifespan by Increasing the key repeat rate. Run the following in the terminal then restart.  Protip by [Michael Musson](https://www.linkedin.com/in/michael-m-a37b1932/).
 
 ```sh
 defaults write -g InitialKeyRepeat -int 13 # normal minimum is 15 (225 ms)
