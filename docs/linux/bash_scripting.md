@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Bash Scripting Class
+title: Cheatsheet
 parent: Linux & Bash Scripting
 nav_order: 3
 ---

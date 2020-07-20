@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Bash Script Cookbook
+title: Cookbook
 parent: Linux & Bash Scripting
 nav_order: 2
 ---
