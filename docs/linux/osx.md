@@ -14,6 +14,16 @@ defaults write -g InitialKeyRepeat -int 13 # normal minimum is 15 (225 ms)
 defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
 ```
 
+# Keyboard Tricks (OS X)
+Set your option key to `Esc+`  in iTerm under Profiles>Keys
+
+![](iterm_escape.png)
+
+
+1. `control-W` delete word backwards
+2. `option-D` delete word forwards
+3. `control-K` delete until end of line
+
 # My `.zshrc` file
 
 Stored at `~/.zshrc`

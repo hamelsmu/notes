@@ -244,9 +244,11 @@ $COL
 The date is Mon Jul 25
 ```
 
-# Using dev/null
+# Redirecting Output
 
-For when you put output somewhere other than the background. `/dev/null` is a device, everything is a file in linux.  Everything you write to `dev/null` just dissapears.
+## Using dev/null
+
+Use `dev/null` when you want to discard output and don't want to put in the background. `/dev/null` is a device, and like everything is a file in linux.  Everything you write to `dev/null` just dissapears.
 
 For example:
 
@@ -258,6 +260,23 @@ echo "This is going to the blackhole." >> /dev/null
 ```
 
 Note `>>` (append) or `>` (overwrite) will work for dev/null, although out of habit in other scenarios it is better to append when unsure using `>>`.
+
+## Redirect  Std Error
+
+`ls -l /bin/usr 2> ls-error.txt`
+
+## Redirect Std Out & Err into one file
+
+`ls  -l /bin/sur > ls-output.txt 2>&1`
+
+
+Shortcut: use `&`
+
+`ls  -l /bin/sur &> ls-output.txt`
+
+## Dispose Std Err output `/dev/null`
+
+`ls -l /bin/sur 2> /dev/null`
 
 
 # The Read Statement
@@ -301,6 +320,24 @@ something
 > echo "${!HO*}"
 OME HOSTNAME HOSTTYPE
 ```
+
+## Brace Expansion
+```sh
+> echo Hello-{Foo,Bar,Baz}-World                             
+Hello-Foo-World Hello-Bar-World Hello-Baz-World
+```
+
+![](Linux%20Command%20Line%202E/FFE1D5B6-3600-45F3-98EA-E5D8D8E38339.png)
+
+
+## Parameter Expansion, Like Coalesce
+
+`{parameter:-word}`
+
+
+If parameter is unset (i.e., does not exist) or is empty, this expansion results in the value of word. If parameter is not empty, the expansion results in the value of parameter.
+
+![](Linux%20Command%20Line%202E/B8AEEDCB-6411-4AAB-9A5E-60DFBF77338A.png)
 
 # Types of Variables
 
@@ -518,6 +555,29 @@ else
 fi
 ```
 
+# Conditional Expressions
+
+Hamel's Note: Use Double Brackets `[[ ]]`, not single brackets
+
+## File Expressions
+
+
+![](Linux%20Command%20Line%202E/04C3BAEC-A2B6-4EDF-B61D-7F290E5C94BE.png)
+
+
+![](Linux%20Command%20Line%202E/C96B41FA-AF66-421D-96BC-B3EA0FA39139.png)
+
+
+## String Expressions
+
+
+![](Linux%20Command%20Line%202E/7E21E94F-714E-48EB-9819-6CF33D414404.png)
+
+## Integer Expressions
+
+
+![](Linux%20Command%20Line%202E/1F1BC194-36CA-4949-83A5-0EB99A150F18.png)
+
 # Aside: Output Streams
 
 https://askubuntu.com/questions/625224/how-to-redirect-stderr-to-a-file
@@ -541,6 +601,10 @@ command &> out
 ```
 
 # Control Flow
+
+- `break` exits the loop
+- `continue` goes to next iteration in loop
+- `until` is opposite of while
 
 ## For Loop
 
@@ -579,6 +643,13 @@ case $MENUCHOICE in
         echo “You have choosen unwisely”;;
 ```
 
+### Match Multiple Case Statements
+
+Allow many matches to occur
+
+
+![](Linux%20Command%20Line%202E/B619EA40-60AC-43A9-91F2-D38B9AF88B29.png)
+
 ## While Loop
 
 ```bash
@@ -596,6 +667,27 @@ do
     COUNT=“`expr $COUNT + 1`”
 done
 ```
+
+## Asynchronous Execution with `wait`
+
+![](Linux%20Command%20Line%202E/D58576C6-9AEA-4124-8575-2A3406CC6590.png)
+
+
+This is the most straightforward implementation of async I have ever seen.  You basically decide when to block and wait for a process that you previously decided to run in a child process.  
+
+
+## Short Circuit Expressions
+
+### &&: `command1 && command2`: 
+
+ only run `command2` if `command1` is successful
+
+### ||: `command1 || command2`: 
+
+only run `command2` if `command1` fails
+
+
+
 
 # Execution Operators
 
@@ -626,6 +718,10 @@ while read -r SUPERHERO; do
     echo “Superhero Name: $SUPERHERO”
 done < “$FILE”
 ```
+
+## Reading Files with loops
+
+![](Linux%20Command%20Line%202E/D08C1840-7C02-4212-AC01-C968DB36EC81.png)
 
 ## File Descriptors
 
