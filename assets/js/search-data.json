@@ -479,11 +479,11 @@
     "url": "https://notes.hamel.dev/docs/linux/cookbook.html",
     "relUrl": "/docs/linux/cookbook.html"
   },"80": {
-    "doc": "Jupyter",
-    "title": "Jupyter",
+    "doc": "GitHub Actions",
+    "title": "GitHub Actions",
     "content": " ",
-    "url": "https://notes.hamel.dev/docs/jupyter/",
-    "relUrl": "/docs/jupyter/"
+    "url": "https://notes.hamel.dev/docs/actions/",
+    "relUrl": "/docs/actions/"
   },"81": {
     "doc": "Linux & Bash Scripting",
     "title": "Linux & Bash Scripting",
@@ -491,11 +491,11 @@
     "url": "https://notes.hamel.dev/docs/linux/",
     "relUrl": "/docs/linux/"
   },"82": {
-    "doc": "GitHub Actions",
-    "title": "GitHub Actions",
+    "doc": "Jupyter",
+    "title": "Jupyter",
     "content": " ",
-    "url": "https://notes.hamel.dev/docs/actions/",
-    "relUrl": "/docs/actions/"
+    "url": "https://notes.hamel.dev/docs/jupyter/",
+    "relUrl": "/docs/jupyter/"
   },"83": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "References",
@@ -527,96 +527,126 @@
     "url": "https://notes.hamel.dev/docs/linux/linux.html",
     "relUrl": "/docs/linux/linux.html"
   },"88": {
+    "doc": "Misc Utilities",
+    "title": "History",
+    "content": ". | See history with history command | You will get a number for each history item. | You can replay any number n with command !n | History on OS X is stored in ~/.zsh_history | . !n refer to command number n in history when you call history . ",
+    "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#history",
+    "relUrl": "/docs/linux/misc_utils.html#history"
+  },"89": {
+    "doc": "Misc Utilities",
+    "title": "Diff",
+    "content": "You can difff two files, you usually want to see a unified diff b/c that is easier to read . diff -u file1.txt file2.txt . ",
+    "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#diff",
+    "relUrl": "/docs/linux/misc_utils.html#diff"
+  },"90": {
+    "doc": "Misc Utilities",
+    "title": "Here Documents",
+    "content": "Instead of using echo, our script now uses cat and a here document. The string EOF (meaning end of file, a common convention) was selected as the token and marks the end of the embedded text. Note that the token must appear alone and that there must not be trailing spaces on the line. Unlike Echo, all double quotes and single quotes are escaped. Here is an example of the same thing at the command line. [me@linuxbox ~]$ foo=\"some text\" [me@linuxbox ~]$ cat &lt;&lt; _EOF_ &gt; $foo &gt; \"$foo\" &gt; '$foo' &gt; \\$foo &gt; _EOF_ some text \"some text\" 'some text' $foo . ",
+    "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#here-documents",
+    "relUrl": "/docs/linux/misc_utils.html#here-documents"
+  },"91": {
+    "doc": "Misc Utilities",
+    "title": "Named Pipes with mkfifo",
+    "content": "Named pipes are input/output buffers. You can fill up the buffer and then drain the buffer later. | Setup Named Pipe using mkfifo . | Fill up the named pipe, this will hang until the pipe is drained . | . Hamel: you can run this part in a sub shell . | In a NEW terminal window drain the pipe | . Hamel: put it all together in a script. You can drain the pipe as many times as you want. #!/bin/bash mkfifo pipe1 ls -l &gt; pipe1 &amp; cat &lt; pipe1 . ",
+    "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#named-pipes-with-mkfifo",
+    "relUrl": "/docs/linux/misc_utils.html#named-pipes-with-mkfifo"
+  },"92": {
+    "doc": "Misc Utilities",
+    "title": "Misc Utilities",
+    "content": ". | History | Diff | Here Documents | Named Pipes with mkfifo | . ",
+    "url": "https://notes.hamel.dev/docs/linux/misc_utils.html",
+    "relUrl": "/docs/linux/misc_utils.html"
+  },"93": {
     "doc": "ocotokit.js",
     "title": "Introduction",
     "content": "ocotokit.js is a javascript library that can help you interact with the GitHub API in a easy manner. Some javascript knowledge is helpful, but not required for many simple tasks. You can use the octokit.js client along with the github-script action to quickly interface with the GitHub API to do useful things in Actions (like commenting on an issue.) . It is helpful to install node.js when developing scripts that interface with the GitHub API so you can test them locally. ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html#introduction",
     "relUrl": "/docs/actions/ocotkit.html#introduction"
-  },"89": {
+  },"94": {
     "doc": "ocotokit.js",
     "title": "Example Octokit Scripts",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html#example-octokit-scripts",
     "relUrl": "/docs/actions/ocotkit.html#example-octokit-scripts"
-  },"90": {
+  },"95": {
     "doc": "ocotokit.js",
     "title": "Example 1: Create A Comment On A PR",
     "content": "Let’s say you want to programatically make a comment on a pull request with a url that includes the branch name, but you are only given the pull request number. We first lookup the branch name associated with the pull request and pass that to the method call that makes an issue comment: . //Instantiate octokit client const { Octokit } = require(\"@octokit/rest\"); const octokit = new Octokit({ auth: \"&lt;YOUR_PERSONAL_ACCESS_TOKEN&gt;\", }); //Take an action (create a comment) triggered by an issue comment // Get information about the pr octokit.pulls.get({ owner: 'hamelsmu', repo: 'test_html', pull_number: 1 }).then( (pr) =&gt; { // use the branch name from the pr to make a pr comment var BRANCH_NAME = pr.data.head.ref octokit.issues.createComment({ issue_number: 1, owner: 'hamelsmu', repo: 'test_html', body: `[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/hamelsmu/test_html/${BRANCH_NAME}) :point_left: Launch a binder notebook on this branch` }) }) . ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html#example-1-create-a-comment-on-a-pr",
     "relUrl": "/docs/actions/ocotkit.html#example-1-create-a-comment-on-a-pr"
-  },"91": {
+  },"96": {
     "doc": "ocotokit.js",
     "title": "Example 2: Issue Comment",
     "content": "This is a simple example of how you can create an issue comment. //Instantiate octokit client const { Octokit } = require(\"@octokit/rest\"); const octokit = new Octokit({ auth: \"&lt;YOUR_PERSONAL_ACCESS_TOKEN&gt;\", }); // Create an issue commment var BRANCH_NAME = 'hamelsmu-patch-1' octokit.issues.createComment({ issue_number: 1, owner: 'hamelsmu', repo: 'test_html', body: `[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/hamelsmu/test_html/${BRANCH_NAME}) :point_left: Launch a binder notebook on this branch` }) . ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html#example-2-issue-comment",
     "relUrl": "/docs/actions/ocotkit.html#example-2-issue-comment"
-  },"92": {
+  },"97": {
     "doc": "ocotokit.js",
     "title": "MyBinder.org",
     "content": "The examples above were adapted to write these docs for mybinder.org. ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html#mybinderorg",
     "relUrl": "/docs/actions/ocotkit.html#mybinderorg"
-  },"93": {
+  },"98": {
     "doc": "ocotokit.js",
     "title": "ocotokit.js",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html",
     "relUrl": "/docs/actions/ocotkit.html"
-  },"94": {
+  },"99": {
     "doc": "OSX Shell Tips",
     "title": "Key Repeat Rate",
     "content": "Add days to your lifespan by Increasing the key repeat rate. Run the following in the terminal then restart. Protip by Michael Musson. defaults write -g InitialKeyRepeat -int 13 # normal minimum is 15 (225 ms) defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms) . ",
     "url": "https://notes.hamel.dev/docs/linux/osx.html#key-repeat-rate",
     "relUrl": "/docs/linux/osx.html#key-repeat-rate"
-  },"95": {
+  },"100": {
     "doc": "OSX Shell Tips",
     "title": "Keyboard Tricks (OS X)",
     "content": "Set your option key to Esc+ in iTerm under Profiles&gt;Keys . | control-W delete word backwards | option-D delete word forwards | control-K delete until end of line | . ",
     "url": "https://notes.hamel.dev/docs/linux/osx.html#keyboard-tricks-os-x",
     "relUrl": "/docs/linux/osx.html#keyboard-tricks-os-x"
-  },"96": {
+  },"101": {
     "doc": "OSX Shell Tips",
     "title": "My .zshrc file",
     "content": "Stored at ~/.zshrc . I used to have ohmyzsh but it made my shell too slow. This is good enough for me. # #speed startup time https://medium.com/@dannysmith/little-thing-2-speeding-up-zsh-f1860390f92 autoload -Uz compinit for dump in ~/.zcompdump(N.mh+24); do compinit done compinit -C #### PROMPT='%(?.%F{green}√.%F{red}?%?)%f %B%F{157}%1~%f%b %F{231}%# ' autoload -Uz vcs_info precmd_vcs_info() { vcs_info } precmd_functions+=( precmd_vcs_info ) setopt prompt_subst RPROMPT=\\$vcs_info_msg_0_ zstyle ':vcs_info:git:*' formats '%F{141}(%b)%r%f' zstyle ':vcs_info:*' enable git alias ls=\"colorls\" alias python=\"python3\" # install jupyter kernel with pipenv function install-jupyter { if [ -n \"${PIPENV_ACTIVE+1}\" ]; then VENV_NAME=`echo ${VIRTUAL_ENV} | cut -d '/' -f 7` echo \"creating Jupyter kernel named $VENV_NAME\" pipenv install --skip-lock ipykernel python -m ipykernel install --user --name=$VENV_NAME fi } ## automatically activate pipenv shell upon cd function auto_pipenv_shell { if [ ! -n \"${PIPENV_ACTIVE+1}\" ]; then if [ -f \"Pipfile\" ] ; then pipenv shell fi fi } function cd { builtin cd \"$@\" auto_pipenv_shell } #extra stuff export CLICOLOR=1 export LSCOLORS=GxFxCxDxBxegedabagaced GREP_OPTIONS=\"--color=always\";export GREP_OPTIONS __git_files () { _wanted files expl 'local files' _files } . ",
     "url": "https://notes.hamel.dev/docs/linux/osx.html#my-zshrc-file",
     "relUrl": "/docs/linux/osx.html#my-zshrc-file"
-  },"97": {
+  },"102": {
     "doc": "OSX Shell Tips",
     "title": "OSX Shell Tips",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/linux/osx.html",
     "relUrl": "/docs/linux/osx.html"
-  },"98": {
+  },"103": {
     "doc": "Remote Browser For Jupyter",
     "title": "Background",
     "content": "It is very common to connect to a remote Jupyter server with your local browser. However, if you lose connection with your remote server, logs printed to the screen may stop streaming. This is common when training deep learning models where training runs can last days or weeks where progress bars are printed to the screen in a notebook. To avoid the issue with your browser loosing connection you can run the browser remotely on the same machine as the Jupyter server, even if your remote server does not have a desktop/GUI interface. ",
     "url": "https://notes.hamel.dev/docs/jupyter/remote_browser.html#background",
     "relUrl": "/docs/jupyter/remote_browser.html#background"
-  },"99": {
+  },"104": {
     "doc": "Remote Browser For Jupyter",
     "title": "fast.ai",
     "content": "The below youtube link, from fastai Lesson 10 Part 2 (2018) will walk you through how to accomplish this. ",
     "url": "https://notes.hamel.dev/docs/jupyter/remote_browser.html#fastai",
     "relUrl": "/docs/jupyter/remote_browser.html#fastai"
-  },"100": {
+  },"105": {
     "doc": "Remote Browser For Jupyter",
     "title": "Remote Browser For Jupyter",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/jupyter/remote_browser.html",
     "relUrl": "/docs/jupyter/remote_browser.html"
-  },"101": {
+  },"106": {
     "doc": "Resources",
     "title": "Introduction",
     "content": "These are resources that can help you get started with GitHub Actions: . | Talk: Getting started with Actions | Blog: An Intro To Actions For Data Scientists | . ",
     "url": "https://notes.hamel.dev/docs/actions/resources.html#introduction",
     "relUrl": "/docs/actions/resources.html#introduction"
-  },"102": {
+  },"107": {
     "doc": "Resources",
     "title": "Going Deeper",
     "content": "Once you have a basic understanding, these resources can help you learn more. | See mlops-github.com for a collection of resources specifically targeted at Data Scientists using GitHub Actions. | Actions official documentation. | . ",
     "url": "https://notes.hamel.dev/docs/actions/resources.html#going-deeper",
     "relUrl": "/docs/actions/resources.html#going-deeper"
-  },"103": {
+  },"108": {
     "doc": "Resources",
     "title": "Resources",
     "content": " ",
