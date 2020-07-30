@@ -14,6 +14,17 @@ defaults write -g InitialKeyRepeat -int 13 # normal minimum is 15 (225 ms)
 defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
 ```
 
+# A better way to search text: `ack`
+
+Install `ack`:
+
+`brew install ack`
+
+Search files for text, super fast and returns results in a very nice way. By default will search recursively from the current directory and it skips unimportant files by default.
+
+`ack "search string"`
+
+
 # Keyboard Tricks (OS X)
 Set your option key to `Esc+`  in iTerm under Profiles>Keys
 
