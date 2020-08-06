@@ -224,6 +224,9 @@ You can also run `chmod 755`
 
 - Reserved names: see study guide or google it.
 
+### `unset` : Delete An Environment Variable
+`unset MY_VAR`
+
 ## Special Characters: Quotes & Escapes
 
 - `$` escapes a single character.

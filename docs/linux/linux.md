@@ -91,6 +91,32 @@ Will show the process hierarchy. The -s  flag allows you to filter parents and d
 
 ![](https://cdn-images-1.medium.com/max/5000/1*pgN5yxujoS7xRJDBUp9Z-w.png)
 
+
+### Killing Process Options
+
+
+![](Linux_Hackers/A84A2EC5-6C98-4925-8120-33B6A94D0C4F.png)
+
+Reminder: view processes with `ps` or `top`
+To show processes from all users `ps aux`
+
+- To restart pid 6996
+	 `kill -1 6996`
+
+- kill pid 6996
+	`kill -9 6996`
+
+
+You can kill processes by name (which is also usually listed as the command that started the processes).  `killall` will search for the string int he relevant process.
+
+### Bringing processes back into the foreground
+Reminder you put processes in the background with `&`   example is `myscript.sh &`
+
+You can move processes back into the foreground with `fg`
+
+`fg 1234` brings process 1234 back into the foreground.
+
+
 ## Bundling & Archiving Files (tar)
 
 You commonly want to package a bunch of files together, such as a collection of photos or CSVs, and optionally compress these with its directory structure intact. A common tool for this is tar . This is how you would bundle and compress a directory of CSV files:

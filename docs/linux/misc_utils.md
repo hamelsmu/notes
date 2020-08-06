@@ -83,3 +83,69 @@ ls -l > pipe1 &
 cat < pipe1
 ```
 
+# Scan host for open ports w/ `nmap`
+
+1. Lookup ip with `nslookup`
+2. `nmap -sT <IP address>`
+
+You can scan a range of IPs for a mysql port like so:
+
+`nmap -sT 192.168.181.0/24 -p 3306 -oG MySQLScan`
+
+This is useful if you have a public server and you want to verify that a port is open.
+
+
+# Devices `/dev`
+Linux has a special directory that contains files representing attached devices.  Important ones are `sda1`, `sda2` , `sda3`, `sdb` and `sdb1`
+
+
+![](Linux_Hackers/6F9F1367-6764-4606-A2B5-EA409815E2AA.png)
+
+You can view a tree of your disks and the partitions with the utility `lsblk`
+
+![](Linux_Hackers/6054D0F0-DCC6-4ACF-93C2-8C1FD8651739.png)
+
+
+
+## Mounting devices
+
+Sometimes you need to mount these devices.  Two common mount points are `/mnt` and `/media`.  If you mount the device into an existing directory it will cover the contents of that directory making them invisible and unavailable.  
+
+Ex: mount device to `/mnt`
+
+`mount /dev/sb1 /mnt`
+
+
+Ex: mount flash drive
+
+`mount /dev/sdc1 /media`
+
+You can unmount a device with `unmount`:
+
+`unmount /dev/sb1`
+
+## Getting information on mounted drives
+`df -h`
+
+## Permanently deleting files with `shred`
+This utility writes over files many times in order to erase things.  Helpful for sensitive data.
+
+# Masking your IP for web scraping
+Look into `proxy chains`
+
+Linux utility called `proxychains` which generally works as:
+
+`proxychains <the command you want proxied> <arguments>`
+
+`proxychains` defaults to using Tor if you don't  supply your own proxies.
+
+See: https://www.technocrazed.com/how-to-use-beagle-scraper-safely-to-scrape-e-commerce-platforms
+
+# Running Scripts At System Startup
+Look at `rc` scripts.  After the kernel has initialized all its modules, it starts adaemon known as `init` or `initd`, which runs scripts found in `/etc/init.d/rc`
+
+You can use the utility `update-rc.d` to add a script to the startup procedure:
+
+![](Linux_Hackers/5F88D6DB-3B9C-456A-904D-6E1BFA805903.png)
+
+This is useful if for example you always want to start a database on system startup.
