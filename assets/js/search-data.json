@@ -79,7 +79,7 @@
   },"13": {
     "doc": "Cheatsheet",
     "title": "Bash Scripting Class Linux Academy",
-    "content": ". | Link to class. | Link to GitHub repo | . | Bash Scripting Class Linux Academy . | History of Bash | Bash Configuration . | .bash_profile | .bashrc | .bash_history | .bash_logout | . | Shell Scripts . | chmod u+x | Introduction | Using Variables on The Command Line . | Using Substitution with backticks | . | Using Variables in Scripts | Command Subsitution | Exit Status . | Using exit statues in a shell script | . | Arithmetic Operations | . | Global and Local Environment Variables | Special Characters: Quotes &amp; Escapes | . | Redirecting Output . | Using dev/null | Redirect Std Error | Redirect Std Out &amp; Err into one file | Dispose Std Err output /dev/null | . | The Read Statement | Shell Expansion . | Brace Expansion | Parameter Expansion, Like Coalesce | . | Types of Variables . | Readonly Variables | Types of Variables | . | Arrays . | Iterating Through Arrays | Passing Variables to Scripts at the Command Line | . | Conditionals . | The if statement | If/Then/Else | . | Conditional Expressions . | File Expressions | String Expressions | Integer Expressions | . | Aside: Output Streams | Control Flow . | For Loop | Case Statement . | Match Multiple Case Statements | . | While Loop | Asynchronous Execution with wait | Short Circuit Expressions . | &amp;&amp;: command1 &amp;&amp; command2: | ||: command1 || command2: | . | . | Execution Operators | Input/Output . | Reading Files | Reading Files with loops | File Descriptors | Delimiters (IFS) | Traps and Signals | . | Debugging Shell Scripts | Error Handling | Functions . | structure of functions in a shell script | Scope | Functions With Parameters | Nested Functions | Function Return and Exit | . | Interactive Menus . | Infobox | Msgbox | Menus | . | . ",
+    "content": ". | Link to class. | Link to GitHub repo | . | Bash Scripting Class Linux Academy . | History of Bash | Bash Configuration . | .bash_profile | .bashrc | .bash_history | .bash_logout | . | Shell Scripts . | chmod u+x | Introduction | Using Variables on The Command Line . | Using Substitution with backticks | . | Using Variables in Scripts | Command Subsitution | Exit Status . | Using exit statues in a shell script | . | Arithmetic Operations | . | Global and Local Environment Variables . | unset : Delete An Environment Variable | . | Special Characters: Quotes &amp; Escapes | . | Redirecting Output . | Using dev/null | Redirect Std Error | Redirect Std Out &amp; Err into one file | Dispose Std Err output /dev/null | . | The Read Statement | Shell Expansion . | Brace Expansion | Parameter Expansion, Like Coalesce | . | Types of Variables . | Readonly Variables | Types of Variables | . | Arrays . | Iterating Through Arrays | Passing Variables to Scripts at the Command Line | . | Conditionals . | The if statement | If/Then/Else | . | Conditional Expressions . | File Expressions | String Expressions | Integer Expressions | . | Aside: Output Streams | Control Flow . | For Loop | Case Statement . | Match Multiple Case Statements | . | While Loop | Asynchronous Execution with wait | Short Circuit Expressions . | &amp;&amp;: command1 &amp;&amp; command2: | ||: command1 || command2: | . | . | Execution Operators | Input/Output . | Reading Files | Reading Files with loops | File Descriptors | Delimiters (IFS) | Traps and Signals | . | Debugging Shell Scripts | Error Handling | Functions . | structure of functions in a shell script | Scope | Functions With Parameters | Nested Functions | Function Return and Exit | . | Interactive Menus . | Infobox | Msgbox | Menus | . | . ",
     "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#bash-scripting-class-linux-academy",
     "relUrl": "/docs/linux/bash_scripting.html#bash-scripting-class-linux-academy"
   },"14": {
@@ -103,7 +103,7 @@
   },"17": {
     "doc": "Cheatsheet",
     "title": "Global and Local Environment Variables",
-    "content": ". | env and printenv will tell you your global vars | set will give you things from your session. This will also usually contain everything from your global scope. set is a superset of env. | Reserved names: see study guide or google it. | . ",
+    "content": ". | env and printenv will tell you your global vars | set will give you things from your session. This will also usually contain everything from your global scope. set is a superset of env. | Reserved names: see study guide or google it. | . unset : Delete An Environment Variable . unset MY_VAR . ",
     "url": "https://notes.hamel.dev/docs/linux/bash_scripting.html#global-and-local-environment-variables",
     "relUrl": "/docs/linux/bash_scripting.html#global-and-local-environment-variables"
   },"18": {
@@ -479,23 +479,23 @@
     "url": "https://notes.hamel.dev/docs/linux/cookbook.html",
     "relUrl": "/docs/linux/cookbook.html"
   },"80": {
-    "doc": "GitHub Actions",
-    "title": "GitHub Actions",
-    "content": " ",
-    "url": "https://notes.hamel.dev/docs/actions/",
-    "relUrl": "/docs/actions/"
-  },"81": {
-    "doc": "Linux & Bash Scripting",
-    "title": "Linux & Bash Scripting",
-    "content": "My personal notes on underrated Linux utilities that are useful when working on machine learning projects. Photo by Arget on Unsplash . ",
-    "url": "https://notes.hamel.dev/docs/linux/",
-    "relUrl": "/docs/linux/"
-  },"82": {
     "doc": "Jupyter",
     "title": "Jupyter",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/jupyter/",
     "relUrl": "/docs/jupyter/"
+  },"81": {
+    "doc": "GitHub Actions",
+    "title": "GitHub Actions",
+    "content": " ",
+    "url": "https://notes.hamel.dev/docs/actions/",
+    "relUrl": "/docs/actions/"
+  },"82": {
+    "doc": "Linux & Bash Scripting",
+    "title": "Linux & Bash Scripting",
+    "content": "My personal notes on underrated Linux utilities that are useful when working on machine learning projects. Photo by Arget on Unsplash . ",
+    "url": "https://notes.hamel.dev/docs/linux/",
+    "relUrl": "/docs/linux/"
   },"83": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "References",
@@ -505,7 +505,7 @@
   },"84": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "Managing Processes (ps, kill, pkill)",
-    "content": "Kill Single Process (ps, kill) . A common scenario is that you might run a python script to train a model: . $ python train.py . Let’s say you want to kill this script for whatever reason. You might not always be able to type Cntrl + C to stop it, especially if this process is running in the background. (Aside: A way make a program run in the background is with a &amp; for example:$ python train.py &amp; ) . In order to find this running program, you can use the command ps . $ ps Gives you basic information (good enough most of the time) . Flags: . | -e Allows you to see all running processes including from other users . | -f Allows you to see additional information about each process . | . In order to kill the process you will want to identify it’s PID for example, if the PID is 501 you can kill this process with the command: . $ kill 501 . Killing Multiple Processes (pkill) . If you use process-based threading in python with a library like multi-processing, python will instantiate many processes for you. This is common thing to do in python for a task like data processing. Let’s consider the below example. When you run this in the background it will produce 8 processes: . from multiprocessing import Pool from time import sleep def f(x): sleep(1000) # simulate some computation return x*x if __name__ == '__main__': with Pool(8) as p: print(p.map(f, range(8))) . $ python train_multi.py &amp; . After a few seconds, calling the command ps will yield something like this: . PID TTY TIME CMD 3982 ttys002 0:00.09 ...MacOS/Python train_multi.py 4219 ttys002 0:00.00 ...MacOS/Python train_multi.py 4220 ttys002 0:00.00 ...MacOS/Python train_multi.py 4221 ttys002 0:00.00 ...MacOS/Python train_multi.py 4222 ttys002 0:00.00 ...MacOS/Python train_multi.py 4223 ttys002 0:00.00 ...MacOS/Python train_multi.py 4224 ttys002 0:00.00 ...MacOS/Python train_multi.py 4225 ttys002 0:00.00 ...MacOS/Python train_multi.py 4226 ttys002 0:00.00 ...MacOS/Python train_multi.py . You can find all processes with the file train_multi.py with the pkill command and the -f flag: . See Parent / Child Processes (pstree) . pstree is also a helpful utility to see parent/child relationships between processes. You can install pstree on a mac with brew install pstree . In the above example, there are 8 sub-processes created by one python process. Running the command . $ pstree -s train_multi.py . Will show the process hierarchy. The -s flag allows you to filter parents and descendants of processes containing a string in their command. In the below example, PID 41592 will kill all the 8 child processes seen below . ",
+    "content": "Kill Single Process (ps, kill) . A common scenario is that you might run a python script to train a model: . $ python train.py . Let’s say you want to kill this script for whatever reason. You might not always be able to type Cntrl + C to stop it, especially if this process is running in the background. (Aside: A way make a program run in the background is with a &amp; for example:$ python train.py &amp; ) . In order to find this running program, you can use the command ps . $ ps Gives you basic information (good enough most of the time) . Flags: . | -e Allows you to see all running processes including from other users . | -f Allows you to see additional information about each process . | . In order to kill the process you will want to identify it’s PID for example, if the PID is 501 you can kill this process with the command: . $ kill 501 . Killing Multiple Processes (pkill) . If you use process-based threading in python with a library like multi-processing, python will instantiate many processes for you. This is common thing to do in python for a task like data processing. Let’s consider the below example. When you run this in the background it will produce 8 processes: . from multiprocessing import Pool from time import sleep def f(x): sleep(1000) # simulate some computation return x*x if __name__ == '__main__': with Pool(8) as p: print(p.map(f, range(8))) . $ python train_multi.py &amp; . After a few seconds, calling the command ps will yield something like this: . PID TTY TIME CMD 3982 ttys002 0:00.09 ...MacOS/Python train_multi.py 4219 ttys002 0:00.00 ...MacOS/Python train_multi.py 4220 ttys002 0:00.00 ...MacOS/Python train_multi.py 4221 ttys002 0:00.00 ...MacOS/Python train_multi.py 4222 ttys002 0:00.00 ...MacOS/Python train_multi.py 4223 ttys002 0:00.00 ...MacOS/Python train_multi.py 4224 ttys002 0:00.00 ...MacOS/Python train_multi.py 4225 ttys002 0:00.00 ...MacOS/Python train_multi.py 4226 ttys002 0:00.00 ...MacOS/Python train_multi.py . You can find all processes with the file train_multi.py with the pkill command and the -f flag: . See Parent / Child Processes (pstree) . pstree is also a helpful utility to see parent/child relationships between processes. You can install pstree on a mac with brew install pstree . In the above example, there are 8 sub-processes created by one python process. Running the command . $ pstree -s train_multi.py . Will show the process hierarchy. The -s flag allows you to filter parents and descendants of processes containing a string in their command. In the below example, PID 41592 will kill all the 8 child processes seen below . Killing Process Options . Reminder: view processes with ps or top To show processes from all users ps aux . | To restart pid 6996 kill -1 6996 . | kill pid 6996 kill -9 6996 . | . You can kill processes by name (which is also usually listed as the command that started the processes). killall will search for the string int he relevant process. Bringing processes back into the foreground . Reminder you put processes in the background with &amp; example is myscript.sh &amp; . You can move processes back into the foreground with fg . fg 1234 brings process 1234 back into the foreground. ",
     "url": "https://notes.hamel.dev/docs/linux/linux.html#managing-processes-ps-kill-pkill",
     "relUrl": "/docs/linux/linux.html#managing-processes-ps-kill-pkill"
   },"85": {
@@ -523,7 +523,7 @@
   },"87": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "Processes, Permissions and Moving Data",
-    "content": ". | References | Managing Processes (ps, kill, pkill) . | Kill Single Process (ps, kill) | Killing Multiple Processes (pkill) | See Parent / Child Processes (pstree) | . | Bundling &amp; Archiving Files (tar) . | Sending An Archive To A Remote Machine | Moving Files In Different Directories Into An Archive | Unpacking &amp; Decompressing Archives | . | File Permissions . | Changing File Permissions | Changing Ownership | . | . ",
+    "content": ". | References | Managing Processes (ps, kill, pkill) . | Kill Single Process (ps, kill) | Killing Multiple Processes (pkill) | See Parent / Child Processes (pstree) | Killing Process Options | Bringing processes back into the foreground | . | Bundling &amp; Archiving Files (tar) . | Sending An Archive To A Remote Machine | Moving Files In Different Directories Into An Archive | Unpacking &amp; Decompressing Archives | . | File Permissions . | Changing File Permissions | Changing Ownership | . | . ",
     "url": "https://notes.hamel.dev/docs/linux/linux.html",
     "relUrl": "/docs/linux/linux.html"
   },"88": {
@@ -552,107 +552,149 @@
     "relUrl": "/docs/linux/misc_utils.html#named-pipes-with-mkfifo"
   },"92": {
     "doc": "Misc Utilities",
+    "title": "Scan host for open ports w/ nmap",
+    "content": ". | Lookup ip with nslookup | nmap -sT &lt;IP address&gt; | . You can scan a range of IPs for a mysql port like so: . nmap -sT 192.168.181.0/24 -p 3306 -oG MySQLScan . This is useful if you have a public server and you want to verify that a port is open. ",
+    "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#scan-host-for-open-ports-w-nmap",
+    "relUrl": "/docs/linux/misc_utils.html#scan-host-for-open-ports-w-nmap"
+  },"93": {
+    "doc": "Misc Utilities",
+    "title": "Devices /dev",
+    "content": "Linux has a special directory that contains files representing attached devices. Important ones are sda1, sda2 , sda3, sdb and sdb1 . You can view a tree of your disks and the partitions with the utility lsblk . ",
+    "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#devices-dev",
+    "relUrl": "/docs/linux/misc_utils.html#devices-dev"
+  },"94": {
+    "doc": "Misc Utilities",
+    "title": "Mounting devices",
+    "content": "Sometimes you need to mount these devices. Two common mount points are /mnt and /media. If you mount the device into an existing directory it will cover the contents of that directory making them invisible and unavailable. Ex: mount device to /mnt . mount /dev/sb1 /mnt . Ex: mount flash drive . mount /dev/sdc1 /media . You can unmount a device with unmount: . unmount /dev/sb1 . ",
+    "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#mounting-devices",
+    "relUrl": "/docs/linux/misc_utils.html#mounting-devices"
+  },"95": {
+    "doc": "Misc Utilities",
+    "title": "Getting information on mounted drives",
+    "content": "df -h . ",
+    "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#getting-information-on-mounted-drives",
+    "relUrl": "/docs/linux/misc_utils.html#getting-information-on-mounted-drives"
+  },"96": {
+    "doc": "Misc Utilities",
+    "title": "Permanently deleting files with shred",
+    "content": "This utility writes over files many times in order to erase things. Helpful for sensitive data. ",
+    "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#permanently-deleting-files-with-shred",
+    "relUrl": "/docs/linux/misc_utils.html#permanently-deleting-files-with-shred"
+  },"97": {
+    "doc": "Misc Utilities",
+    "title": "Masking your IP for web scraping",
+    "content": "Look into proxy chains . Linux utility called proxychains which generally works as: . proxychains &lt;the command you want proxied&gt; &lt;arguments&gt; . proxychains defaults to using Tor if you don’t supply your own proxies. See: https://www.technocrazed.com/how-to-use-beagle-scraper-safely-to-scrape-e-commerce-platforms . ",
+    "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#masking-your-ip-for-web-scraping",
+    "relUrl": "/docs/linux/misc_utils.html#masking-your-ip-for-web-scraping"
+  },"98": {
+    "doc": "Misc Utilities",
+    "title": "Running Scripts At System Startup",
+    "content": "Look at rc scripts. After the kernel has initialized all its modules, it starts adaemon known as init or initd, which runs scripts found in /etc/init.d/rc . You can use the utility update-rc.d to add a script to the startup procedure: . This is useful if for example you always want to start a database on system startup. ",
+    "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#running-scripts-at-system-startup",
+    "relUrl": "/docs/linux/misc_utils.html#running-scripts-at-system-startup"
+  },"99": {
+    "doc": "Misc Utilities",
     "title": "Misc Utilities",
-    "content": ". | History | Diff | Here Documents | Named Pipes with mkfifo | . ",
+    "content": ". | History | Diff | Here Documents | Named Pipes with mkfifo | Scan host for open ports w/ nmap | Devices /dev . | Mounting devices | Getting information on mounted drives | Permanently deleting files with shred | . | Masking your IP for web scraping | Running Scripts At System Startup | . ",
     "url": "https://notes.hamel.dev/docs/linux/misc_utils.html",
     "relUrl": "/docs/linux/misc_utils.html"
-  },"93": {
+  },"100": {
     "doc": "ocotokit.js",
     "title": "Introduction",
     "content": "ocotokit.js is a javascript library that can help you interact with the GitHub API in a easy manner. Some javascript knowledge is helpful, but not required for many simple tasks. You can use the octokit.js client along with the github-script action to quickly interface with the GitHub API to do useful things in Actions (like commenting on an issue.) . It is helpful to install node.js when developing scripts that interface with the GitHub API so you can test them locally. ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html#introduction",
     "relUrl": "/docs/actions/ocotkit.html#introduction"
-  },"94": {
+  },"101": {
     "doc": "ocotokit.js",
     "title": "Example Octokit Scripts",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html#example-octokit-scripts",
     "relUrl": "/docs/actions/ocotkit.html#example-octokit-scripts"
-  },"95": {
+  },"102": {
     "doc": "ocotokit.js",
     "title": "Example 1: Create A Comment On A PR",
     "content": "Let’s say you want to programatically make a comment on a pull request with a url that includes the branch name, but you are only given the pull request number. We first lookup the branch name associated with the pull request and pass that to the method call that makes an issue comment: . //Instantiate octokit client const { Octokit } = require(\"@octokit/rest\"); const octokit = new Octokit({ auth: \"&lt;YOUR_PERSONAL_ACCESS_TOKEN&gt;\", }); //Take an action (create a comment) triggered by an issue comment // Get information about the pr octokit.pulls.get({ owner: 'hamelsmu', repo: 'test_html', pull_number: 1 }).then( (pr) =&gt; { // use the branch name from the pr to make a pr comment var BRANCH_NAME = pr.data.head.ref octokit.issues.createComment({ issue_number: 1, owner: 'hamelsmu', repo: 'test_html', body: `[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/hamelsmu/test_html/${BRANCH_NAME}) :point_left: Launch a binder notebook on this branch` }) }) . ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html#example-1-create-a-comment-on-a-pr",
     "relUrl": "/docs/actions/ocotkit.html#example-1-create-a-comment-on-a-pr"
-  },"96": {
+  },"103": {
     "doc": "ocotokit.js",
     "title": "Example 2: Issue Comment",
     "content": "This is a simple example of how you can create an issue comment. //Instantiate octokit client const { Octokit } = require(\"@octokit/rest\"); const octokit = new Octokit({ auth: \"&lt;YOUR_PERSONAL_ACCESS_TOKEN&gt;\", }); // Create an issue commment var BRANCH_NAME = 'hamelsmu-patch-1' octokit.issues.createComment({ issue_number: 1, owner: 'hamelsmu', repo: 'test_html', body: `[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/hamelsmu/test_html/${BRANCH_NAME}) :point_left: Launch a binder notebook on this branch` }) . ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html#example-2-issue-comment",
     "relUrl": "/docs/actions/ocotkit.html#example-2-issue-comment"
-  },"97": {
+  },"104": {
     "doc": "ocotokit.js",
     "title": "MyBinder.org",
     "content": "The examples above were adapted to write these docs for mybinder.org. ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html#mybinderorg",
     "relUrl": "/docs/actions/ocotkit.html#mybinderorg"
-  },"98": {
+  },"105": {
     "doc": "ocotokit.js",
     "title": "ocotokit.js",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html",
     "relUrl": "/docs/actions/ocotkit.html"
-  },"99": {
+  },"106": {
     "doc": "OSX Shell Tips",
     "title": "Key Repeat Rate",
     "content": "Add days to your lifespan by Increasing the key repeat rate. Run the following in the terminal then restart. Protip by Michael Musson. defaults write -g InitialKeyRepeat -int 13 # normal minimum is 15 (225 ms) defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms) . ",
     "url": "https://notes.hamel.dev/docs/linux/osx.html#key-repeat-rate",
     "relUrl": "/docs/linux/osx.html#key-repeat-rate"
-  },"100": {
+  },"107": {
     "doc": "OSX Shell Tips",
     "title": "A better way to search text: ack",
     "content": "Install ack: . brew install ack . Search files for text, super fast and returns results in a very nice way. By default will search recursively from the current directory and it skips unimportant files by default. ack \"search string\" . ",
     "url": "https://notes.hamel.dev/docs/linux/osx.html#a-better-way-to-search-text-ack",
     "relUrl": "/docs/linux/osx.html#a-better-way-to-search-text-ack"
-  },"101": {
+  },"108": {
     "doc": "OSX Shell Tips",
     "title": "Keyboard Tricks (OS X)",
     "content": "Set your option key to Esc+ in iTerm under Profiles&gt;Keys . | control-W delete word backwards | option-D delete word forwards | control-K delete until end of line | . ",
     "url": "https://notes.hamel.dev/docs/linux/osx.html#keyboard-tricks-os-x",
     "relUrl": "/docs/linux/osx.html#keyboard-tricks-os-x"
-  },"102": {
+  },"109": {
     "doc": "OSX Shell Tips",
     "title": "My .zshrc file",
     "content": "Stored at ~/.zshrc . I used to have ohmyzsh but it made my shell too slow. This is good enough for me. # #speed startup time https://medium.com/@dannysmith/little-thing-2-speeding-up-zsh-f1860390f92 autoload -Uz compinit for dump in ~/.zcompdump(N.mh+24); do compinit done compinit -C #### PROMPT='%(?.%F{green}√.%F{red}?%?)%f %B%F{157}%1~%f%b %F{231}%# ' autoload -Uz vcs_info precmd_vcs_info() { vcs_info } precmd_functions+=( precmd_vcs_info ) setopt prompt_subst RPROMPT=\\$vcs_info_msg_0_ zstyle ':vcs_info:git:*' formats '%F{141}(%b)%r%f' zstyle ':vcs_info:*' enable git alias ls=\"colorls\" alias python=\"python3\" # install jupyter kernel with pipenv function install-jupyter { if [ -n \"${PIPENV_ACTIVE+1}\" ]; then VENV_NAME=`echo ${VIRTUAL_ENV} | cut -d '/' -f 7` echo \"creating Jupyter kernel named $VENV_NAME\" pipenv install --skip-lock ipykernel python -m ipykernel install --user --name=$VENV_NAME fi } ## automatically activate pipenv shell upon cd function auto_pipenv_shell { if [ ! -n \"${PIPENV_ACTIVE+1}\" ]; then if [ -f \"Pipfile\" ] ; then pipenv shell fi fi } function cd { builtin cd \"$@\" auto_pipenv_shell } #extra stuff export CLICOLOR=1 export LSCOLORS=GxFxCxDxBxegedabagaced GREP_OPTIONS=\"--color=always\";export GREP_OPTIONS __git_files () { _wanted files expl 'local files' _files } . ",
     "url": "https://notes.hamel.dev/docs/linux/osx.html#my-zshrc-file",
     "relUrl": "/docs/linux/osx.html#my-zshrc-file"
-  },"103": {
+  },"110": {
     "doc": "OSX Shell Tips",
     "title": "OSX Shell Tips",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/linux/osx.html",
     "relUrl": "/docs/linux/osx.html"
-  },"104": {
+  },"111": {
     "doc": "Remote Browser For Jupyter",
     "title": "Background",
     "content": "It is very common to connect to a remote Jupyter server with your local browser. However, if you lose connection with your remote server, logs printed to the screen may stop streaming. This is common when training deep learning models where training runs can last days or weeks where progress bars are printed to the screen in a notebook. To avoid the issue with your browser loosing connection you can run the browser remotely on the same machine as the Jupyter server, even if your remote server does not have a desktop/GUI interface. ",
     "url": "https://notes.hamel.dev/docs/jupyter/remote_browser.html#background",
     "relUrl": "/docs/jupyter/remote_browser.html#background"
-  },"105": {
+  },"112": {
     "doc": "Remote Browser For Jupyter",
     "title": "fast.ai",
     "content": "The below youtube link, from fastai Lesson 10 Part 2 (2018) will walk you through how to accomplish this. ",
     "url": "https://notes.hamel.dev/docs/jupyter/remote_browser.html#fastai",
     "relUrl": "/docs/jupyter/remote_browser.html#fastai"
-  },"106": {
+  },"113": {
     "doc": "Remote Browser For Jupyter",
     "title": "Remote Browser For Jupyter",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/jupyter/remote_browser.html",
     "relUrl": "/docs/jupyter/remote_browser.html"
-  },"107": {
+  },"114": {
     "doc": "Resources",
     "title": "Introduction",
     "content": "These are resources that can help you get started with GitHub Actions: . | Talk: Getting started with Actions | Blog: An Intro To Actions For Data Scientists | . ",
     "url": "https://notes.hamel.dev/docs/actions/resources.html#introduction",
     "relUrl": "/docs/actions/resources.html#introduction"
-  },"108": {
+  },"115": {
     "doc": "Resources",
     "title": "Going Deeper",
     "content": "Once you have a basic understanding, these resources can help you learn more. | See mlops-github.com for a collection of resources specifically targeted at Data Scientists using GitHub Actions. | Actions official documentation. | . ",
     "url": "https://notes.hamel.dev/docs/actions/resources.html#going-deeper",
     "relUrl": "/docs/actions/resources.html#going-deeper"
-  },"109": {
+  },"116": {
     "doc": "Resources",
     "title": "Resources",
     "content": " ",
