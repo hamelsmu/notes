@@ -1,5 +1,6 @@
-# Hamel's Notes: https://notes.hamel.dev
+![Documentation](https://github.com/hamelsmu/notes/workflows/Documentation/badge.svg) 
 
+# Hamel's Notes: https://notes.hamel.dev
 
 ## Run this site locally: 
 
