@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Things Learned From fastcore.utils
+title: fastcore.utils
 parent: fastai
 nav_order: 2
 ---
 
-# Things Learned From fastcore.utils
+# Things I Learned From fastcore.utils
 
 <details open markdown="block">
   <summary>
