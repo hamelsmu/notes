@@ -13,7 +13,7 @@ To avoid the issue with your browser loosing connection you can run the browser 
 
 ## fast.ai
 
-The below youtube link, from fastai Lesson 10 Part 2 (2018) will walk you through how to accomplish this.
+The below youtube link (at timestamp 1:59:00), from fastai Lesson 10 Part 2 (2018) will walk you through how to accomplish this.
 
-{% include youtube.html content="h5Tz7gZT9Fo" %}
+{% include youtube.html content="h5Tz7gZT9Fo?t=7140" %}
 
