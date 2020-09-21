@@ -485,23 +485,23 @@
     "url": "https://notes.hamel.dev/docs/jupyter/",
     "relUrl": "/docs/jupyter/"
   },"81": {
-    "doc": "fastai",
-    "title": "fastai",
-    "content": "Random notes on fast.ai . ",
-    "url": "https://notes.hamel.dev/docs/fastai/",
-    "relUrl": "/docs/fastai/"
-  },"82": {
-    "doc": "GitHub Actions",
-    "title": "GitHub Actions",
-    "content": " ",
-    "url": "https://notes.hamel.dev/docs/actions/",
-    "relUrl": "/docs/actions/"
-  },"83": {
     "doc": "Linux & Bash Scripting",
     "title": "Linux & Bash Scripting",
     "content": "My personal notes on underrated Linux utilities that are useful when working on machine learning projects. Photo by Arget on Unsplash . ",
     "url": "https://notes.hamel.dev/docs/linux/",
     "relUrl": "/docs/linux/"
+  },"82": {
+    "doc": "fastai",
+    "title": "fastai",
+    "content": "Random notes on fast.ai . ",
+    "url": "https://notes.hamel.dev/docs/fastai/",
+    "relUrl": "/docs/fastai/"
+  },"83": {
+    "doc": "GitHub Actions",
+    "title": "GitHub Actions",
+    "content": " ",
+    "url": "https://notes.hamel.dev/docs/actions/",
+    "relUrl": "/docs/actions/"
   },"84": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "References",
