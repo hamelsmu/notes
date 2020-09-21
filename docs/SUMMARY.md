@@ -1,0 +1,23 @@
+# Table of contents
+
+* [Initial page](README.md)
+* [linux](linux/README.md)
+  * [linux](linux/linux.md)
+  * [osx](linux/osx.md)
+  * [index](linux/index.md)
+  * [cookbook](linux/cookbook.md)
+  * [bash\_scripting](linux/bash_scripting.md)
+  * [misc\_utils](linux/misc_utils.md)
+* [jupyter](jupyter/README.md)
+  * [remote\_browser](jupyter/remote_browser.md)
+  * [index](jupyter/index.md)
+* [actions](actions/README.md)
+  * [resources](actions/resources.md)
+  * [ocotkit](actions/ocotkit.md)
+  * [index](actions/index.md)
+* [fastai](fastai/README.md)
+  * [index](fastai/index.md)
+  * [utils](fastai/utils.md)
+* [docker](docker/README.md)
+  * [Docker-In-Action](docker/docker-in-action.md)
+
