@@ -1,0 +1,101 @@
+I"}<h1 id="introduction">Introduction</h1>
+
+<p><a href="https://github.com/octokit/rest.js/">ocotokit.js</a> is a javascript library that can help you interact with the <a href="https://docs.github.com/en/rest">GitHub API</a> in a easy manner.  Some javascript knowledge is helpful, but not required for many simple tasks.</p>
+
+<p>You can use the octokit.js client along with the <a href="https://github.com/actions/github-script">github-script</a> action to quickly interface with the GitHub API to do useful things in Actions (like commenting on an issue.)</p>
+
+<p>It is helpful to install <a href="https://nodejs.org/en/download/">node.js</a> when developing scripts that interface with the GitHub API so you can test them locally.</p>
+
+<h1 id="example-octokit-scripts">Example Octokit Scripts</h1>
+
+<h2 id="example-1-create-a-comment-on-a-pr">Example 1: Create A Comment On A PR</h2>
+
+<p>Let’s say you want to programatically make a comment on a pull request with a url that includes the branch name, but you are only given the pull request number.  We first lookup the branch name associated with the pull request and pass that to the method call that makes an issue comment:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="rouge-code"><pre><span class="c1">//Instantiate octokit client</span>
+<span class="kd">const</span> <span class="p">{</span> <span class="nx">Octokit</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">@octokit/rest</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">octokit</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Octokit</span><span class="p">({</span>
+    <span class="na">auth</span><span class="p">:</span> <span class="dl">"</span><span class="s2">&lt;YOUR_PERSONAL_ACCESS_TOKEN&gt;</span><span class="dl">"</span><span class="p">,</span>
+  <span class="p">});</span>
+
+  <span class="c1">//Take an action (create a comment) triggered by an issue comment</span>
+
+  <span class="c1">// Get information about the pr</span>
+  <span class="nx">octokit</span><span class="p">.</span><span class="nx">pulls</span><span class="p">.</span><span class="kd">get</span><span class="p">({</span>
+    <span class="na">owner</span><span class="p">:</span> <span class="dl">'</span><span class="s1">hamelsmu</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">repo</span><span class="p">:</span> <span class="dl">'</span><span class="s1">test_html</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">pull_number</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="p">}).</span><span class="nx">then</span><span class="p">(</span> <span class="p">(</span><span class="nx">pr</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// use the branch name from the pr to make a pr comment</span>
+    <span class="kd">var</span> <span class="nx">BRANCH_NAME</span> <span class="o">=</span> <span class="nx">pr</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">ref</span>
+    <span class="nx">octokit</span><span class="p">.</span><span class="nx">issues</span><span class="p">.</span><span class="nx">createComment</span><span class="p">({</span>
+        <span class="na">issue_number</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="na">owner</span><span class="p">:</span> <span class="dl">'</span><span class="s1">hamelsmu</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">repo</span><span class="p">:</span> <span class="dl">'</span><span class="s1">test_html</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">body</span><span class="p">:</span> <span class="s2">`[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/hamelsmu/test_html/</span><span class="p">${</span><span class="nx">BRANCH_NAME</span><span class="p">}</span><span class="s2">) :point_left: Launch a binder notebook on this branch`</span>
+      <span class="p">})</span>
+  <span class="p">})</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="example-2-issue-comment">Example 2: Issue Comment</h2>
+
+<p>This is a simple example of how you can create an issue comment.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="rouge-code"><pre>  <span class="c1">//Instantiate octokit client</span>
+  <span class="kd">const</span> <span class="p">{</span> <span class="nx">Octokit</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">@octokit/rest</span><span class="dl">"</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="nx">octokit</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Octokit</span><span class="p">({</span>
+    <span class="na">auth</span><span class="p">:</span> <span class="dl">"</span><span class="s2">&lt;YOUR_PERSONAL_ACCESS_TOKEN&gt;</span><span class="dl">"</span><span class="p">,</span>
+    <span class="p">});</span>
+
+  <span class="c1">// Create an issue commment</span>
+  <span class="kd">var</span> <span class="nx">BRANCH_NAME</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">hamelsmu-patch-1</span><span class="dl">'</span>
+  <span class="nx">octokit</span><span class="p">.</span><span class="nx">issues</span><span class="p">.</span><span class="nx">createComment</span><span class="p">({</span>
+      <span class="na">issue_number</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="na">owner</span><span class="p">:</span> <span class="dl">'</span><span class="s1">hamelsmu</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">repo</span><span class="p">:</span> <span class="dl">'</span><span class="s1">test_html</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">body</span><span class="p">:</span> <span class="s2">`[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/hamelsmu/test_html/</span><span class="p">${</span><span class="nx">BRANCH_NAME</span><span class="p">}</span><span class="s2">) :point_left: Launch a binder notebook on this branch`</span>
+    <span class="p">})</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h1 id="mybinderorg">MyBinder.org</h1>
+
+<p>The examples above were adapted to <a href="https://mybinder.readthedocs.io/en/latest/howto/gh-actions-badges.html">write these docs</a> for <a href="https://mybinder.org/">mybinder.org</a>.</p>
+
+:ET

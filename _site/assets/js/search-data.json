@@ -1,0 +1,860 @@
+{"0": {
+    "doc": "Docker",
+    "title": "Chapter 1",
+    "content": ". | Docker containers are faster than VMs to start, partly because they do NOT offer any hardware virtualization. | VMs provide hardware abstractions so you can run operating systems. | . | Docker uses Linux namespaces and cgropus . | Hamel: I don’t know what this is | . | . ",
+    "url": "http://localhost:4000/docs/docker/Docker-In-Action.html#chapter-1",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-1"
+  },"1": {
+    "doc": "Docker",
+    "title": "Chapter 2",
+    "content": ". | Getting help: . | docker help cp | docker help run | . | Linking containers: docker run --link . | this is apparently deprecated per the docs | Opens a secure tunnel between two containers automatically | Also exposes environment variables and other things (see the docs) | . | docker cp copy files from a container to local filesystem . | Detach an interactive container: . | Hold down Control and press P then Q | . | Get logs docker logs &lt;container name&gt; . | Hamel: This is like kubectl logs | . | Run a new command in a running container docker exec . | docker exec &lt;container_name&gt; ps will run the ps command and emit that to stdout | . | Rename a container with docker rename &lt;current_name&gt; &lt;new_name&gt; . | docker exec run additional processes in an already running container . | docker create is the same as docker run except that the container is created in a stopped state. | docker run --read-only allows you to run a container in a read only state, which you only need to do in special circumstances (you probably never need to use this). You can make exceptions to the read only constraint with the -v flag: | . | Override the entrypoint using the --entrypoint flag (this is discussed in part 2 of the book). | . Injecting environment variables . With the --env or -e flags. A nice trick to see all the environment variables in a docker container is to use the Unix command env . Setting multiple environment variables: use \\ for multiline like this: . | 1 2 3 4 5 . | docker create \\ --env WORDPRESS_DB_HOST=&lt;my database hostname&gt; \\ --env WORDPRESS_DB_USER=site_admin \\ --env WORDPRESS_DB_PASSWORD=MeowMix42 \\ wordpress:4 . | . Automatically restarting containers . Docker uses an exponential backoff strategy - double the previous time waiting until restarting. docker run -d --restart always ... See these restart policies . | no | on-failure[:max-retries] | always | unless-stopped | . Removing containers vs. images . Containers are the actual instantiation of an image, just like how an object is an instantion of an instance of a class. docker rm: remove a container docker rmi: remove an image . ",
+    "url": "http://localhost:4000/docs/docker/Docker-In-Action.html#chapter-2",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-2"
+  },"2": {
+    "doc": "Docker",
+    "title": "Chapter 3",
+    "content": ". | Two ways to publish an image . | Build locally, push image to registry | Make a Dockerfile and use DockerHub’s build system. This is preferred and considered to be safer, and DockerHub will mark your image as trusted if you do this because it is the only way to provide transparency to what is in your image. | . | Search dockerhub by keyword , sorted descending by stars . | docker search &lt;keyword&gt; | example: docker search postgres | . | Using Alternative registries . | docker pull quay.io/dockerinaction/ch3_hello_registry:latest | . | . Images as files . You can transport, save and load images as files! (You don’t have to push them to a registry). You can then load the image: . docker load -i myfile.tar . ",
+    "url": "http://localhost:4000/docs/docker/Docker-In-Action.html#chapter-3",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-3"
+  },"3": {
+    "doc": "Docker",
+    "title": "Chapter 4 Persistent Storage &amp;. Shared State with Volumes",
+    "content": "-v and --volume are aliases . --volumes-from=\"&lt;container-name&gt;\" Mount all volumes from the given container . Different kind of Volumes . | Bind mount - this is what you always use | Docker managed volume (2 kinds) . | Anonymous | Named volume (a special case of Anonymous) | . | . Use volumes | Docker Documentation - Named vs. Anonymous volumes: article - Hamel: maybe? You might use named volumes to persist data between containers. To persist data with named volumes . Named volume is a kind of anonymous volume where the mount point is managed by Docker. Example of how you used a named volume: . | Start container with a named volume: docker run --name myDatabaseWithVolume -v appdata:/var/lib/mysql mysql save a table in the mysql database . | Start a new container with the same named volume docker run --name myDatabaseWithVolume2 -v appdata:/var/lib/mysql mysql You should be able to see the same table you created in the last container b/c data has been persisted. | . See where Docker anonymous volumes store information . Unlike a bind mount, where you explicitly name the host location, docker will manage the storage location of anonymous volumes. But how do you know where the files are stored on the host? . You can use docker inspect command filtered for the Volumes key to find the storage location on the host. Create a container with an anonymous volume. docker run -v /some/location --name cass-shared alpine . docker inspect -f \"\" cass-shared . This will output a json blob which will show the mount points. Other things you didn’t know about volumes . | when you mount a volume, it overrides any files already at that location . | You can mount specific files which avoid this | if you specify a host directory that doesn’t exist Docker will create it for you . | exception: If you are mounting a file instead of a directory and it doesn’t exist on the host, Docker will throw an error | . | . | you can mount a volume as read only -v /source:/destination:ro . | see docs (there is this optional third argument for volumes) | . | . The volumes-from flag . Allows you to share volumes with another container. When you use this flag, the same volumes are mounted into your container at the same location. Volumes are copied transitively, so this will automatically mount volumes that are also mounted this way from another container. Caveats - You cannot mount a shared volume to a different location within a container. This is a limitation of --volumes-from - If you have a collision in the destination mount point among several volumes-from only one volume will survive, which you can ascertain from docker inpsect - see above for how to use docker inspect - You cannot change the write permission of the volume, you inherit whatever the permission is in the source container. Cleaning up volumes . -v flag . docker rm -v will delete any managed volumes referenced by the target container . However, if you delete all containers but forget a -v flag you will be left with an orphaned volume. This is bad b/c it takes up disk space until cleaned up. You have to run complicated cleanup steps to get rid of orphans. Solution: There is none, its a good habit to use -v anytime you call docker rm . Hamel: this means that- . | Don’t use managed volumes unless you really need it | If you do use them, try to include makefiles that include -v as a part of things | . Advanced Volume Stuff . | You can have a volume container p. 72 so that you can reference --volume-from from all your containers. | Data-paced volume containers, you can pre-load volume containers with data p. 73 | You can change the behavior of currently running containers by mounting configuration files and application in volumes. In a way, Hamel | . ",
+    "url": "http://localhost:4000/docs/docker/Docker-In-Action.html#chapter-4-persistent-storage--shared-state-with-volumes",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-4-persistent-storage--shared-state-with-volumes"
+  },"4": {
+    "doc": "Docker",
+    "title": "Chapter 5 Single Host Networking",
+    "content": ". | Terminology: . | protocols: tcp, http | interfaces: IP addresses | ports: you know what this means . | Customary ports: . | HTTP: 80 | MySQL: 3306 | Memcached: 11211 | . | . | . | . Discuss advanced networking and creating a network using the docker network command. Hamel: I don’t see an immediate use for this. | Special container networks: . | host . | docker run --network host allows you to pretend like the host is your local machine, and you can expose any port and that will bind to the host. | . | none . | docker run --network none closes all connection to the outside world. This is useful for security. | . | . | . exposing ports . -p 8080 This binds port 8080 to a random port on the host! you can find the port that the container is bound to by docker port &lt;image name&gt; example: docker run -p 8080 --name listener alpine docker port listener . This will give you output that looks like container --&gt; host (which is reverse the other nomenclature of host:container . -p 8080:8080 this binds the container’s port to the host’s port 8080 . -p 0.0.0.0:8080:8080/tcp same as above but specifies the interface and the tcp protocol. Syntax is -p &lt;host-interface&gt;:&lt;host-port&gt;:&lt;target-port&gt;/&lt;protocol&gt; . ",
+    "url": "http://localhost:4000/docs/docker/Docker-In-Action.html#chapter-5-single-host-networking",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-5-single-host-networking"
+  },"5": {
+    "doc": "Docker",
+    "title": "Chapter 6 Isolation",
+    "content": "Limit resources: Memory, CPU, . | -m or --memory . | where unit = b, k, m or g | memory limits are not reservations, just caps | . | --cpu-shares . | is a weight you set that is used to calculate % of CPU usage allowed | % is calculated as weight / (sum of all weights) | only enforced when there is contention for a CPU | . | --cpuset-cpus : limits process to a specific CPU . | docker run -d --cpuset-cpus 0 Restricts to CPU number 0 | Can specify a list or 0,1,2 or a range 0-2 | . | --device . | mount your webcam: docker run --device /dev/video0:/dev/video0 | . | Shared memory : Hamel this was too advanced for me | . Running as a user . | You can only inspect the default run-as User by creating or pulling the image . | see p. 113 | . | Change run-as user . | docker run --user nobody | The user has to exist in the image when doing this or you will get an error. The user will not be created automatically for you. | See available users: . | docker run --rm busybox:latest awk -F: '$0=$1' /etc/passwd | . | . | . Privileged Containers: TRY NOT TO DO THIS . | This is how you run Docker-in-Docker | Priviliged containers have root privileges on the host. | --privilged on docker create or docker run | . ",
+    "url": "http://localhost:4000/docs/docker/Docker-In-Action.html#chapter-6-isolation",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-6-isolation"
+  },"6": {
+    "doc": "Docker",
+    "title": "Chapter 7 packaging software",
+    "content": "Aside: cleaning up your docker environment . docker image prune -a and docker container prune . Recovering changes to a stopped container . I always thought you have to commit changes in order to preserve changes to an image you made in a container. This is not true (although committing changes is a good idea). Any changes you make to a container is saved even if the container is exited . To recover changes to a container . | Find the container (if you didn’t name it with docker run --name it will be named for you), using docker ps -a | Start the container using docker start -ai &lt;container_name&gt; the -ai flags mean to attach and run interactively | Now you are in the container you can verify that everything you installed is still there! | . Note: if you run your container initially with docker run --rm this automatically removes your container upon exit, so this might not be recommended as your changes are not recoverable if you forget to commit . Seeing changes to a container from the base image . docker diff &lt;container name&gt; will output a long list of of file changes: - A: file added - D: file deleted - C: file changed . Other tricks . You can override the entry point to the container permanently by using the --entrypoint flag: docker run --entrypoint . Understanding Images &amp; Layers . | files are stored in a Union file system, so they are stored in specific layers. The file system you are seeing as an end user are a union of all the layers. Each time a change is made to a union file system, that change is recorded on a new layer on top of all of the others. The “union” of all of those layers, or top-down view, is what the container (and user) sees when accessing the file system. | This means if you are not careful you can bloat the file system by making a bunch of unnecessary changes to add/delete files. | . | docker commit commits the top-layer changes to an image, meaning all the files changes are saved. | . See image size with . docker images. Even though you remove a file, the image size will increase! This is because of the Union File System . See size of all layers . docker history &lt;image name&gt; . flatten an image This is kind of complicated, you can do this by exporting and importing the filesystem into a base image See pg. 140. BUT there is an experimental feature called docker build --squash -t &lt;image&gt; .You can enable experimental features by following these instructions: dockerd Docker Documentation. For Mac, you can turn on experimental features by setting experimental: true in `settings&gt; Command Line &gt; enable experimental . ",
+    "url": "http://localhost:4000/docs/docker/Docker-In-Action.html#chapter-7-packaging-software",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-7-packaging-software"
+  },"7": {
+    "doc": "Docker",
+    "title": "Chapter 8 Build Automation",
+    "content": ". | use .dockerignore to prevent certain files from being copied | You can set multiple environment variables at once in Dockerfile | You can use environment variables in the LABEL command . | The metadata makes it clear that the environment variable substitution works. You can use this form of substitution in the ENV, ADD, COPY, WORKDIR, VOLUME, EXPOSE, and USER instructions. | . | . | 1 2 . | ENV APPROOT \"/app\" APP \"mailer.sh\" VERSION \"0.6\" LABEL base.name \"Mailer Archetype\" base.version \"${VERSION}\" . | . | view metadata using the command docker inspect &lt;image name&gt; | . ENTRYPOINT something arugment vs. ENTRYPOINT [“something”, “argument”] . TLDR; use the ugly list approach . There are two instruction forms shell form and exec form docker - Dockerfile CMD shell versus exec form - Stack Overflow . The ENTRYPOINT instruction has two forms: the shell form and an exec form. The shell form looks like a shell command with whitespace-delimited arguments. The exec form is a string array where the first value is the command to execute and the remaining values are arguments. Most importantly, if the shell form is used for ENTRYPOINT, then all other arguments provided by the CMD instruction or at runtime as extra arguments to docker run will be ignored. This makes the shell form of ENTRYPOINT less flexible. Other commands can use the exec form too! You must use the exec form when any of the arguments contain a whitespace: . | 1 2 3 4 5 6 . | FROM dockerinaction/mailer-base:0.6 COPY [\"./log-impl\", \"${APPROOT}\"] RUN chmod a+x ${APPROOT}/${APP} &amp;&amp; \\ chown example:example /var/log USER example:example VOLUME [\"/var/log\"] # each value in this array will be created as a new volume definition CMD [\"/var/log/mailer.log\"] . | . Note: you usually don’t want to specify a volume at build time. CMD vs. ENTRYPOINT (You should really try to always use both!) . CMD is actually an argument list for the ENTRYPOINT. | Logically when you run a container it runs as &lt;default shell program&gt; ENTRYPOINT CMD | You can override the ENTRYPOINT with docker run --entrypoint, and you can override commands by just passing commands to docker run : docker run &lt;image name&gt; &lt;command&gt; | . | 1 2 3 4 . | FROM ubuntu ENTRYPOINT [ \"ls\" ] CMD [\"-lah\"] . | . As you can see using ENTRYPOINT as well as CMD separately provides your downstream users with the most flexibility. COPY vs ADD . Use COPY. ADD has additional functionality like ability to download from urls and decompress files, which proved opaque over time and you shouldn’t use it. ONBUILD . The ONBUILD instruction defines instructions to execute if the resulting image is used as a base for another build. those ONBUILD instructions are executed after the FROM instruction and before the next instruction in a Dockerfile. | 1 2 3 . | FROM busybox:latest WORKDIR /app RUN touch /app/base-evidence ONBUILD RUN ls -al /app . | . Other Stuff . | You should always validate the presence of required environment variables in a startup shell script like entrypoint.sh | . Docker Digests . Reference the exact SHA of a Container which is the only way to guarantee the image you are referencing has not changed. @ symbol followed by the digest. Hamel: doesn’t look like a good way to find history of digests, but you can see the current SHA when you use docker pull , you can see the SHA as well if you call docker images --digests . | 1 . | FROM debian@sha256:d5e87cfcb730... | . ",
+    "url": "http://localhost:4000/docs/docker/Docker-In-Action.html#chapter-8-build-automation",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-8-build-automation"
+  },"8": {
+    "doc": "Docker",
+    "title": "Chapter 10 (skipped Ch 9)",
+    "content": ". | You can run your own customized registry. Simplest version can be hosted from a Docker Container! | . | 1 2 3 4 5 6 7 8 . | # start a local registry on port 5000 docker run -d --name personal_registry \\ -p 5000:5000 --restart=always \\ registry:2 # push an image to the registry (using the same image that created the registry for convenience) docker tag registry:2 localhost:5000/distribution:2 docker push localhost:5000/distribution:2 . | . Note that docker push syntax is actually docker push &lt;registry url&gt;/org/repo . This chapter discusses many more things which are skipped: - Centralized registries - Enhancements - Durable blog storage - Integrating through notifications . ",
+    "url": "http://localhost:4000/docs/docker/Docker-In-Action.html#chapter-10-skipped-ch-9",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-10-skipped-ch-9"
+  },"9": {
+    "doc": "Docker",
+    "title": "Chapter 11 Docker Compose",
+    "content": "Docker compose for fastpages: . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 . | version: \"3\" services: fastpages: &amp;fastpages working_dir: /data environment: - INPUT_BOOL_SAVE_MARKDOWN=false build: context: ./_action_files dockerfile: ./Dockerfile image: fastpages-dev logging: driver: json-file options: max-size: 50m stdin_open: true tty: true volumes: - .:/data/ converter: &lt;&lt;: *fastpages command: /fastpages/action_entrypoint.sh watcher: &lt;&lt;: *fastpages command: watchmedo shell-command --command /fastpages/action_entrypoint.sh --pattern *.ipynb --recursive --drop jekyll: working_dir: /data image: hamelsmu/fastpages-jekyll restart: unless-stopped ports: - \"4000:4000\" volumes: - .:/data/ command: &gt; bash -c \"gem install bundler &amp;&amp; jekyll serve --trace --strict_front_matter\" . | . The above uses YAML anchors: YAML anchors - Atlassian Documentation . Start a particular service: docker-compose up &lt;service name&gt; Rebuild a service docker-compose build &lt;service name&gt; . You can express dependencies with depends_on which is useful for compose to know which services to restart or start in a specified order. See examples of Docker Compose files on p 243 . Scaling Up w/Docker Compose . That’s right you don’t need docker swarm. This example uses ch11_coffee_api/docker-compose.yml at master · dockerinaction/ch11_coffee_api · GitHub . | Get list of containers that are currently providing the service. | . docker-compose ps coffee . | 1 2 3 . | Name Command State Ports ---------------------------------------------------------------------------- ch11_coffee_api_coffee_1 ./entrypoint.sh Up 0.0.0.0:32768-&gt;3000/tcp . | . | Scale it up with docker-compose up --scale | . docker-compose up --scale coffee=5 . When you run docker-compose ps coffee: . | 1 2 3 4 5 6 7 8 . | docker-compose ps coffee  ✔ Name Command State Ports ---------------------------------------------------------------------------- ch11_coffee_api_coffee_1 ./entrypoint.sh Up 0.0.0.0:32768-&gt;3000/tcp ch11_coffee_api_coffee_2 ./entrypoint.sh Up 0.0.0.0:32769-&gt;3000/tcp ch11_coffee_api_coffee_3 ./entrypoint.sh Up 0.0.0.0:32771-&gt;3000/tcp ch11_coffee_api_coffee_4 ./entrypoint.sh Up 0.0.0.0:32770-&gt;3000/tcp ch11_coffee_api_coffee_5 ./entrypoint.sh Up 0.0.0.0:32772-&gt;3000/tcp . | . Note that the coffee service binds to port 0 on your host, which is an ephemeral port, which just means that your host machine assigns the service to a random port. This is required if you plan on using docker compose up --scale . The service was bound to port 0 on the host with . | 1 2 3 4 5 6 7 8 9 . | coffee: build: ./coffee user: 777:777 restart: always expose: - 3000 ports: - \"0:3000\" ... | . | Load balancer | . Problem with this kind of scaling is you don’t know the ports in advance , and you don’t want to hit these individual endpoints, you need a load balancer. This blog post shows you how to luse NGINX as a load balancer. You will need something like this in your compose file . | 1 2 3 4 5 6 7 8 . | nginx: image: nginx:latest volumes: - ./nginx.conf:/etc/nginx/nginx.conf:ro depends_on: - pspdfkit ports: - \"4000:4000\" . | . Templating Docker Compose Files . You can read about this here: Share Compose configurations between files and projects | Docker Documentation, allows you to override certain things from a base compose file. ",
+    "url": "http://localhost:4000/docs/docker/Docker-In-Action.html#chapter-11-docker-compose",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-11-docker-compose"
+  },"10": {
+    "doc": "Docker",
+    "title": "Chapter 12 Clusters w/Machine &amp; Swarm",
+    "content": "Hamel: I skipped this completely . ",
+    "url": "http://localhost:4000/docs/docker/Docker-In-Action.html#chapter-12-clusters-wmachine--swarm",
+    "relUrl": "/docs/docker/Docker-In-Action.html#chapter-12-clusters-wmachine--swarm"
+  },"11": {
+    "doc": "Docker",
+    "title": "Docker",
+    "content": "Notes from the book Docker In Action . | Chapter 1 | Chapter 2 . | Injecting environment variables | Automatically restarting containers | Removing containers vs. images | . | Chapter 3 . | Images as files | . | Chapter 4 Persistent Storage &amp;. Shared State with Volumes . | Different kind of Volumes | To persist data with named volumes | See where Docker anonymous volumes store information | Other things you didn’t know about volumes | The volumes-from flag | Cleaning up volumes | Advanced Volume Stuff | . | Chapter 5 Single Host Networking . | exposing ports | . | Chapter 6 Isolation . | Limit resources: Memory, CPU, | Running as a user | Privileged Containers: TRY NOT TO DO THIS | . | Chapter 7 packaging software . | Recovering changes to a stopped container | Seeing changes to a container from the base image | Other tricks | Understanding Images &amp; Layers | . | Chapter 8 Build Automation . | ENTRYPOINT something arugment vs. ENTRYPOINT [“something”, “argument”] | CMD vs. ENTRYPOINT (You should really try to always use both!) | COPY vs ADD | ONBUILD | Other Stuff | Docker Digests | . | Chapter 10 (skipped Ch 9) | Chapter 11 Docker Compose . | Scaling Up w/Docker Compose | Templating Docker Compose Files | . | Chapter 12 Clusters w/Machine &amp; Swarm | . ",
+    "url": "http://localhost:4000/docs/docker/Docker-In-Action.html",
+    "relUrl": "/docs/docker/Docker-In-Action.html"
+  },"12": {
+    "doc": "About",
+    "title": "About",
+    "content": "These docs are hosted on GitHub: hamelsmu/notes. You can find more information about the author here. ",
+    "url": "http://localhost:4000/about/",
+    "relUrl": "/about/"
+  },"13": {
+    "doc": "Cheatsheet",
+    "title": "Bash Scripting Class Linux Academy",
+    "content": ". | Link to class. | Link to GitHub repo | . | Bash Scripting Class Linux Academy . | History of Bash | Bash Configuration . | .bash_profile | .bashrc | .bash_history | .bash_logout | . | Shell Scripts . | chmod u+x | Introduction | Using Variables on The Command Line . | Using Substitution with backticks | . | Using Variables in Scripts | Command Subsitution | Exit Status . | Using exit statues in a shell script | . | Arithmetic Operations | . | Global and Local Environment Variables . | unset : Delete An Environment Variable | . | Special Characters: Quotes &amp; Escapes | . | Redirecting Output . | Using dev/null | Redirect Std Error | Redirect Std Out &amp; Err into one file | Dispose Std Err output /dev/null | . | The Read Statement | Shell Expansion . | Brace Expansion | Parameter Expansion, Like Coalesce | . | Types of Variables . | Readonly Variables | Types of Variables | . | Arrays . | Iterating Through Arrays | Passing Variables to Scripts at the Command Line | . | Conditionals . | The if statement | If/Then/Else | . | Conditional Expressions . | File Expressions | String Expressions | Integer Expressions | . | Aside: Output Streams | Control Flow . | For Loop | Case Statement . | Match Multiple Case Statements | . | While Loop | Asynchronous Execution with wait | Short Circuit Expressions . | &amp;&amp;: command1 &amp;&amp; command2: | ||: command1 || command2: | . | . | Execution Operators | Input/Output . | Reading Files | Reading Files with loops | File Descriptors | Delimiters (IFS) | Traps and Signals | . | Debugging Shell Scripts | Error Handling | Functions . | structure of functions in a shell script | Scope | Functions With Parameters | Nested Functions | Function Return and Exit | . | Interactive Menus . | Infobox | Msgbox | Menus | . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#bash-scripting-class-linux-academy",
+    "relUrl": "/docs/linux/bash_scripting.html#bash-scripting-class-linux-academy"
+  },"14": {
+    "doc": "Cheatsheet",
+    "title": "History of Bash",
+    "content": ". | was originally a program called bin/sh | Bourne Shell: introduced more advanced structure into the shell. | Bourne Again Shell (Bash): Second iteration of Bourne Shell. | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#history-of-bash",
+    "relUrl": "/docs/linux/bash_scripting.html#history-of-bash"
+  },"15": {
+    "doc": "Cheatsheet",
+    "title": "Bash Configuration",
+    "content": "| 1 2 3 4 5 6 7 8 . | ls -a ~/ | grep bash  .bash_history  .bash_profile  .bash_profile.backup  .bash_profile.bensherman  .bash_profile_copy  .bash_sessions/  git-completion.bash . | .bash_profile . | .bash_profile: executed when you login -&gt; configures the shell when you get an initial command prompt. This is different than .bashrc. | commonly loads the ~/.bashrc file as well. | bin is traditionally the folder for binaries. | bash_profile is designed to run when you login, so if you change it will not refresh until you login next time. | .bashrc . | .bashrc it is executed simply before the command shell comes up, does not have to wait until you login. | etc/bashrc are system bashrc files which is like a “template” for user bashrc files. Anytime a new user is created, it inherits from this template and sometimes automated customizations are applied. This is usually done by simply importing etc/bashrc from each user’s bashrc file. | env will list all env variables. | to apply .bashrc you just have to run the command bash as it will start another shell from your current one. However, if you run bash you can now exit without closing the shell, because a shell is running inside another shell. | .bash_history . | ~/.bash_history contains lots of history. By default will only capture last 100 but you can change this setting. | you can exlude something from saving to history (like passwords) by using an ignorespace | the environment variable HIST_CONTROL can be used to control how much history to keep and settings about what should not be logged. One way to turn off loggin is: | 1 . | export HISTCONTROL=$HISTCONTROL:ignorespace . | . this allow you to skip logging by adding a space to the the beginning of any command. If you want to see what is in HIST_CONTROL you will see: . | 1 2 . | &gt; cat ~/.bash_history | grep HISTCONTROL HISTCONTROL=ignoredups:ignorespace . | . ignoredups was already set to this variable. | .bash_logout . | Doesn’t always exist on a system. in most cases the contents of the ~/.bash_logout will be empty or contain a comment. | The role of this file is to execute things when you exit the shell. If you close the shell it will not work, you have to do a clean exit instead. | Common use is to use this to clear out ~/.bashrc with the original to clear out any changes the user may have made. You can accomplish this by copying a backup: . | 1 . | cp ~/.bashrc.original ~/.bashrc . | . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#bash-configuration",
+    "relUrl": "/docs/linux/bash_scripting.html#bash-configuration"
+  },"16": {
+    "doc": "Cheatsheet",
+    "title": "Shell Scripts",
+    "content": "Put your shell scripts in a folder you can find them. We can put them in ~/bin: . | 1 . | &gt; mkdir bin . | . Make sure in ~/.bash_profile you have: . | 1 2 . | PATH=$PATH:$HOME/bin export PATH . | . chmod u+x . | To make test.sh executable run command chmod u+x test.sh | . You can also run chmod 755 . Introduction . | See these notes on what makes a shell script, accessing environment variables. | . Using Variables on The Command Line . | can use any name that is not an environment variable (check with env). | by convention variable names in ALLCAPS. | 1 . | &gt; FIRSTNAME=\"Hamel\" . | . | 1 2 . | - No space b/w = and value. - Good idea to __always__ put value in double quotes `\"`, although this is not required in every case. | . | As a practice you want to use export command to set is as an environment variable. This makes the variable available to any subprocess that starts from the shell. Read more about this here. | 1 2 3 4 5 . | &gt; export FIRSTNAME &gt; echo \"Hello, $FIRSTNAME\" \"Hello Hamel\" &gt; export FIRSTNAME=\"Hamel\" # do this in one step . | . The above example could work without export, too just reinforcing that its a good idea to use this as a habit. You can do this in one step: . | . Using Substitution with backticks . | 1 . | &gt; export TODAYSDATE=`date` # executes date command . | . Using Variables in Scripts . | Illustrative script varexample.sh . | 1 2 3 4 5 6 7 8 9 10 11 . | MYUSERNAME='hamel' MYPASSWORD='password' STARTOFSCRIPT=`date` echo \"My login name for this app is $MYUSERNAME\" echo \"My login password for this app is $MYPASSWORD\" echo \"I started this script at $STARTOFSCRIPT\" ENDOFSCRIPT=`date` echo \"I ended the script at $ENDOFSCRIPT\" . | . | These variables only live within the sub-shell that executes the script. | . Command Subsitution . | Method 1 (Static): Assign command result to variable. Only runs the command at time of variable assignment. | . | 1 2 3 4 5 . | TODAYSDATE=`date` USERFILES=`find /home -user user` # find all directories owned by the user \"user\" echo \"Today's Date: $TODAYSDATE\" echo \"All files owned by USER: $USERFILES\" . | . | Method 2: Use an alias, which allows you to run a command every time you call the alias. For aliases to work this way you must use the shopt command, which allows aliases to be useable in shell scripts. Technically referred to as “expanding aliases within a subshell”. | . | 1 2 3 4 5 6 7 8 9 10 11 . | #!/bin/bash shopt -s expand_aliases # notice that we don't use backticks here because the command we want to execute is put in \"..\" alias TODAY=\"date\" alias UFILES=\"find /home -user user\" A=`TODAY` #Executes the command date B=`UFILES`#Executes the command echo \"With Alias, TODAY is: $A\" echo \"With Alias, UFILES is: $B\" . | . Exit Status . | Value = 0 means everything is ok | Value != 0 means something is wrong. | See last exit status w/ the $? command: | . | 1 2 3 . | &gt; ls &gt; echo $? 0 . | . Using exit statues in a shell script . | Unlike python, shell scripts will continue executing even if there is an error. You can prevent this by using set -e | . | 1 . | set -e # means exit the shell if there is an error, don't continue. | . Arithmetic Operations . | 1 2 3 . | expr 1 + 2 expr 2 \\* 2 # you have to escape the * expr \\( 2 + 2 \\) \\* 4 # you must also escape the ( ) . | . | Caveat: You need a space on each side of the operator. | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#shell-scripts",
+    "relUrl": "/docs/linux/bash_scripting.html#shell-scripts"
+  },"17": {
+    "doc": "Cheatsheet",
+    "title": "Global and Local Environment Variables",
+    "content": ". | env and printenv will tell you your global vars | set will give you things from your session. This will also usually contain everything from your global scope. set is a superset of env. | Reserved names: see study guide or google it. | . unset : Delete An Environment Variable . unset MY_VAR . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#global-and-local-environment-variables",
+    "relUrl": "/docs/linux/bash_scripting.html#global-and-local-environment-variables"
+  },"18": {
+    "doc": "Cheatsheet",
+    "title": "Special Characters: Quotes &amp; Escapes",
+    "content": ". | $ escapes a single character. | single quotes '..' treats something as a string, escapes the whole thing | double quotes do not escape anything. | . | 1 2 3 4 5 6 7 8 9 10 11 . | &gt; echo \"\\$COL\" # this will escape the $ $COL &gt; echo '$COL' # single quotes escape things, means the literal string $COL &gt; echo \"$COL\" # does not escape anything 250 &gt; echo \"The date is: `date`\" # command substitution with bacticks The date is Mon Jul 25 . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#special-characters-quotes--escapes",
+    "relUrl": "/docs/linux/bash_scripting.html#special-characters-quotes--escapes"
+  },"19": {
+    "doc": "Cheatsheet",
+    "title": "Redirecting Output",
+    "content": " ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#redirecting-output",
+    "relUrl": "/docs/linux/bash_scripting.html#redirecting-output"
+  },"20": {
+    "doc": "Cheatsheet",
+    "title": "Using dev/null",
+    "content": "Use dev/null when you want to discard output and don’t want to put in the background. /dev/null is a device, and like everything is a file in linux. Everything you write to dev/null just dissapears. For example: . | 1 2 3 4 . | #!/bin/bash #redirect to dev/null example echo \"This is going to the blackhole.\" &gt;&gt; /dev/null . | . Note &gt;&gt; (append) or &gt; (overwrite) will work for dev/null, although out of habit in other scenarios it is better to append when unsure using &gt;&gt;. ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#using-devnull",
+    "relUrl": "/docs/linux/bash_scripting.html#using-devnull"
+  },"21": {
+    "doc": "Cheatsheet",
+    "title": "Redirect  Std Error",
+    "content": "ls -l /bin/usr 2&gt; ls-error.txt . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#redirect--std-error",
+    "relUrl": "/docs/linux/bash_scripting.html#redirect--std-error"
+  },"22": {
+    "doc": "Cheatsheet",
+    "title": "Redirect Std Out &amp; Err into one file",
+    "content": "ls -l /bin/sur &gt; ls-output.txt 2&gt;&amp;1 . Shortcut: use &amp; . ls -l /bin/sur &amp;&gt; ls-output.txt . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#redirect-std-out--err-into-one-file",
+    "relUrl": "/docs/linux/bash_scripting.html#redirect-std-out--err-into-one-file"
+  },"23": {
+    "doc": "Cheatsheet",
+    "title": "Dispose Std Err output /dev/null",
+    "content": "ls -l /bin/sur 2&gt; /dev/null . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#dispose-std-err-output-devnull",
+    "relUrl": "/docs/linux/bash_scripting.html#dispose-std-err-output-devnull"
+  },"24": {
+    "doc": "Cheatsheet",
+    "title": "The Read Statement",
+    "content": "note the backticks and the expr command . | 1 2 3 4 5 6 7 8 9 10 11 12 . | echo \"Enter Your First Name: \" read FIRSTNAME echo \"Enter Your Last Name\" read LASTNAME echo \"Your Full Name is $FIRSTNAME $LASTNAME\" echo \"Enter Your Age: \" read USERAGE echo \"In 10 Years, You will be `expr $USERAGE + 10` years old.\" . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#the-read-statement",
+    "relUrl": "/docs/linux/bash_scripting.html#the-read-statement"
+  },"25": {
+    "doc": "Cheatsheet",
+    "title": "Shell Expansion",
+    "content": "| 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 . | &gt; echo sh{ot,oot,ort} shot shoot short &gt; echo st{il,al}l still stall &gt; echo \"$[ 2 * 2 ]\" 4 # set and display var at same time &gt; echo \"${VARNAME:=something}\" something &gt; echo $VARNAME something # will print any environment variable that starts with HO &gt; echo \"${!HO*}\" OME HOSTNAME HOSTTYPE . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#shell-expansion",
+    "relUrl": "/docs/linux/bash_scripting.html#shell-expansion"
+  },"26": {
+    "doc": "Cheatsheet",
+    "title": "Brace Expansion",
+    "content": "| 1 2 . | &gt; echo Hello-{Foo,Bar,Baz}-World Hello-Foo-World Hello-Bar-World Hello-Baz-World . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#brace-expansion",
+    "relUrl": "/docs/linux/bash_scripting.html#brace-expansion"
+  },"27": {
+    "doc": "Cheatsheet",
+    "title": "Parameter Expansion, Like Coalesce",
+    "content": "{parameter:-word} . If parameter is unset (i.e., does not exist) or is empty, this expansion results in the value of word. If parameter is not empty, the expansion results in the value of parameter. ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#parameter-expansion-like-coalesce",
+    "relUrl": "/docs/linux/bash_scripting.html#parameter-expansion-like-coalesce"
+  },"28": {
+    "doc": "Cheatsheet",
+    "title": "Types of Variables",
+    "content": "Variables are declared implicitly, and the value will implicitly determine what kind of variable it is. However, it could be useful to explicitly define the type. | 1 2 3 4 5 6 . | # an integer variable MYVAR=4 # use command substitution &gt; echo `expr $MYVAR + 5` 9 . | . Show the type of the variable, using decalre -p . | 1 2 3 4 5 . | MYVAR=4 # this shows you MYVAR is a string &gt; declare -p MYVAR declare -- MYVAR=\"4\" . | . Interpreting the output of declare -p: -- tells you that this variable is not strongly typed and its type has not been declared. Set the type of the variable, using decalre -i notice how the value is converted to zero when setting NEWVAR to a string when you have declared it as an integer. | 1 2 3 4 5 6 7 . | &gt; declare -i NEWVAR=10 &gt; declare -p NEWVAR declare -i NEWVAR=\"10\" &gt; NEWVAR=\"Hello\" &gt; echo $NEWVAR 0 . | . Notice in the output instead of -- we have -i which means this variable is an integer. Readonly Variables . | 1 2 3 . | &gt; declare -r READONLY=\"This is a string we cannot overwrite\" &gt; declare -p READONLY declare -r READONLY=\"This is a string we cannot overwrite\" . | . The -r in the output confirms this is a readonly variable. Equivalent to declare -r, using the readonly command: . | 1 . | readonly MYREADONLY=\"This String\" . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#types-of-variables",
+    "relUrl": "/docs/linux/bash_scripting.html#types-of-variables"
+  },"29": {
+    "doc": "Cheatsheet",
+    "title": "Types of Variables",
+    "content": "| 1 2 3 4 5 6 7 8 9 10 11 12 13 . | # declare int variable: &gt; declare -i NEWVAR=10 # inpsect type of NEWVAR &gt; declare -p NEWVAR declare -i NEWVAR=\"10\" # declare readonly variable &gt; declare -r READONLY=\"This is something we cannot overwrite\" # try to cancel READONLY type &gt; declare +r READONLY ### will result in an error . | . Variables in bash are implicitly typed, the type will be inferred from the value you assign. | determine the type of a variable: declare -p $MYVAR | declare variable as integer: | 1 . | declare -i NEWVAR=10 . | . | If you explicitly declare a variable as an int but assign it to a string, it will implicitly convert the value to 0. | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#types-of-variables-1",
+    "relUrl": "/docs/linux/bash_scripting.html#types-of-variables-1"
+  },"30": {
+    "doc": "Cheatsheet",
+    "title": "Arrays",
+    "content": "Indexing starts at zero. Notice that arrays are space-delimited., this is a strange thing if you are used to arrays w/commas. You can have spaces in values if you enclose the spaces in double-quotes. | 1 2 3 4 . | # notice no commas just spaces! &gt; MYARRAY=(“First” “Second” “Third”) &gt; echo ${MYARRAY[2]} “Third” . | . Iterating Through Arrays . See ./array.sh . | 1 2 3 4 5 6 7 8 9 10 . | #!/bin/bash # simple array list and loop for display SERVERLIST=(“websrv01” “websrv02” “websrv03”) COUNT=0 for INDEX in ${SERVERLIST[@]}; do echo “Processing Server: ${SERVERLIST[COUNT]}” COUNT=“`expr $COUNT + 1 `” done . | . You cannot decrease the size of the array, you can only increase the size of the array. Passing Variables to Scripts at the Command Line . see ./cli_args.sh . | 1 . | echo “The following item was passed to the script at run time $1” . | . The arguments go from 1-n (starts at 1). if you have an argument that contains a space, then you wan to enclose this in quotes, otherwhise space is seen as a delimiter. ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#arrays",
+    "relUrl": "/docs/linux/bash_scripting.html#arrays"
+  },"31": {
+    "doc": "Cheatsheet",
+    "title": "Conditionals",
+    "content": " ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#conditionals",
+    "relUrl": "/docs/linux/bash_scripting.html#conditionals"
+  },"32": {
+    "doc": "Cheatsheet",
+    "title": "The if statement",
+    "content": "| 1 2 3 4 5 6 7 8 9 10 11 12 . | 3 echo “Guess the Secret Number” echo “======================“ echo “” echo “Enter a Number Between 1 and 5” read GUESS if [ $GUESS -eq 3 ] then echo “You guessed the Correct Number!” fi . | . Test if a file exists iffileexists.sh . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 . | FILENAME=$1 echo “Testing for the existence of a file called $FILENAME” if [ -a $FILENAME ] then echo “$FILENAME does exist!” fi # negation operator if [! -a $FILENAME ] then echo “$FILENAME does not exist!” fi # test multiple expressions in if statement if [ -f $FILENAME ] &amp;&amp; [ -R $FILENAME] then echo “File $FILENAME exists and is readable.” fi . | . -a is the same as -f w.r.t. testing for the existence of a file. ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#the-if-statement",
+    "relUrl": "/docs/linux/bash_scripting.html#the-if-statement"
+  },"33": {
+    "doc": "Cheatsheet",
+    "title": "If/Then/Else",
+    "content": "| 1 2 3 4 5 6 7 . | echo “Enter a number between 1 and 3:” read VALUE # use semicolons for readability if [ “$VALUE” -eq “1” ]; then echo “You entered $VALUE” fi . | . Using an OR statement: . | 1 2 3 4 5 6 . | # another variation if [ “$VALUE” -eq “1” ] || [ “$VALUE” -eq “2” ] || [ “$VALUE” -eq “3” ]; then echo “You entered $VALUE” else echo “You didn’t follow directions!” fi . | . Redirect errors to /dev/null . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 . | if [ “$VALUE” -eq “1” ] 2&gt;/dev/null || [ “$VALUE” -eq “2” ] 2&gt;/dev/null || [ “$VALUE” -eq “3” ] 2&gt;/dev/null; then echo “You entered $VALUE” else echo “You didn’t follow directions!” fi if [ “$VALUE” -eq “1” ] 2&gt;/dev/null; then echo “You entered #1” elif “ \"$VAL”E\" -e“ ”2\" ] 2&gt;/dev/null; then ech“ \"You entered ”2\" elif “ \"$VAL”E\" -e“ ”3\" ] 2&gt;/dev/null; then ech“ \"You entered ”3\" else ech“ \"You di’n't follow direction”!\" fi . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#ifthenelse",
+    "relUrl": "/docs/linux/bash_scripting.html#ifthenelse"
+  },"34": {
+    "doc": "Cheatsheet",
+    "title": "Conditional Expressions",
+    "content": "Hamel’s Note: Use Double Brackets [[ ]], not single brackets . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#conditional-expressions",
+    "relUrl": "/docs/linux/bash_scripting.html#conditional-expressions"
+  },"35": {
+    "doc": "Cheatsheet",
+    "title": "File Expressions",
+    "content": ". ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#file-expressions",
+    "relUrl": "/docs/linux/bash_scripting.html#file-expressions"
+  },"36": {
+    "doc": "Cheatsheet",
+    "title": "String Expressions",
+    "content": ". ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#string-expressions",
+    "relUrl": "/docs/linux/bash_scripting.html#string-expressions"
+  },"37": {
+    "doc": "Cheatsheet",
+    "title": "Integer Expressions",
+    "content": ". ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#integer-expressions",
+    "relUrl": "/docs/linux/bash_scripting.html#integer-expressions"
+  },"38": {
+    "doc": "Cheatsheet",
+    "title": "Aside: Output Streams",
+    "content": "https://askubuntu.com/questions/625224/how-to-redirect-stderr-to-a-file . 1: stdout . 2: stderr . error messages are printed to standard error. The classic redirection operator (command &gt; file) only redirects standard output, so standard error is still shown on the terminal. To redirect stderr as well, you have a few choices: . | 1 2 3 4 5 6 7 8 9 . | # Redirect stdout to one file and stderr to another file: command &gt; out 2&gt;error # Redirect stderr to stdout (&amp;1), and then redirect stdout to a file: command &gt;out 2&gt;&amp;1 # Redirect both to a file (this isn’t supported by all shells, bash and zsh support it, for example, but sh and ksh do not) command &amp;&gt; out . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#aside-output-streams",
+    "relUrl": "/docs/linux/bash_scripting.html#aside-output-streams"
+  },"39": {
+    "doc": "Cheatsheet",
+    "title": "Control Flow",
+    "content": ". | break exits the loop | continue goes to next iteration in loop | until is opposite of while | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#control-flow",
+    "relUrl": "/docs/linux/bash_scripting.html#control-flow"
+  },"40": {
+    "doc": "Cheatsheet",
+    "title": "For Loop",
+    "content": "| 1 2 3 4 5 6 7 8 9 . | #!/bin/bash echo “List all the shell scripts contents of the directory” SHELLSCRIPTS=`ls *.sh` # alternate using for loop for FILE in *.sh; do echo “$FILE” done . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#for-loop",
+    "relUrl": "/docs/linux/bash_scripting.html#for-loop"
+  },"41": {
+    "doc": "Cheatsheet",
+    "title": "Case Statement",
+    "content": "| 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 . | #!/bin/bash echo “1) Choice 2” echo “2) Choice 2” echo “3) Choice 3” echo “Enter Choice:” read MENUCHOICE case $MENUCHOICE in 1) echo “You have choosen the first option”;; 2) echo “You have chosen the second option”;; 3) echo “You have selected the third option”;; *) echo “You have choosen unwisely”;; . | . Match Multiple Case Statements . Allow many matches to occur . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#case-statement",
+    "relUrl": "/docs/linux/bash_scripting.html#case-statement"
+  },"42": {
+    "doc": "Cheatsheet",
+    "title": "While Loop",
+    "content": "| 1 2 3 4 5 6 7 8 9 10 11 12 13 . | #!/bin/bash echo “Enter number of times to display message:” read NUM COUNT=1 # -le means less than or equal to while [ $COUNT -le $NUM ] do echo “Hello World $COUNT” COUNT=“`expr $COUNT + 1`” done . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#while-loop",
+    "relUrl": "/docs/linux/bash_scripting.html#while-loop"
+  },"43": {
+    "doc": "Cheatsheet",
+    "title": "Asynchronous Execution with wait",
+    "content": ". This is the most straightforward implementation of async I have ever seen. You basically decide when to block and wait for a process that you previously decided to run in a child process. ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#asynchronous-execution-with-wait",
+    "relUrl": "/docs/linux/bash_scripting.html#asynchronous-execution-with-wait"
+  },"44": {
+    "doc": "Cheatsheet",
+    "title": "Short Circuit Expressions",
+    "content": "&amp;&amp;: command1 &amp;&amp; command2: . only run command2 if command1 is successful . ||: command1 || command2: . only run command2 if command1 fails . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#short-circuit-expressions",
+    "relUrl": "/docs/linux/bash_scripting.html#short-circuit-expressions"
+  },"45": {
+    "doc": "Cheatsheet",
+    "title": "Execution Operators",
+    "content": "the file super duper does not exist . | 1 . | rm superduper 2&gt; /dev/null &amp;&amp; echo \"File was deleted\" . | . The echo will only execute if the rm command was successful and exits without errors. Therefore, in this case the echo statement will not be triggered. | 1 . | rm superduper 2&gt; /dev/null &amp;&amp; echo \"File was deleted\" || echo \"File does not exit\" . | . | Because of short-circuiting rules, the second statement of the OR |   | will not trigger unless the left hand side is false. | . | &amp;&amp; : and | || : or | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#execution-operators",
+    "relUrl": "/docs/linux/bash_scripting.html#execution-operators"
+  },"46": {
+    "doc": "Cheatsheet",
+    "title": "Input/Output",
+    "content": " ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#inputoutput",
+    "relUrl": "/docs/linux/bash_scripting.html#inputoutput"
+  },"47": {
+    "doc": "Cheatsheet",
+    "title": "Reading Files",
+    "content": "| 1 2 3 4 5 6 . | echo “Enter a filename” read FILE while read -r SUPERHERO; do echo “Superhero Name: $SUPERHERO” done &lt; “$FILE” . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#reading-files",
+    "relUrl": "/docs/linux/bash_scripting.html#reading-files"
+  },"48": {
+    "doc": "Cheatsheet",
+    "title": "Reading Files with loops",
+    "content": ". ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#reading-files-with-loops",
+    "relUrl": "/docs/linux/bash_scripting.html#reading-files-with-loops"
+  },"49": {
+    "doc": "Cheatsheet",
+    "title": "File Descriptors",
+    "content": "Use a number &gt;= 3 for file descriptors. 0 - stdin 1 - stdout 2 - stderr . /dev/null -&gt; generic place where you can redirect streams into nothing. | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 . | #!/bin/bash echo “Enter file name: “ read FILE # &lt; means readonly, &gt; means write only, &lt;&gt; means allow read &amp; write # assign file descriptor to filename exec 5&lt;&gt;$FILE while read -r SUPERHERO; do echo “Superhero Name: $SUPERHERO” done &lt;&amp;5 #use &amp; to reference the file descriptor # append to end of file. echo \"File Was Read On: `date`\" &gt;&amp;5 # close file descriptor exec 5&gt;&amp;- . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#file-descriptors",
+    "relUrl": "/docs/linux/bash_scripting.html#file-descriptors"
+  },"50": {
+    "doc": "Cheatsheet",
+    "title": "Delimiters (IFS)",
+    "content": "IFS - Internal Field Seperator Default is a space . | 1 2 . | # this will return a space echo $IFS . | . | 1 2 3 4 5 6 7 8 9 10 . | echo \"Enter filename to parse: \" read FILE # spacedelim.txt # https://stackoverflow.com/questions/24337385/bash-preserve-string-with-spaces-input-on-command-line while read -r CPU MEM DISK; do echo \"CPU: $CPU\" echo \"Memory: $MEM\" echo \"Disk: $DISK\" done &lt;\"$FILE\" . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#delimiters-ifs",
+    "relUrl": "/docs/linux/bash_scripting.html#delimiters-ifs"
+  },"51": {
+    "doc": "Cheatsheet",
+    "title": "Traps and Signals",
+    "content": "https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html . | cntrl+c = SIGINT | cntrl+z = SIGTSTP | kill command (without -9 flag) = SIGTERM | kill -9 = SIGKILL; this signal is not sent to the process, it is just killed. | . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 . | clear # first argument is what to exexute trap 'echo \" - Please Press Q to Exit.\"' SIGINT SIGTERM SIGTSTP # cntrl+c = SIGINT # cntrl+z = SIGTSTP (Suspend, send to background) while [ \"$CHOICE\" != \"Q\" ] &amp;&amp; [ \"$CHOICE\" != \"q\" ]; do echo \"Main Menu\" echo \"=======\" echo \"1) Choice One\" echo \"2) Choice Two\" echo \"3) Choice Three\" echo \"Q) Quit\" read CHOICE clear done . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#traps-and-signals",
+    "relUrl": "/docs/linux/bash_scripting.html#traps-and-signals"
+  },"52": {
+    "doc": "Cheatsheet",
+    "title": "Debugging Shell Scripts",
+    "content": "bash -x will run a shell script in debug mode. google this to figure out how to interpret output of debugging. ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#debugging-shell-scripts",
+    "relUrl": "/docs/linux/bash_scripting.html#debugging-shell-scripts"
+  },"53": {
+    "doc": "Cheatsheet",
+    "title": "Error Handling",
+    "content": "$? contains the status code of the last command. What if you have the code: . | 1 2 3 4 5 6 7 . | #!/bin/bash echo \"Change to a directory and list the contents\" DIRECTORY=\"$1\" cd $DIRECTORY # DANGER: the below command will still run even if the previous command failed! rm * . | . Solution: . | 1 2 3 4 5 6 7 8 9 . | DIRECTORY=\"$1\" cd $DIRECTORY if [ $? -eq \"0\" ]; then echo \"Changed directory successfully into $DIRECTORY\" else echo \"Cannot change driectories, exiting with error.\" exit 111 # you can exit with any code you want! fi . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#error-handling",
+    "relUrl": "/docs/linux/bash_scripting.html#error-handling"
+  },"54": {
+    "doc": "Cheatsheet",
+    "title": "Functions",
+    "content": "| 1 2 3 4 5 6 7 8 . | funcExample () { echo \"We are inside the function\" } #call the function funcExample . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#functions",
+    "relUrl": "/docs/linux/bash_scripting.html#functions"
+  },"55": {
+    "doc": "Cheatsheet",
+    "title": "structure of functions in a shell script",
+    "content": "Unlike python, you must define your functions before you call them. ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#structure-of-functions-in-a-shell-script",
+    "relUrl": "/docs/linux/bash_scripting.html#structure-of-functions-in-a-shell-script"
+  },"56": {
+    "doc": "Cheatsheet",
+    "title": "Scope",
+    "content": "setting a variable within a function defines that variable globally after that function is called!!! . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 . | GLOBALVAR=“Globally Visible” # sample function for function variable scope funcExample () { # local LOCALVAR=“Locally Visible” echo “From within the function, the variable’s value is set to $LOCALVAR …” } # script start echo “this happens before the function call” echo “” echo “Local Variable = $LOCALVAR after the function call.” echo “Global Variable = $GLOBALVAR (before the function call).” funcExample echo “this happens after the function call” echo “Local Variable = $LOCALVAR after the function call.” echo “Global Variable = $GLOBALVAR (before the function call).” . | . Output of above code: . | 1 2 3 4 5 6 7 8 9 . |  ./scope.sh this happens before the function call Local Variable = after the function call. Global Variable = Globally Visible (before the function call). From within the function, the variable’s value is set to Locally Visible … this happens after the function call Local Variable = Locally Visible after the function call. Global Variable = Globally Visible (before the function call). | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#scope",
+    "relUrl": "/docs/linux/bash_scripting.html#scope"
+  },"57": {
+    "doc": "Cheatsheet",
+    "title": "Functions With Parameters",
+    "content": "| 1 2 3 4 5 6 7 8 9 10 11 12 13 . | # global USERNAME=$1 funcAgeInDays () { echo “Hello $USERNAME, You are $1 Years old.” echo “That makes you approx `expr 365 \\* $1` days old” } #script - start read -r -p “Enter your age:” AGE # pass in arguments like this funcAgeInDays $AGE . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#functions-with-parameters",
+    "relUrl": "/docs/linux/bash_scripting.html#functions-with-parameters"
+  },"58": {
+    "doc": "Cheatsheet",
+    "title": "Nested Functions",
+    "content": "Author of course uses this for organization purposes. When you call a function if it has nested functions the functions defined within will be exposed to the script also. | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 . | # global GENDER=$1 funcHuman () { ARMS=2 LEGS=2 funcMale () { BEARD=1 echo “This man has $ARMS arms and $LEGS legs with $BEARD beard” } funcFemale () { BEARD=0 echo “This woman has $ARMS arms and $LEGS legs with $BEARD beard” } } # script start clear # determine the actual gender and display the characteristics. if [ “$GENDER” == “male” ]; then funcHuman funcMale # this function is available after the parent function is called. else funcHuman funcFemale fi . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#nested-functions",
+    "relUrl": "/docs/linux/bash_scripting.html#nested-functions"
+  },"59": {
+    "doc": "Cheatsheet",
+    "title": "Function Return and Exit",
+    "content": "This allows you to get arguments from the command line and then exit with a proper code and also use function returns inside scripts. | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 . | # demo of return values and testing results YES=0 NO=1 FIRST=$1 SECOND=$2 THIRD=$3 # function definitions funcCheckParams () { # did we get three # -z equivalent to isnull (in this case means not-null b/c of !) if [ ! -z “$THIRD” ]; then echo “We got three params” return $YES else echo “We did not get three params” return $NO fi } # script start funcCheckParams # the return value from the function gets stored in $? RETURN_VALS=$? if [ “$RETURN_VALS” -eq “$YES” ]; then echo “We received three params and they are:” echo “Param 1: $FIRST” echo “Param 2: $SECOND” echo “Param 3: $THIRD” else echo “Usage: funcreturn.sh [param1] [param2] [param3]” exit 1 fi . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#function-return-and-exit",
+    "relUrl": "/docs/linux/bash_scripting.html#function-return-and-exit"
+  },"60": {
+    "doc": "Cheatsheet",
+    "title": "Interactive Menus",
+    "content": " ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#interactive-menus",
+    "relUrl": "/docs/linux/bash_scripting.html#interactive-menus"
+  },"61": {
+    "doc": "Cheatsheet",
+    "title": "Infobox",
+    "content": "Dissappears unless you sleep (see below). Does not come with any buttons. see exercises/26_dialog.sh . | 1 2 3 4 5 6 7 8 9 10 11 . | # globals INFOBOX=${INFOBOX=dialog} TITLE=“Default” MESSAGE=“Something to say” XCOORD=10 YCOORD=20 funcDisplayInfoBox () { $INFOBOX —title “$1” —infobox “$2” “$3” “$4” sleep “$5” } . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#infobox",
+    "relUrl": "/docs/linux/bash_scripting.html#infobox"
+  },"62": {
+    "doc": "Cheatsheet",
+    "title": "Msgbox",
+    "content": "Msgbox - dissapears unless you sleep pass --msgbox argument, comes with default ok button and stays on screen. see exercises/27_msgbox.sh . | 1 2 3 4 5 6 7 8 9 10 . | # global MSGBOX=${MSGBOX=dialog} TITLE=“Default” MESSAGE=“Some Message” XCOORD=10 YCOORD=20 funcDisplayMsgBox () { $MSGBOX —title “$1” —msgbox “$2” “$3” “$4” } . | . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#msgbox",
+    "relUrl": "/docs/linux/bash_scripting.html#msgbox"
+  },"63": {
+    "doc": "Cheatsheet",
+    "title": "Menus",
+    "content": "See pdf notes/scripts . ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html#menus",
+    "relUrl": "/docs/linux/bash_scripting.html#menus"
+  },"64": {
+    "doc": "Cheatsheet",
+    "title": "Cheatsheet",
+    "content": " ",
+    "url": "http://localhost:4000/docs/linux/bash_scripting.html",
+    "relUrl": "/docs/linux/bash_scripting.html"
+  },"65": {
+    "doc": "Python Concurrency",
+    "title": "Understand the world of Python concurrency: threads, processes, coroutines and asynchronous programming with a realistic examples.",
+    "content": " ",
+    "url": "http://localhost:4000/docs/python/concurrency.html#understand-the-world-of-python-concurrency-threads-processes-coroutines-and-asynchronous-programming-with-a-realistic-examples",
+    "relUrl": "/docs/python/concurrency.html#understand-the-world-of-python-concurrency-threads-processes-coroutines-and-asynchronous-programming-with-a-realistic-examples"
+  },"66": {
+    "doc": "Python Concurrency",
+    "title": "Motivation",
+    "content": "As a data scientist who is spending more and more time on software engineering, I was recently forced to confront an ugly gap in my knowledge of Python: concurrency. To be honest, I never completely understood how the terms async, threads, pools and coroutines were different and how these mechanisms could work together. Whenever I encountered talks or material that mentioned these terms, I was unable to grasp related concepts or follow along. Furthermore, I was guilty of incorrectly applying these mechanisms due to my lack of understanding. For example, I avoided using threads completely in favor of processes all the time. Most importantly, every time I tried to learn about the subject, the examples were a bit too abstract for me, and I hard time internalizing how everything worked. This changed when a friend of mine, Jeremy Howard, recommended a live coding talk by Daivd Beazley, an accomplished Python educator. Because of restrictions with this YouTube video, I couldn’t embed the video in this article, so you will have to open it in a different window. This talk is incredibly intimidating at first. Not only is it coded live from scratch, but it also jumps immediately into socket programming, something that I had never encountered as a data scientist. However, I was encouraged to take things slow and deeply understand this talk, and attempt to understand each piece bit by bit. This blog post documents what I learned along the way with the hopes that it will benefit others. ",
+    "url": "http://localhost:4000/docs/python/concurrency.html#motivation",
+    "relUrl": "/docs/python/concurrency.html#motivation"
+  },"67": {
+    "doc": "Python Concurrency",
+    "title": "Prerequisites",
+    "content": "Before getting started, David sets up the following infrastructure that is used to demonstrate threads and concurrency. ",
+    "url": "http://localhost:4000/docs/python/concurrency.html#prerequisites",
+    "relUrl": "/docs/python/concurrency.html#prerequisites"
+  },"68": {
+    "doc": "Python Concurrency",
+    "title": "A cpu-bound task: Fibonacci",
+    "content": "To demonstrate concurrency, it is useful to create a task that can saturate your CPU, (such as mathematical operations) for a noticeable period of time. For this purpose David uses a function that computes a Fibonacci number. | 1 2 3 4 . | #fib.py def fib(n): if n &lt;= 2: return 1 else: return fib(n-1) + fib(n-2) . | . This function is useful for threads as it will take much longer for large inputs versus smaller inputs1, which allows us to profile different workloads. ",
+    "url": "http://localhost:4000/docs/python/concurrency.html#a-cpu-bound-task-fibonacci",
+    "relUrl": "/docs/python/concurrency.html#a-cpu-bound-task-fibonacci"
+  },"69": {
+    "doc": "Python Concurrency",
+    "title": "A Simple Web Server",
+    "content": "It is also useful to have a real-word task that can benefit from threading. A web server is one of the best ways to illustrate the benefits of concurrency with both thread and processes. However, to really demonstrate how things work it is useful to use something that is sufficiently low level enough to see how the pieces work. For this, David sets up a web server using socket programming. If you aren’t familiar with socket programming (I’m willing to bet most people are not), please stop reading and complete this tutorial. To begin with, David starts with the below code (to which I’ve added some comments): . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 . | # server-1.py from socket import * from fib import fib def fib_server(address): sock = socket(AF_INET, SOCK_STREAM) sock.setsockopt(SOL_SOCKET, SO_REUSEADDR,1) sock.bind(address) sock.listen(5) while True: client,addr = sock.accept() # waits for a connection to be established print(\"Connection\", addr) fib_handler(client) # passes the client to a handler which will listen for input data. def fib_handler(client): while True: req = client.recv(100) # waits for data that sent by the client. if not req: break result = fib(int(req)) resp = str(result).encode('ascii') + b'\\n' client.send(resp) # sends data back to the client. print(\"Closed\") fib_server(('', 25000)) . | . Here is an explanation of this code: . | Lines 6-9 are socket programming boilerplate. It’s ok to just take this for granted as a reasonable way to set up a socket server. This also matches the the tutorial I linked to above. | Line 11 waits for an incoming connection from a client. Once a connection is made, the server can begin receiving data from a client. The code will stop execution on this line until a connection is made. | Line 13: Once a connection is established, the client object is passed to a function which can handle data sent by the client. | Line 17: waits for data to be sent by the client. The code will stop execution on this line until data is received from the client. | Line 21: The server sends a response back to the client. The code could stop execution on this line if the send buffers are full, but unlikely in this toy example. | . ",
+    "url": "http://localhost:4000/docs/python/concurrency.html#a-simple-web-server",
+    "relUrl": "/docs/python/concurrency.html#a-simple-web-server"
+  },"70": {
+    "doc": "Python Concurrency",
+    "title": "Testing the non-concurrent code",
+    "content": "In the above example, the server will only be able to accept a connection from a single client, because the call to fib_handler will never return (because it will run in an infinite loop unless a kill signal is received) which means that sock.accept() can only be called once. You can test this out by first running the server: . python server-1.py . Then establish a client: . telnet localhost 25000 . You can type numbers in as David does in his video and verifies that fibonacci numbers are returned. However, if you try to connect with another client at the same time from a different terminal session: . telnet localhost 25000 . You will notice that the second client just hangs and doesn’t return anything from the server. This is because the server is only able to accept a single connection. We can solve this with threads: . ",
+    "url": "http://localhost:4000/docs/python/concurrency.html#testing-the-non-concurrent-code",
+    "relUrl": "/docs/python/concurrency.html#testing-the-non-concurrent-code"
+  },"71": {
+    "doc": "Python Concurrency",
+    "title": "Threads",
+    "content": "A way to solve this issue is to use threads. If you haven’t encountered threads before, please go through this tutorial on threads. You can add threads to the handler so that more connections can be accepted by adding the following two lines code with comments below: . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 . | from socket import * from fib import fib from threading import Thread # Import the thread def fib_server(address): sock = socket(AF_INET, SOCK_STREAM) sock.setsockopt(SOL_SOCKET, SO_REUSEADDR,1) sock.bind(address) sock.listen(5) while True: client,addr = sock.accept() print(\"Connection\", addr) Thread(target=fib_handler, args=(client,)).start() ## Create and start the thread def fib_handler(client): while True: req = client.recv(100) if not req: break result = fib(int(req)) resp = str(result).encode('ascii') + b'\\n' client.send(resp) print(\"Closed\") fib_server(('', 25000)) . | . You can verify that this works by connecting two separate clients to the server by running the following command in two separate terminal shells: . telnet localhost 25000 . By executing the fib_handler in a thread, the main while loop in fib_server will continue, allowing sock.accept() to receive additional clients. ",
+    "url": "http://localhost:4000/docs/python/concurrency.html#threads",
+    "relUrl": "/docs/python/concurrency.html#threads"
+  },"72": {
+    "doc": "Python Concurrency",
+    "title": "Thread performance &amp; the GIL",
+    "content": "When code stops execution and waits for an external event to occur (like a connection to be made, or data to be sent), this is often referred to as blocking. One important utility of Python threads is that it allows you to force blocking process to share CPU resources better. However, Python thread’s share a single CPU due to Python’s Global Interpreter Lock (GIL). Therefore, you have to think carefully about what kind of tasks you execute on threads. If you try to execute CPU bound tasks the tasks will compete with each other and slow each other down. David demonstrates this with this script that sends a bunch of requests to our threaded server: . | 1 2 3 4 5 6 7 8 9 10 11 12 13 . | #perf1.py from socket import * import time sock = socket(AF_INET, SOCK_STREAM) sock.connect(('localhost', 25000)) while True: start = time.time() sock.send(b'30') resp = sock.recv(100) end = time.time() print(end-start) . | . If you run several instances of this script (after starting the server first): . python perf1.py . You will see the execution times for each script linearly increase as you increase the number of these scripts running in parallel. For this particular task, adding threads does not make anything faster. But why? This is because the fibonacci task is CPU bound so threads will compete with each other for resources on the same CPU core. Threads work by interleaving the execution of different tasks on your CPU. Only one thread runs at a time, and take turns executing in small bits until all threads are done. The details of this are carried about by your operating system, so you need not worry about how this happens (with one exception mentioned below). Note that this interleaving doesn’t always occur in a predictable way (but is not something you should worry about). Because you are restricted to a single CPU core in Python, interleaving a bunch of CPU bound tasks will not speed up the total runtime of those tasks. However, if your tasks involve lots of non-CPU time, such as waiting for network connections, or disk I/O interleaving tasks may result in a considerable speedup. A canonical way of simulating a non-cpu bound task in python is to use the built-in function time.sleep(). To check my understanding about threads and performance, I edited this code from the tutorial on threads mentioned to above, and changed time.sleep(2) to fib(20) and back again: . ```py {hl_lines=[7]} import logging import threading import time . def thread_function(name): logging.info(“Thread %s: starting”, name) time.sleep(2) ## Change this line of code to fib(20) logging.info(“Thread %s: finishing”, name) . if name == “main”: format = “%(asctime)s: %(message)s” start = time.time() logging.basicConfig(format=format, level=logging.INFO, datefmt=”%H:%M:%S”) . | 1 2 3 4 5 6 7 8 9 10 11 12 13 . | threads = list() for index in range(3): logging.info(\"Main : create and start thread %d.\", index) x = threading.Thread(target=thread_function, args=(index,)) threads.append(x) x.start() for index, thread in enumerate(threads): logging.info(\"Main : before joining thread %d.\", index) thread.join() logging.info(\"Main : thread %d done\", index) end = time.time() print(f'total time: {end-start}') ``` . | . As expected, increasing the number of threads while running time.sleep(2) did not increase the program’s overall execution time (the program runs in roughly 2 seconds). On the other hand, replacing time.sleep(2) with fib(20) causes this program’s running time to increase as more threads are added. This is because fib(20) is a cpu bound task so interleaving the task doesn’t really help much. Another interesting but less known aspect that David discusses is the relation between the following two types of tasks: . | things that take much longer to compute on the CPU, like fib(30), demonstrated with perf1.py. | things that compute relatively fast on the CPU, like fib(1), demonstrated with perf2.py. | . The Python GIL will prioritize the first type of task at the expense of the second if they are made to compete for resources with threads. You can follow along with a demonstration of this here. This is interesting because this is the opposite of how typical operating systems prioritize threads (by favoring shorter running tasks) and is something unique to the implementation of the Python GIL. More importantly, this behavior has a very practical consequence: if you are running a web-server where most tasks are fairly quick, one outlier expensive cpu-bound task can grind everything to a halt. ",
+    "url": "http://localhost:4000/docs/python/concurrency.html#thread-performance--the-gil",
+    "relUrl": "/docs/python/concurrency.html#thread-performance--the-gil"
+  },"73": {
+    "doc": "Python Concurrency",
+    "title": "Threads are not just about making things faster",
+    "content": "It is tempting to think of threads as a tool to make things run faster, but that’s not the only use case. Recall that the socket server used threads to allow multiple connections at once without any speedup. David illustrates another way to use threads with his code used to measure the runtime of short-running tasks: . perf2.py: ```py {hl_lines=[12, 19]} . ",
+    "url": "http://localhost:4000/docs/python/concurrency.html#threads-are-not-just-about-making-things-faster",
+    "relUrl": "/docs/python/concurrency.html#threads-are-not-just-about-making-things-faster"
+  },"74": {
+    "doc": "Python Concurrency",
+    "title": "perf2.py",
+    "content": " ",
+    "url": "http://localhost:4000/docs/python/concurrency.html#perf2py",
+    "relUrl": "/docs/python/concurrency.html#perf2py"
+  },"75": {
+    "doc": "Python Concurrency",
+    "title": "requests/sec of fast requests",
+    "content": "from socket import * import time . sock = socket(AF_INET, SOCK_STREAM) sock.connect((‘localhost’, 25000)) . n = 0 . from threading import Thread def monitor(): global n while True: time.sleep(1) print(n, ‘reqs/sec’) n = 0 Thread(target=monitor).start() . while True: sock.send(b’1’) resp =sock.recv(100) n += 1 . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 . | In this case David uses a single thread with blocking call to `sleep(1)` to make sure that `monitor` only prints out a metric once per second, while allowing the rest of the program to send requests hundreds of times per second. In other words, this is a clever use of threads and blocking that allow a part of the program to run at a specified time interval while allowing the rest of your program to run as usual. [^2] These different angles of looking at threads allowed me to understand threads more holistically. Threads are not only about making certain things run faster or run in parallel, but also allows you to control how your program is executed. # Processes For CPU Bound Tasks One way to solve the problem with the GIL and cpu-bound tasks competing for resources is to use processes instead of threads. Processes are different from threads in the following respects: - Threads share a memory space, whereas processes have a separate memory space. This is an important consideration if you need to share variables or data between tasks. - Processes have significant overhead compared to threads because data and program state has to be replicated across each process. - Unlike threads, processes are not constrained to run on a single CPU, so you can execute cpu-bound tasks in parallel on different cores. You can learn more about the differences between processes and threads in [this tutorial](https://realpython.com/python-concurrency). David uses python processes in the server by using a process pool.[^3] The relevant lines of code are highlighted below: ```py {hl_lines=[7, 9, \"27-28\"]} # server-3.py # Fib microservice from socket import * from fib import fib from threading import Thread from concurrent.futures import ProcessPoolExecutor as Pool pool = Pool(4) def fib_server(address): sock = socket(AF_INET, SOCK_STREAM) sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1) sock.bind(address) sock.listen(5) while True: client, addr = sock.accept() print(\"Connection\", addr) Thread(target=fib_handler, args=(client,), daemon=True).start() def fib_handler(client): while True: req = client.recv(100) if not req: break n = int(req) future = pool.submit(fib, n) result = future.result() resp = str(result).encode('ascii') + b'\\n' client.send(resp) print(\"Closed\") fib_server(('',25000)) . | . If you then start this version of the server with: . python server-3.py . And run the profiler perf2.py, we can make the following observations: . | The requests/sec are lower than the thread based version, because there is more overhead required to execute tasks in a pool. | However, if you also run perf1.py it will not materially interfere with the first task, as this will not compete for resources on the same CPU. | . This is a realistic example that allow you to gain more intuition about how threads and processes work. ",
+    "url": "http://localhost:4000/docs/python/concurrency.html#requestssec-of-fast-requests",
+    "relUrl": "/docs/python/concurrency.html#requestssec-of-fast-requests"
+  },"76": {
+    "doc": "Python Concurrency",
+    "title": "Asynchronous programming",
+    "content": "Recall that threads run one task at a time, and the operating system automatically decides when to interrupt each thread to allow the threads to take turns running. This is called pre-emptive multitasking since the operating systems, not you, determine when your thread makes the switch. When you don’t care about how tasks are interleaved, threads are great because you don’t have to worry about how they are scheduled. However, there is third type of concurrency paradigm in Python that allows you to control how this switching occurs: Asynchronous Programming. This is also called cooperative multitasking which means each task must announce when it wants to switch. Another term used for cooperative multitasking is a coroutine. One way to create coroutines in Python is by using the yield statement. David provides some intuition on how you can achieve multi-tasking with yield in the following code: . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 . | from collections import deque def countdown(n): while n &gt; 0: yield n n -=1 tasks = deque() tasks.extend([countdown(10), countdown(5), countdown(20)]) def run(): while tasks: task = tasks.popleft() try: x=next(task) print(x) tasks.append(task) except StopIteration: print(\"Task\") . | . When you run this code, you can see from the output the three countdown tasks are being interleaved: . | 1 2 3 4 5 6 7 8 9 10 11 12 . | &gt; run() 10 5 20 9 4 19 8 3 18 ... | . This clever use of yield allows you to pause execution of a task and move onto a different task kind of like threading, except you, not the operating system are controlling how compute is interleaved. This is the key intuition for understanding the rest of the talk, which goes on to to push this example further. One of the most popular ways to accomplish async programming is by using the various utilities in the built-in asyncio module, which uses similar yield statements under the hood. I didn’t end up diving deeply into the asyncio module or this particular flavor of programming as my goal was to understand the concept so that I wouldn’t be lost when encountering this in the wild. ",
+    "url": "http://localhost:4000/docs/python/concurrency.html#asynchronous-programming",
+    "relUrl": "/docs/python/concurrency.html#asynchronous-programming"
+  },"77": {
+    "doc": "Python Concurrency",
+    "title": "Conclusion",
+    "content": "This talk really helped me learn about various concurrency paradigms in Python: threading, processes, and async using coroutines. I hope that my commentary helps others follow along easier and get the same benefit that I did from it. ",
+    "url": "http://localhost:4000/docs/python/concurrency.html#conclusion",
+    "relUrl": "/docs/python/concurrency.html#conclusion"
+  },"78": {
+    "doc": "Python Concurrency",
+    "title": "Other random things",
+    "content": "In David’s code, deque from the collections module was introduced, which is a very handy data structure not only for async programming but also for threads because they are thread-safe, which means that you don’t have to worry about race conditions. Similarly, the queue module provides other types of thread-safe queues. Furthermore, one of my favorite python libraries, fastcore, contains a module called parallel which makes using threads and processes easy for many use cases. ",
+    "url": "http://localhost:4000/docs/python/concurrency.html#other-random-things",
+    "relUrl": "/docs/python/concurrency.html#other-random-things"
+  },"79": {
+    "doc": "Python Concurrency",
+    "title": "Resources",
+    "content": ". | GitHub repo that contains David’s code. | . | This fibonacci algorithm runs in O(n2) time. &#8617; . | . ",
+    "url": "http://localhost:4000/docs/python/concurrency.html#resources",
+    "relUrl": "/docs/python/concurrency.html#resources"
+  },"80": {
+    "doc": "Python Concurrency",
+    "title": "Python Concurrency",
+    "content": " ",
+    "url": "http://localhost:4000/docs/python/concurrency.html",
+    "relUrl": "/docs/python/concurrency.html"
+  },"81": {
+    "doc": "Cookbook",
+    "title": "A Cookbook of Shell Scripts - Wicked Shell Scripts, 2d Edition",
+    "content": "You should browse the table of contents of this book and use the shell scripts contained within off the shelf if possible. | GitHub: https://github.com/hamelsmu/wicked_cool_shell_scripts_2e/ | Link to book on GitHub: https://github.com/hamelsmu/wicked_cool_shell_scripts_2e/blob/master/WickedCoolShellScripts2E.pdf | Book: https://nostarch.com/wcss2 | . ",
+    "url": "http://localhost:4000/docs/linux/cookbook.html#a-cookbook-of-shell-scripts---wicked-shell-scripts-2d-edition",
+    "relUrl": "/docs/linux/cookbook.html#a-cookbook-of-shell-scripts---wicked-shell-scripts-2d-edition"
+  },"82": {
+    "doc": "Cookbook",
+    "title": "Things Learned From The Cookbook",
+    "content": "In addition to just using the library of shell scripts, I also learned the following bash tidbits from this book. ",
+    "url": "http://localhost:4000/docs/linux/cookbook.html#things-learned-from-the-cookbook",
+    "relUrl": "/docs/linux/cookbook.html#things-learned-from-the-cookbook"
+  },"83": {
+    "doc": "Cookbook",
+    "title": "shift  and $#  pop args off and count args",
+    "content": "shift.sh . | 1 2 3 4 5 . | #!/bin/bash while (( $# )); do echo \"process args: $1\" shift done . | . Results in: . | 1 2 3 4 . | $ ./shift.sh foo bar bash process args: foo process args: bar process args: bash . | . Using shift for CLI options: . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 . | #!/bin/bash # newquota--A frontend to quota that works with full-word flags a la GNU # quota has three possible flags, -g, -v, and -q, but this script # allows them to be '--group', '--verbose', and '--quiet' too: flags=\"\" realquota=\"$(which quota)\" while [ $# -gt 0 ] do case $1 in --help) echo \"Usage: $0 [--group --verbose --quiet -gvq]\" &gt;&amp;2 exit 1 ;; --group ) flags=\"$flags -g\"; shift ;; --verbose) flags=\"$flags -v\"; shift ;; --quiet) flags=\"$flags -q\"; shift ;; --) shift; break ;; *) break; # done with 'while' loop! esac done exec $realquota $flags \"$@\" . | . ",
+    "url": "http://localhost:4000/docs/linux/cookbook.html#shift--and---pop-args-off-and-count-args",
+    "relUrl": "/docs/linux/cookbook.html#shift--and---pop-args-off-and-count-args"
+  },"84": {
+    "doc": "Cookbook",
+    "title": "$* collect all arguments",
+    "content": "shift2.sh . | 1 2 3 4 . | #!/bin/bash for var in $*; do echo $var done . | . Results in: . | 1 2 3 4 . | $ ./shift2.sh foo bar bash process args: foo process args: bar process args: bash . | . ",
+    "url": "http://localhost:4000/docs/linux/cookbook.html#-collect-all-arguments",
+    "relUrl": "/docs/linux/cookbook.html#-collect-all-arguments"
+  },"85": {
+    "doc": "Cookbook",
+    "title": "Multi Option Case Statement",
+    "content": "| 1 2 3 4 5 6 7 8 9 10 11 12 . | while read command args do case $command in quit|exit) exit 0 ;; help|\\?) show_help ;; scale) scale=$args ;; *) scriptbc -p $scale \"$command\" \"$args\" ;; esac /bin/echo -n \"calc&gt; \" done . | . Another example of case statement . | 1 2 3 4 5 6 7 8 9 10 11 . | case $1 in 1 ) month=\"Jan\" ;; 2 ) month=\"Feb\" ;; 3 ) month=\"Mar\" ;; 4 ) month=\"Apr\" ;; 5 ) month=\"May\" ;; 6 ) month=\"Jun\" ;; 7 ) month=\"Jul\" ;; 8 ) month=\"Aug\" ;; 9 ) month=\"Sep\" ;; 10) month=\"Oct\" ;; 11) month=\"Nov\" ;; 12) month=\"Dec\" ;; * ) echo \"$0: Unknown numeric month value $1\" &gt;&amp;2; exit 1 esac return 0 . | . ",
+    "url": "http://localhost:4000/docs/linux/cookbook.html#multi-option-case-statement",
+    "relUrl": "/docs/linux/cookbook.html#multi-option-case-statement"
+  },"86": {
+    "doc": "Cookbook",
+    "title": "Collecting stdout with -",
+    "content": "echo \"Enter something: \" | cat - . ",
+    "url": "http://localhost:4000/docs/linux/cookbook.html#collecting-stdout-with--",
+    "relUrl": "/docs/linux/cookbook.html#collecting-stdout-with--"
+  },"87": {
+    "doc": "Cookbook",
+    "title": "Formatting Long Lines fmt",
+    "content": "Will make lines no longer than 30 characters, not cutting off any words. fmt -w30 long_text.txt . ",
+    "url": "http://localhost:4000/docs/linux/cookbook.html#formatting-long-lines-fmt",
+    "relUrl": "/docs/linux/cookbook.html#formatting-long-lines-fmt"
+  },"88": {
+    "doc": "Cookbook",
+    "title": "IFS - Internal Field Seperator",
+    "content": "Sets the internal delimiter . ifs_variable.sh . | 1 2 3 4 5 6 7 . | #!/bin/bash IFS=\":\" var='a:b-c~d' for n in $var do echo \"$n\" done . | . Results in . | 1 2 3 . | $ ./1/ifs_variable.sh a b-c~d . | . IFS in Great Expectations Action . I’m using this in the Great Expectations Action to parse a list of arguments given as a string to an input . | 1 2 3 4 5 6 7 8 9 10 . | # Loop through checkpoints STATUS=0 IFS=',' for c in $INPUT_CHECKPOINTS;do echo \"\" echo \"Validating Checkpoint: ${c}\" if ! great_expectations checkpoint run $c; then STATUS=1 fi done . | . IFS for iterating through $PATH . | 1 2 3 4 5 . | #!/bin/bash IFS=\":\" for directory in $PATH ; do echo $directory done . | . IFS: Double vs. Single Quotes . With double quotes the outcome of the command expansion would be fed as one parameter to the source command. Without quotes it would be broken up into multiple parameters, depending on the value of IFS which contains space, TAB and newline by default. | 1 2 3 4 5 6 7 8 9 . | var=\"some value\" # $var fed into cmd as one parameter cmd \"$var\" # $var is fed into cmd as two parameters # delimted by the default IFS character, space cmd '$var' . | . ",
+    "url": "http://localhost:4000/docs/linux/cookbook.html#ifs---internal-field-seperator",
+    "relUrl": "/docs/linux/cookbook.html#ifs---internal-field-seperator"
+  },"89": {
+    "doc": "Cookbook",
+    "title": "$RANDOM",
+    "content": "echo $RANDOM will print out a random number . ",
+    "url": "http://localhost:4000/docs/linux/cookbook.html#random",
+    "relUrl": "/docs/linux/cookbook.html#random"
+  },"90": {
+    "doc": "Cookbook",
+    "title": "Debugging Shell Scripts -x",
+    "content": "Debug a script: . bash -x myscript.sh . OR, within a script: . | 1 2 3 . | set -x # start debugging ./myscript.sh set +x # stop debugging . | . All variables will be substituted and lines that are run will be printed to screen, showing the control flow of the program . ",
+    "url": "http://localhost:4000/docs/linux/cookbook.html#debugging-shell-scripts--x",
+    "relUrl": "/docs/linux/cookbook.html#debugging-shell-scripts--x"
+  },"91": {
+    "doc": "Cookbook",
+    "title": "Sourcing files with . ",
+    "content": "So you can “import” scripts . | 1 2 3 . | . myscript.sh # is equivalent to source myscript.sh . | . ",
+    "url": "http://localhost:4000/docs/linux/cookbook.html#sourcing-files-with--",
+    "relUrl": "/docs/linux/cookbook.html#sourcing-files-with--"
+  },"92": {
+    "doc": "Cookbook",
+    "title": "Using functions to set exit codes",
+    "content": "| 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 . | validAlphaNum() { # Validate arg: returns 0 if all upper+lower+digits, 1 otherwise. # Remove all unacceptable chars. validchars=\"$(echo $1 | sed -e 's/[^[:alnum:]]//g')\" if [ \"$validchars\" = \"$1\" ] ; then return 0 else return 1 fi } exit validAlphaNum . | . ",
+    "url": "http://localhost:4000/docs/linux/cookbook.html#using-functions-to-set-exit-codes",
+    "relUrl": "/docs/linux/cookbook.html#using-functions-to-set-exit-codes"
+  },"93": {
+    "doc": "Cookbook",
+    "title": "Know if someone running the script directly with  $BASH_SOURCE",
+    "content": "The variable $BASH_SOURCE can let you differentiate between when a script is run standalone vs when its invoked from another script: . | 1 . | if [ \"$BASH_SOURCE\" = \"$0\" ] . | . ",
+    "url": "http://localhost:4000/docs/linux/cookbook.html#know-if-someone-running-the-script-directly-with--bash_source",
+    "relUrl": "/docs/linux/cookbook.html#know-if-someone-running-the-script-directly-with--bash_source"
+  },"94": {
+    "doc": "Cookbook",
+    "title": "xargs",
+    "content": "https://www.cyberciti.biz/faq/linux-unix-bsd-xargs-construct-argument-lists-utility/ . | 1 2 3 4 . | &gt; echo 1 2 3 4 | xargs -n2 -I {} echo hello {} world hello 1 2 world hello 3 4 world . | . ",
+    "url": "http://localhost:4000/docs/linux/cookbook.html#xargs",
+    "relUrl": "/docs/linux/cookbook.html#xargs"
+  },"95": {
+    "doc": "Cookbook",
+    "title": "Cookbook",
+    "content": " ",
+    "url": "http://localhost:4000/docs/linux/cookbook.html",
+    "relUrl": "/docs/linux/cookbook.html"
+  },"96": {
+    "doc": "fastai",
+    "title": "fastai",
+    "content": "Random notes on fast.ai . ",
+    "url": "http://localhost:4000/docs/fastai/",
+    "relUrl": "/docs/fastai/"
+  },"97": {
+    "doc": "Linux & Bash Scripting",
+    "title": "Linux & Bash Scripting",
+    "content": "My personal notes on underrated Linux utilities that are useful when working on machine learning projects. Photo by Arget on Unsplash . ",
+    "url": "http://localhost:4000/docs/linux/",
+    "relUrl": "/docs/linux/"
+  },"98": {
+    "doc": "python",
+    "title": "python",
+    "content": "My notes on interesting things in Python. ",
+    "url": "http://localhost:4000/docs/python/",
+    "relUrl": "/docs/python/"
+  },"99": {
+    "doc": "GitHub Actions",
+    "title": "GitHub Actions",
+    "content": " ",
+    "url": "http://localhost:4000/docs/actions/",
+    "relUrl": "/docs/actions/"
+  },"100": {
+    "doc": "Jupyter",
+    "title": "Jupyter",
+    "content": " ",
+    "url": "http://localhost:4000/docs/jupyter/",
+    "relUrl": "/docs/jupyter/"
+  },"101": {
+    "doc": "Processes, Permissions and Moving Data",
+    "title": "References",
+    "content": "Files associated with this tutorial can be found here. ",
+    "url": "http://localhost:4000/docs/linux/linux.html#references",
+    "relUrl": "/docs/linux/linux.html#references"
+  },"102": {
+    "doc": "Processes, Permissions and Moving Data",
+    "title": "Managing Processes (ps, kill, pkill)",
+    "content": "Kill Single Process (ps, kill) . A common scenario is that you might run a python script to train a model: . $ python train.py . Let’s say you want to kill this script for whatever reason. You might not always be able to type Cntrl + C to stop it, especially if this process is running in the background. (Aside: A way make a program run in the background is with a &amp; for example:$ python train.py &amp; ) . In order to find this running program, you can use the command ps . $ ps Gives you basic information (good enough most of the time) . Flags: . | -e Allows you to see all running processes including from other users . | -f Allows you to see additional information about each process . | . In order to kill the process you will want to identify it’s PID for example, if the PID is 501 you can kill this process with the command: . $ kill 501 . Killing Multiple Processes (pkill) . If you use process-based threading in python with a library like multi-processing, python will instantiate many processes for you. This is common thing to do in python for a task like data processing. Let’s consider the below example. When you run this in the background it will produce 8 processes: . | 1 2 3 4 5 6 7 8 9 10 . | from multiprocessing import Pool from time import sleep def f(x): sleep(1000) # simulate some computation return x*x if __name__ == '__main__': with Pool(8) as p: print(p.map(f, range(8))) . | . $ python train_multi.py &amp; . After a few seconds, calling the command ps will yield something like this: . | 1 2 3 4 5 6 7 8 9 10 . | PID TTY TIME CMD 3982 ttys002 0:00.09 ...MacOS/Python train_multi.py 4219 ttys002 0:00.00 ...MacOS/Python train_multi.py 4220 ttys002 0:00.00 ...MacOS/Python train_multi.py 4221 ttys002 0:00.00 ...MacOS/Python train_multi.py 4222 ttys002 0:00.00 ...MacOS/Python train_multi.py 4223 ttys002 0:00.00 ...MacOS/Python train_multi.py 4224 ttys002 0:00.00 ...MacOS/Python train_multi.py 4225 ttys002 0:00.00 ...MacOS/Python train_multi.py 4226 ttys002 0:00.00 ...MacOS/Python train_multi.py . | . You can find all processes with the file train_multi.py with the pkill command and the -f flag: . See Parent / Child Processes (pstree) . pstree is also a helpful utility to see parent/child relationships between processes. You can install pstree on a mac with brew install pstree . In the above example, there are 8 sub-processes created by one python process. Running the command . $ pstree -s train_multi.py . Will show the process hierarchy. The -s flag allows you to filter parents and descendants of processes containing a string in their command. In the below example, PID 41592 will kill all the 8 child processes seen below . Killing Process Options . Reminder: view processes with ps or top To show processes from all users ps aux . | To restart pid 6996 kill -1 6996 . | kill pid 6996 kill -9 6996 . | . You can kill processes by name (which is also usually listed as the command that started the processes). killall will search for the string int he relevant process. Bringing processes back into the foreground . Reminder you put processes in the background with &amp; example is myscript.sh &amp; . You can move processes back into the foreground with fg . fg 1234 brings process 1234 back into the foreground. ",
+    "url": "http://localhost:4000/docs/linux/linux.html#managing-processes-ps-kill-pkill",
+    "relUrl": "/docs/linux/linux.html#managing-processes-ps-kill-pkill"
+  },"103": {
+    "doc": "Processes, Permissions and Moving Data",
+    "title": "Bundling &amp; Archiving Files (tar)",
+    "content": "You commonly want to package a bunch of files together, such as a collection of photos or CSVs, and optionally compress these with its directory structure intact. A common tool for this is tar . This is how you would bundle and compress a directory of CSV files: . Sending An Archive To A Remote Machine . It is often the case you want to send data to a remote machine. The below command creates a directory called data , compresses all files in a local folder named csv_data , with the exception of the sub-directory csv_data/intermediate_files without creating any temporary files locally: . Optionally, create the directory on the remote machine: . Then, stream the archive directly to remote. Note that providing a — instead of a destination filename allows tar to write to a stream (stdout) that can be sent directly to the remote server. Moving Files In Different Directories Into An Archive . If your files exist in sibling directories, rather than under one parent directory you can use find along with tar . Suppose you want to archive all csv files relative to a directory: . When you archive files on the fly above with find you cannot compress the files until the archive is finished being built, therefore you have to compress the tar file with the gzip command: . $ gzip data.tar . Tip: some people like to use locate with updatedb instead of find. There are tradeoffs so make sure you read the documentation carefully! . Unpacking &amp; Decompressing Archives . You can decompress and unpack a tar file, for example data.tar.gz with the following command: . $ tar -xzvf data.tar.gz . If the data is not compressed, you can leave out the -z flag: . $ tar -xvf data.tar . ",
+    "url": "http://localhost:4000/docs/linux/linux.html#bundling--archiving-files-tar",
+    "relUrl": "/docs/linux/linux.html#bundling--archiving-files-tar"
+  },"104": {
+    "doc": "Processes, Permissions and Moving Data",
+    "title": "File Permissions",
+    "content": "Before we begin, we must introduce some nomenclature: . If you run the command ls -a you will see something similar to the below output for all of your files in the current directory. The file permissions are shown in three-character groupings for three different groups (nine characters total). These three groups are the owner , group , and other users. In this case, the owner name is hamel and the group name is staff . For the owner, the file permissions are rwx which means that the owner has read r , write w , and execute x permissions. For the group, the file permissions are r-x which means the group has read and execute permissions, but not write permissions. A group is a collection of users with common permissions. Finally, all other users have file permissions of r– which means only read permissions. Changing File Permissions . There are several ways to change file permissions. Method 1: Using Characters and +, - . Refer to the nomenclature above to follow along . | chmod o-r csvfiles.tar.gz . Removes - the ability of other users o to read r the file. | chmod g+w csvfiles.tar.gz . Adds + the ability of the group g to write w to the file. | chmod u+x csvfiles.tar.gz . Adds + the ability of the owner u to execute x the file. | chomd a+x csvfiles.tar.gz . Adds + the ability of all users a to execute x the file. | . Method 2: using numbers . This method works by adding up the numbers corresponding to the permissions separately for each user group (owner, group, others). For example: . | chmod 777 csvfiles.tar.gz . This gives all users the ability to read (4), write( 2), and execute (1) files. In other words 4+2+1 = 7, for the owner, group and other users. | chmod 732 csvfiles.tar.gz . This gives the owner the ability to read, write and execute ( 4+2+1=7), the group the ability to write and execute (2+1=3) and all other users only the ability to write (2). | . Changing Ownership . You can change the owner or group assigned to a file like this: . chown newuser:newgroup file . The :newgroup is optional, if you do not specify that the group will stay the same. ",
+    "url": "http://localhost:4000/docs/linux/linux.html#file-permissions",
+    "relUrl": "/docs/linux/linux.html#file-permissions"
+  },"105": {
+    "doc": "Processes, Permissions and Moving Data",
+    "title": "Processes, Permissions and Moving Data",
+    "content": ". | References | Managing Processes (ps, kill, pkill) . | Kill Single Process (ps, kill) | Killing Multiple Processes (pkill) | See Parent / Child Processes (pstree) | Killing Process Options | Bringing processes back into the foreground | . | Bundling &amp; Archiving Files (tar) . | Sending An Archive To A Remote Machine | Moving Files In Different Directories Into An Archive | Unpacking &amp; Decompressing Archives | . | File Permissions . | Changing File Permissions | Changing Ownership | . | . ",
+    "url": "http://localhost:4000/docs/linux/linux.html",
+    "relUrl": "/docs/linux/linux.html"
+  },"106": {
+    "doc": "Misc Utilities",
+    "title": "History",
+    "content": ". | See history with history command | You will get a number for each history item. | You can replay any number n with command !n | History on OS X is stored in ~/.zsh_history | . !n refer to command number n in history when you call history . ",
+    "url": "http://localhost:4000/docs/linux/misc_utils.html#history",
+    "relUrl": "/docs/linux/misc_utils.html#history"
+  },"107": {
+    "doc": "Misc Utilities",
+    "title": "Diff",
+    "content": "You can difff two files, you usually want to see a unified diff b/c that is easier to read . diff -u file1.txt file2.txt . ",
+    "url": "http://localhost:4000/docs/linux/misc_utils.html#diff",
+    "relUrl": "/docs/linux/misc_utils.html#diff"
+  },"108": {
+    "doc": "Misc Utilities",
+    "title": "Here Documents",
+    "content": "Instead of using echo, our script now uses cat and a here document. The string EOF (meaning end of file, a common convention) was selected as the token and marks the end of the embedded text. Note that the token must appear alone and that there must not be trailing spaces on the line. Unlike Echo, all double quotes and single quotes are escaped. Here is an example of the same thing at the command line. | 1 2 3 4 5 6 7 8 9 10 11 . | [me@linuxbox ~]$ foo=\"some text\" [me@linuxbox ~]$ cat &lt;&lt; _EOF_ &gt; $foo &gt; \"$foo\" &gt; '$foo' &gt; \\$foo &gt; _EOF_ some text \"some text\" 'some text' $foo . | . ",
+    "url": "http://localhost:4000/docs/linux/misc_utils.html#here-documents",
+    "relUrl": "/docs/linux/misc_utils.html#here-documents"
+  },"109": {
+    "doc": "Misc Utilities",
+    "title": "Named Pipes with mkfifo",
+    "content": "Named pipes are input/output buffers. You can fill up the buffer and then drain the buffer later. | Setup Named Pipe using mkfifo . | Fill up the named pipe, this will hang until the pipe is drained . | . Hamel: you can run this part in a sub shell . | In a NEW terminal window drain the pipe | . Hamel: put it all together in a script. You can drain the pipe as many times as you want. | 1 2 3 4 5 . | #!/bin/bash mkfifo pipe1 ls -l &gt; pipe1 &amp; cat &lt; pipe1 . | . ",
+    "url": "http://localhost:4000/docs/linux/misc_utils.html#named-pipes-with-mkfifo",
+    "relUrl": "/docs/linux/misc_utils.html#named-pipes-with-mkfifo"
+  },"110": {
+    "doc": "Misc Utilities",
+    "title": "Scan host for open ports w/ nmap",
+    "content": ". | Lookup ip with nslookup | nmap -sT &lt;IP address&gt; | . You can scan a range of IPs for a mysql port like so: . nmap -sT 192.168.181.0/24 -p 3306 -oG MySQLScan . This is useful if you have a public server and you want to verify that a port is open. ",
+    "url": "http://localhost:4000/docs/linux/misc_utils.html#scan-host-for-open-ports-w-nmap",
+    "relUrl": "/docs/linux/misc_utils.html#scan-host-for-open-ports-w-nmap"
+  },"111": {
+    "doc": "Misc Utilities",
+    "title": "Devices /dev",
+    "content": "Linux has a special directory that contains files representing attached devices. Important ones are sda1, sda2 , sda3, sdb and sdb1 . You can view a tree of your disks and the partitions with the utility lsblk . ",
+    "url": "http://localhost:4000/docs/linux/misc_utils.html#devices-dev",
+    "relUrl": "/docs/linux/misc_utils.html#devices-dev"
+  },"112": {
+    "doc": "Misc Utilities",
+    "title": "Mounting devices",
+    "content": "Sometimes you need to mount these devices. Two common mount points are /mnt and /media. If you mount the device into an existing directory it will cover the contents of that directory making them invisible and unavailable. Ex: mount device to /mnt . mount /dev/sb1 /mnt . Ex: mount flash drive . mount /dev/sdc1 /media . You can unmount a device with unmount: . unmount /dev/sb1 . ",
+    "url": "http://localhost:4000/docs/linux/misc_utils.html#mounting-devices",
+    "relUrl": "/docs/linux/misc_utils.html#mounting-devices"
+  },"113": {
+    "doc": "Misc Utilities",
+    "title": "Getting information on mounted drives",
+    "content": "df -h . ",
+    "url": "http://localhost:4000/docs/linux/misc_utils.html#getting-information-on-mounted-drives",
+    "relUrl": "/docs/linux/misc_utils.html#getting-information-on-mounted-drives"
+  },"114": {
+    "doc": "Misc Utilities",
+    "title": "Permanently deleting files with shred",
+    "content": "This utility writes over files many times in order to erase things. Helpful for sensitive data. ",
+    "url": "http://localhost:4000/docs/linux/misc_utils.html#permanently-deleting-files-with-shred",
+    "relUrl": "/docs/linux/misc_utils.html#permanently-deleting-files-with-shred"
+  },"115": {
+    "doc": "Misc Utilities",
+    "title": "Masking your IP for web scraping",
+    "content": "Look into proxy chains . Linux utility called proxychains which generally works as: . proxychains &lt;the command you want proxied&gt; &lt;arguments&gt; . proxychains defaults to using Tor if you don’t supply your own proxies. See: https://www.technocrazed.com/how-to-use-beagle-scraper-safely-to-scrape-e-commerce-platforms . ",
+    "url": "http://localhost:4000/docs/linux/misc_utils.html#masking-your-ip-for-web-scraping",
+    "relUrl": "/docs/linux/misc_utils.html#masking-your-ip-for-web-scraping"
+  },"116": {
+    "doc": "Misc Utilities",
+    "title": "Running Scripts At System Startup",
+    "content": "Look at rc scripts. After the kernel has initialized all its modules, it starts adaemon known as init or initd, which runs scripts found in /etc/init.d/rc . You can use the utility update-rc.d to add a script to the startup procedure: . This is useful if for example you always want to start a database on system startup. ",
+    "url": "http://localhost:4000/docs/linux/misc_utils.html#running-scripts-at-system-startup",
+    "relUrl": "/docs/linux/misc_utils.html#running-scripts-at-system-startup"
+  },"117": {
+    "doc": "Misc Utilities",
+    "title": "Misc Utilities",
+    "content": ". | History | Diff | Here Documents | Named Pipes with mkfifo | Scan host for open ports w/ nmap | Devices /dev . | Mounting devices | Getting information on mounted drives | Permanently deleting files with shred | . | Masking your IP for web scraping | Running Scripts At System Startup | . ",
+    "url": "http://localhost:4000/docs/linux/misc_utils.html",
+    "relUrl": "/docs/linux/misc_utils.html"
+  },"118": {
+    "doc": "ocotokit.js",
+    "title": "Introduction",
+    "content": "ocotokit.js is a javascript library that can help you interact with the GitHub API in a easy manner. Some javascript knowledge is helpful, but not required for many simple tasks. You can use the octokit.js client along with the github-script action to quickly interface with the GitHub API to do useful things in Actions (like commenting on an issue.) . It is helpful to install node.js when developing scripts that interface with the GitHub API so you can test them locally. ",
+    "url": "http://localhost:4000/docs/actions/ocotkit.html#introduction",
+    "relUrl": "/docs/actions/ocotkit.html#introduction"
+  },"119": {
+    "doc": "ocotokit.js",
+    "title": "Example Octokit Scripts",
+    "content": " ",
+    "url": "http://localhost:4000/docs/actions/ocotkit.html#example-octokit-scripts",
+    "relUrl": "/docs/actions/ocotkit.html#example-octokit-scripts"
+  },"120": {
+    "doc": "ocotokit.js",
+    "title": "Example 1: Create A Comment On A PR",
+    "content": "Let’s say you want to programatically make a comment on a pull request with a url that includes the branch name, but you are only given the pull request number. We first lookup the branch name associated with the pull request and pass that to the method call that makes an issue comment: . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 . | //Instantiate octokit client const { Octokit } = require(\"@octokit/rest\"); const octokit = new Octokit({ auth: \"&lt;YOUR_PERSONAL_ACCESS_TOKEN&gt;\", }); //Take an action (create a comment) triggered by an issue comment // Get information about the pr octokit.pulls.get({ owner: 'hamelsmu', repo: 'test_html', pull_number: 1 }).then( (pr) =&gt; { // use the branch name from the pr to make a pr comment var BRANCH_NAME = pr.data.head.ref octokit.issues.createComment({ issue_number: 1, owner: 'hamelsmu', repo: 'test_html', body: `[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/hamelsmu/test_html/${BRANCH_NAME}) :point_left: Launch a binder notebook on this branch` }) }) . | . ",
+    "url": "http://localhost:4000/docs/actions/ocotkit.html#example-1-create-a-comment-on-a-pr",
+    "relUrl": "/docs/actions/ocotkit.html#example-1-create-a-comment-on-a-pr"
+  },"121": {
+    "doc": "ocotokit.js",
+    "title": "Example 2: Issue Comment",
+    "content": "This is a simple example of how you can create an issue comment. | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 . | //Instantiate octokit client const { Octokit } = require(\"@octokit/rest\"); const octokit = new Octokit({ auth: \"&lt;YOUR_PERSONAL_ACCESS_TOKEN&gt;\", }); // Create an issue commment var BRANCH_NAME = 'hamelsmu-patch-1' octokit.issues.createComment({ issue_number: 1, owner: 'hamelsmu', repo: 'test_html', body: `[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/hamelsmu/test_html/${BRANCH_NAME}) :point_left: Launch a binder notebook on this branch` }) . | . ",
+    "url": "http://localhost:4000/docs/actions/ocotkit.html#example-2-issue-comment",
+    "relUrl": "/docs/actions/ocotkit.html#example-2-issue-comment"
+  },"122": {
+    "doc": "ocotokit.js",
+    "title": "MyBinder.org",
+    "content": "The examples above were adapted to write these docs for mybinder.org. ",
+    "url": "http://localhost:4000/docs/actions/ocotkit.html#mybinderorg",
+    "relUrl": "/docs/actions/ocotkit.html#mybinderorg"
+  },"123": {
+    "doc": "ocotokit.js",
+    "title": "ocotokit.js",
+    "content": " ",
+    "url": "http://localhost:4000/docs/actions/ocotkit.html",
+    "relUrl": "/docs/actions/ocotkit.html"
+  },"124": {
+    "doc": "OSX Shell Tips",
+    "title": "Key Repeat Rate",
+    "content": "Add days to your lifespan by Increasing the key repeat rate. Run the following in the terminal then restart. Protip by Michael Musson. | 1 2 . | defaults write -g InitialKeyRepeat -int 13 # normal minimum is 15 (225 ms) defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms) . | . ",
+    "url": "http://localhost:4000/docs/linux/osx.html#key-repeat-rate",
+    "relUrl": "/docs/linux/osx.html#key-repeat-rate"
+  },"125": {
+    "doc": "OSX Shell Tips",
+    "title": "A better way to search text: ack",
+    "content": "Install ack: . brew install ack . Search files for text, super fast and returns results in a very nice way. By default will search recursively from the current directory and it skips unimportant files by default. ack \"search string\" . ",
+    "url": "http://localhost:4000/docs/linux/osx.html#a-better-way-to-search-text-ack",
+    "relUrl": "/docs/linux/osx.html#a-better-way-to-search-text-ack"
+  },"126": {
+    "doc": "OSX Shell Tips",
+    "title": "Keyboard Tricks (OS X)",
+    "content": "Set your option key to Esc+ in iTerm under Profiles&gt;Keys . | control-W delete word backwards | option-D delete word forwards | control-K delete until end of line | . ",
+    "url": "http://localhost:4000/docs/linux/osx.html#keyboard-tricks-os-x",
+    "relUrl": "/docs/linux/osx.html#keyboard-tricks-os-x"
+  },"127": {
+    "doc": "OSX Shell Tips",
+    "title": "My .zshrc file",
+    "content": "Stored at ~/.zshrc . I used to have ohmyzsh but it made my shell too slow. This is good enough for me. | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 . | # #speed startup time https://medium.com/@dannysmith/little-thing-2-speeding-up-zsh-f1860390f92 autoload -Uz compinit for dump in ~/.zcompdump(N.mh+24); do compinit done compinit -C #### PROMPT='%(?.%F{green}√.%F{red}?%?)%f %B%F{157}%1~%f%b %F{231}%# ' autoload -Uz vcs_info precmd_vcs_info() { vcs_info } precmd_functions+=( precmd_vcs_info ) setopt prompt_subst RPROMPT=\\$vcs_info_msg_0_ zstyle ':vcs_info:git:*' formats '%F{141}(%b)%r%f' zstyle ':vcs_info:*' enable git alias ls=\"colorls\" alias python=\"python3\" # install jupyter kernel with pipenv function install-jupyter { if [ -n \"${PIPENV_ACTIVE+1}\" ]; then VENV_NAME=`echo ${VIRTUAL_ENV} | cut -d '/' -f 7` echo \"creating Jupyter kernel named $VENV_NAME\" pipenv install --skip-lock ipykernel python -m ipykernel install --user --name=$VENV_NAME fi } ## automatically activate pipenv shell upon cd function auto_pipenv_shell { if [ ! -n \"${PIPENV_ACTIVE+1}\" ]; then if [ -f \"Pipfile\" ] ; then pipenv shell fi fi } function cd { builtin cd \"$@\" auto_pipenv_shell } #extra stuff export CLICOLOR=1 export LSCOLORS=GxFxCxDxBxegedabagaced GREP_OPTIONS=\"--color=always\";export GREP_OPTIONS __git_files () { _wanted files expl 'local files' _files } . | . ",
+    "url": "http://localhost:4000/docs/linux/osx.html#my-zshrc-file",
+    "relUrl": "/docs/linux/osx.html#my-zshrc-file"
+  },"128": {
+    "doc": "OSX Shell Tips",
+    "title": "OSX Shell Tips",
+    "content": " ",
+    "url": "http://localhost:4000/docs/linux/osx.html",
+    "relUrl": "/docs/linux/osx.html"
+  },"129": {
+    "doc": "Remote Browser For Jupyter",
+    "title": "Background",
+    "content": "It is very common to connect to a remote Jupyter server with your local browser. However, if you lose connection with your remote server, logs printed to the screen may stop streaming. This is common when training deep learning models where training runs can last days or weeks where progress bars are printed to the screen in a notebook. To avoid the issue with your browser loosing connection you can run the browser remotely on the same machine as the Jupyter server, even if your remote server does not have a desktop/GUI interface. ",
+    "url": "http://localhost:4000/docs/jupyter/remote_browser.html#background",
+    "relUrl": "/docs/jupyter/remote_browser.html#background"
+  },"130": {
+    "doc": "Remote Browser For Jupyter",
+    "title": "fast.ai",
+    "content": "The below youtube link (at timestamp 1:58:33), from fastai Lesson 10 Part 2 (2018) will walk you through how to accomplish this. ",
+    "url": "http://localhost:4000/docs/jupyter/remote_browser.html#fastai",
+    "relUrl": "/docs/jupyter/remote_browser.html#fastai"
+  },"131": {
+    "doc": "Remote Browser For Jupyter",
+    "title": "Remote Browser For Jupyter",
+    "content": " ",
+    "url": "http://localhost:4000/docs/jupyter/remote_browser.html",
+    "relUrl": "/docs/jupyter/remote_browser.html"
+  },"132": {
+    "doc": "Resources",
+    "title": "Introduction",
+    "content": "These are resources that can help you get started with GitHub Actions: . | Talk: Getting started with Actions | Blog: An Intro To Actions For Data Scientists | . ",
+    "url": "http://localhost:4000/docs/actions/resources.html#introduction",
+    "relUrl": "/docs/actions/resources.html#introduction"
+  },"133": {
+    "doc": "Resources",
+    "title": "Going Deeper",
+    "content": "Once you have a basic understanding, these resources can help you learn more. | See mlops-github.com for a collection of resources specifically targeted at Data Scientists using GitHub Actions. | Actions official documentation. | . ",
+    "url": "http://localhost:4000/docs/actions/resources.html#going-deeper",
+    "relUrl": "/docs/actions/resources.html#going-deeper"
+  },"134": {
+    "doc": "Resources",
+    "title": "Resources",
+    "content": " ",
+    "url": "http://localhost:4000/docs/actions/resources.html",
+    "relUrl": "/docs/actions/resources.html"
+  },"135": {
+    "doc": "fastcore.utils",
+    "title": "Things I Learned From fastcore.utils",
+    "content": "Some notes I took while documenting this module. | Things I Learned From fastcore.utils | Important Reading Materials . | Defining classes with type | Avoid boilerplate when defining new classes w/ store_attr | Utilities I’m likely to use in other projects . | Multiprocessing | Functions on Functions | . | . | Other . | Class Decorators | . | . ",
+    "url": "http://localhost:4000/docs/fastai/utils.html#things-i-learned-from-fastcoreutils",
+    "relUrl": "/docs/fastai/utils.html#things-i-learned-from-fastcoreutils"
+  },"136": {
+    "doc": "fastcore.utils",
+    "title": "Important Reading Materials",
+    "content": ". | Real Python Metaclasses blog post | fastcore.utils docs: http://fastcore.fast.ai/utils.html | . ",
+    "url": "http://localhost:4000/docs/fastai/utils.html#important-reading-materials",
+    "relUrl": "/docs/fastai/utils.html#important-reading-materials"
+  },"137": {
+    "doc": "fastcore.utils",
+    "title": "Defining classes with type",
+    "content": "You can use type to also define classes. This can be useful when you want to programmatically define classes, and is new to python 3. | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 . | Foo = type( 'Foo', (), { 'attr': 100, 'attr_val': lambda x : x.attr } ) &gt;&gt;&gt; x = Foo() &gt;&gt;&gt; x.attr 100 &gt;&gt;&gt; x.attr_val() 100 . | . This is used in fastcore.utils.get_class http://fastcore.fast.ai/utils.html#get_class. ",
+    "url": "http://localhost:4000/docs/fastai/utils.html#defining-classes-with-type",
+    "relUrl": "/docs/fastai/utils.html#defining-classes-with-type"
+  },"138": {
+    "doc": "fastcore.utils",
+    "title": "Avoid boilerplate when defining new classes w/ store_attr",
+    "content": "Use fast core.utils.store_attr: http://fastcore.fast.ai/utils.html#get_class . The old way . | 1 2 3 4 5 . | class T: def __init__(self, a,b,c): self.a = a self.b = b self.c = c . | . The new way . | 1 2 . | class T: def __init__(self, a,b,c): store_attr(self, 'a,b,c') . | . ",
+    "url": "http://localhost:4000/docs/fastai/utils.html#avoid-boilerplate-when-defining-new-classes-w-store_attr",
+    "relUrl": "/docs/fastai/utils.html#avoid-boilerplate-when-defining-new-classes-w-store_attr"
+  },"139": {
+    "doc": "fastcore.utils",
+    "title": "Utilities I’m likely to use in other projects",
+    "content": "Suggest going through http://fastcore.fast.ai/utils.html and taking a look. The below utilities are well documented, but this is a quick list of things I especially liked. You can accomplish the same things without these utilities, but these utilities involve writing less code. | mk_class: quickly add a bunch of attributes to a class | wrap_class: add new methods to an a class with a simple decorator | store_attr: already discussed above. | groupby: similar to scala groupby | merge: merge dicts | fasttuple: a tuple on steroids | Infinite Lists: useful for padding and testing | chunked: for batching and organizing stuff | Pathlib.Path Extensions: A better Pathlib.Path. http://fastcore.fast.ai/utils.html#Extensions-to-Pathlib.Path | . Multiprocessing . Extends python’s multiprocessing http://fastcore.fast.ai/utils.html#Multiprocessing. Has features like: . | progress bars | better default behavior | ability to pause to mitigate race conditions with external services: http://fastcore.fast.ai/utils.html#parallel | parallel_chunks: processing things in batches on each worker, ex: if you have a vectorized operation to perform in chunks | . Functions on Functions . This is a functional programming toolkit that is my favorite part of this library. http://fastcore.fast.ai/utils.html#Functions-on-Functions . | compose: functional programming - compose several functions | maps: a map that also composes functions | partialler: partial that copies the docstring | mapped: A more robust map | using_attr: change the way a function uses its inputs (see docs) | Self: with an uppercase S - a better lambda | . ",
+    "url": "http://localhost:4000/docs/fastai/utils.html#utilities-im-likely-to-use-in-other-projects",
+    "relUrl": "/docs/fastai/utils.html#utilities-im-likely-to-use-in-other-projects"
+  },"140": {
+    "doc": "fastcore.utils",
+    "title": "Other",
+    "content": " ",
+    "url": "http://localhost:4000/docs/fastai/utils.html#other",
+    "relUrl": "/docs/fastai/utils.html#other"
+  },"141": {
+    "doc": "fastcore.utils",
+    "title": "Class Decorators",
+    "content": "I did not know you could have decorators on classes. I though it was only for functions. Learned this from Real Python Metaclasses blog post. | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 . | def decorator(cls): class NewClass(cls): attr = 100 return NewClass @decorator class X: pass @decorator class Y: pass @decorator class Z: pass &gt;&gt;&gt; X.attr 100 &gt;&gt;&gt; Y.attr 100 &gt;&gt;&gt; Z.attr 100 . | . ",
+    "url": "http://localhost:4000/docs/fastai/utils.html#class-decorators",
+    "relUrl": "/docs/fastai/utils.html#class-decorators"
+  },"142": {
+    "doc": "fastcore.utils",
+    "title": "fastcore.utils",
+    "content": " ",
+    "url": "http://localhost:4000/docs/fastai/utils.html",
+    "relUrl": "/docs/fastai/utils.html"
+  }
+}

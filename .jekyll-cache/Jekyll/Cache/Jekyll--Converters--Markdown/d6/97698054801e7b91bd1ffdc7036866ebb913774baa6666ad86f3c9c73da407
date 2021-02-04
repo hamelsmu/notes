@@ -1,0 +1,143 @@
+I"<h1 id="key-repeat-rate">Key Repeat Rate</h1>
+
+<p>Add days to your lifespan by Increasing the key repeat rate. Run the following in the terminal then restart.  Protip by <a href="https://www.linkedin.com/in/michael-m-a37b1932/">Michael Musson</a>.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>defaults write <span class="nt">-g</span> InitialKeyRepeat <span class="nt">-int</span> 13 <span class="c"># normal minimum is 15 (225 ms)</span>
+defaults write <span class="nt">-g</span> KeyRepeat <span class="nt">-int</span> 1 <span class="c"># normal minimum is 2 (30 ms)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h1 id="a-better-way-to-search-text-ack">A better way to search text: <code class="highlighter-rouge">ack</code></h1>
+
+<p>Install <code class="highlighter-rouge">ack</code>:</p>
+
+<p><code class="highlighter-rouge">brew install ack</code></p>
+
+<p>Search files for text, super fast and returns results in a very nice way. By default will search recursively from the current directory and it skips unimportant files by default.</p>
+
+<p><code class="highlighter-rouge">ack "search string"</code></p>
+
+<h1 id="keyboard-tricks-os-x">Keyboard Tricks (OS X)</h1>
+<p>Set your option key to <code class="highlighter-rouge">Esc+</code>  in iTerm under Profiles&gt;Keys</p>
+
+<p><img src="iterm_escape.png" alt="" /></p>
+
+<ol>
+  <li><code class="highlighter-rouge">control-W</code> delete word backwards</li>
+  <li><code class="highlighter-rouge">option-D</code> delete word forwards</li>
+  <li><code class="highlighter-rouge">control-K</code> delete until end of line</li>
+</ol>
+
+<h1 id="my-zshrc-file">My <code class="highlighter-rouge">.zshrc</code> file</h1>
+
+<p>Stored at <code class="highlighter-rouge">~/.zshrc</code></p>
+
+<p>I used to have <a href="https://github.com/ohmyzsh/ohmyzsh">ohmyzsh</a> but it made my shell too slow. This is good enough for me.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+</pre></td><td class="rouge-code"><pre><span class="c"># #speed startup time https://medium.com/@dannysmith/little-thing-2-speeding-up-zsh-f1860390f92</span>
+autoload <span class="nt">-Uz</span> compinit
+<span class="k">for </span>dump <span class="k">in</span> ~/.zcompdump<span class="o">(</span>N.mh+24<span class="o">)</span><span class="p">;</span> <span class="k">do
+  </span>compinit
+<span class="k">done
+</span>compinit <span class="nt">-C</span>
+<span class="c">####</span>
+
+<span class="nv">PROMPT</span><span class="o">=</span><span class="s1">'%(?.%F{green}√.%F{red}?%?)%f %B%F{157}%1~%f%b %F{231}%# '</span>
+
+autoload <span class="nt">-Uz</span> vcs_info
+precmd_vcs_info<span class="o">()</span> <span class="o">{</span> vcs_info <span class="o">}</span>
+precmd_functions+<span class="o">=(</span> precmd_vcs_info <span class="o">)</span>
+setopt prompt_subst
+<span class="nv">RPROMPT</span><span class="o">=</span><span class="se">\$</span>vcs_info_msg_0_
+zstyle <span class="s1">':vcs_info:git:*'</span> formats <span class="s1">'%F{141}(%b)%r%f'</span>
+zstyle <span class="s1">':vcs_info:*'</span> <span class="nb">enable </span>git
+
+<span class="nb">alias ls</span><span class="o">=</span><span class="s2">"colorls"</span>
+<span class="nb">alias </span><span class="nv">python</span><span class="o">=</span><span class="s2">"python3"</span>
+
+<span class="c"># install jupyter kernel with pipenv</span>
+<span class="k">function </span>install-jupyter <span class="o">{</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="nt">-n</span> <span class="s2">"</span><span class="k">${</span><span class="nv">PIPENV_ACTIVE</span><span class="p">+1</span><span class="k">}</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nv">VENV_NAME</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">VIRTUAL_ENV</span><span class="k">}</span> | <span class="nb">cut</span> <span class="nt">-d</span> <span class="s1">'/'</span> <span class="nt">-f</span> 7<span class="sb">`</span>
+    <span class="nb">echo</span> <span class="s2">"creating Jupyter kernel named </span><span class="nv">$VENV_NAME</span><span class="s2">"</span>
+    pipenv <span class="nb">install</span> <span class="nt">--skip-lock</span> ipykernel
+    python <span class="nt">-m</span> ipykernel <span class="nb">install</span> <span class="nt">--user</span> <span class="nt">--name</span><span class="o">=</span><span class="nv">$VENV_NAME</span>
+  <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="c">## automatically activate pipenv shell upon cd</span>
+<span class="k">function </span>auto_pipenv_shell <span class="o">{</span>
+    <span class="k">if</span> <span class="o">[</span> <span class="o">!</span> <span class="nt">-n</span> <span class="s2">"</span><span class="k">${</span><span class="nv">PIPENV_ACTIVE</span><span class="p">+1</span><span class="k">}</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+        if</span> <span class="o">[</span> <span class="nt">-f</span> <span class="s2">"Pipfile"</span> <span class="o">]</span> <span class="p">;</span> <span class="k">then
+            </span>pipenv shell
+        <span class="k">fi
+    fi</span>
+<span class="o">}</span>
+
+<span class="k">function </span><span class="nb">cd</span> <span class="o">{</span>
+    <span class="nb">builtin cd</span> <span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+    auto_pipenv_shell
+<span class="o">}</span>
+
+<span class="c">#extra stuff</span>
+<span class="nb">export </span><span class="nv">CLICOLOR</span><span class="o">=</span>1
+<span class="nb">export </span><span class="nv">LSCOLORS</span><span class="o">=</span>GxFxCxDxBxegedabagaced
+<span class="nv">GREP_OPTIONS</span><span class="o">=</span><span class="s2">"--color=always"</span><span class="p">;</span><span class="nb">export </span>GREP_OPTIONS
+__git_files <span class="o">()</span> <span class="o">{</span> 
+    _wanted files expl <span class="s1">'local files'</span> _files     
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+:ET
