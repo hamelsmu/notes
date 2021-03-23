@@ -155,17 +155,21 @@
   <li><code class="highlighter-rouge">cons</code> allows you to append to the beginning of a list</li>
   <li>There is an option type that is <code class="highlighter-rouge">NONE</code> or <code class="highlighter-rouge">SOME v</code></li>
   <li>This language doesn’t encourage mutation, which is a feature.  Otherwise, you can use a reference which is like a pointer to mutate a variable.</li>
-  <li><strong>pattern matching with a case expression</strong>:  This is one of the coolest things that I learned, and <a href="https://www.python.org/dev/peps/pep-0636/">is coming to Python v 3.10</a>.
+  <li><strong>pattern matching with a case expression</strong>:  This is one of the coolest things that I learned, and something similar <a href="https://www.python.org/dev/peps/pep-0636/">is coming to Python v 3.10</a>.
     <ul>
       <li>You can have nested patterns</li>
-      <li>You can pattern match against function arguments which allow for really nice syntax for achieving multiple dispatch type of functionality..
+      <li>You can pattern match against function arguments which allow for really nice syntax for achieving multiple dispatch type of functionality.. (not sure about python)</li>
+      <li>You can pattern match against types as well as data structures.</li>
+      <li>You can have constants in there as well.
         <div class="language-ml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
 4
 5
+6
 </pre></td><td class="rouge-code"><pre>  <span class="kr">case</span> <span class="n">name</span> 
    <span class="n">NameType</span> <span class="n">name</span> <span class="p">=&gt;</span> <span class="p">...</span>
+ <span class="p">|</span> <span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="s2">"MyLastName"</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">...</span>
  <span class="p">|</span> <span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">...</span>
  <span class="p">|</span> <span class="n">name</span> <span class="p">=&gt;</span> <span class="p">...</span>
  <span class="p">|</span> <span class="p">_</span> <span class="p">=&gt;</span> <span class="p">...</span>
