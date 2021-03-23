@@ -2,8 +2,9 @@
 layout: default
 title: programming languages
 nav_order: 6
-has_children: true
 ---
+
+## Programming Languages Notes
 
 High level takeaways after completing the [3-Part Coursera class Programming Languages](https://www.coursera.org/learn/programming-languages) with Dan Grossman.
 
@@ -11,16 +12,24 @@ Your GitHub repo for this class (private) [is here](https://github.com/hamelsmu/
 
 ## SML (Standard ML) Part A
 
-- You setup vim to have an IDE for this.  See these [notes](vim.md).
+- You setup vim to have an IDE for this.  See notes in the VIM section below.
 - ML is a statically typed language with magical **type inference** that works really well.  It automatically determines the types and is very intuitive and helpful.
 - Learned how to use recursion everywhere instead of loops, particularly with `hd`, `tl` and `cons`.
 - Local variable binding with `let` is very important (which also allows you to bind local/private functions as well)
 - `cons` allows you to append to the beginning of a list
 - There is an option type that is `NONE` or `SOME v`
 - This language doesn't encourage mutation, which is a feature.  Otherwise, you can use a reference which is like a pointer to mutate a variable.
-- **pattern matching with a case expression**  `case name (first, last) =>`
+- **pattern matching with a case expression**:  This is one of the coolest things that I learned, and [is coming to Python v 3.10](https://www.python.org/dev/peps/pep-0636/).
     - You can have nested patterns
     - You can pattern match against function arguments which allow for really nice syntax for achieving multiple dispatch type of functionality..
+    ```ml
+    case name 
+         NameType name => ...
+       | (first, last) => ...
+       | name => ...
+       | _ => ...
+    ```
+
 - **Tail recursion** with accumulators.  Ex- factorial
 - The `fn` keyword is used to define **anonymous functions**.
 - ML uses `lexical scope` which means function is evaluated in the environment where the function was defined. `dynamic scope`, which is usually not desired, is the alternative where the function is evaluated in the in the environment it is called.
@@ -45,8 +54,13 @@ Your GitHub repo for this class (private) [is here](https://github.com/hamelsmu/
 
 ## Racket (Part B)
 
+TODO
 
+## Ruby (Part C)
 
+TODO
+
+---
 
 ## VIM 
 For the Standard ML programming language I decided to force myself to use vim.  I added the following things to my `.vimrc` to make it manageable.  Note the plugin `jez/vim-better-sml`

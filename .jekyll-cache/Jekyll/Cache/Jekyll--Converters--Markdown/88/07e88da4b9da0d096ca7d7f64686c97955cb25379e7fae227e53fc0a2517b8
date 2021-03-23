@@ -1,0 +1,164 @@
+I"�<h2 id="programming-languages-notes">Programming Languages Notes</h2>
+
+<p>High level takeaways after completing the <a href="https://www.coursera.org/learn/programming-languages">3-Part Coursera class Programming Languages</a> with Dan Grossman.</p>
+
+<p>Your GitHub repo for this class (private) <a href="https://github.com/hamelsmu/programming-languages-class">is here</a>.</p>
+
+<h2 id="sml-standard-ml-part-a">SML (Standard ML) Part A</h2>
+
+<ul>
+  <li>You setup vim to have an IDE for this.  See these <a href="vim.md">notes</a>.</li>
+  <li>ML is a statically typed language with magical <strong>type inference</strong> that works really well.  It automatically determines the types and is very intuitive and helpful.</li>
+  <li>Learned how to use recursion everywhere instead of loops, particularly with <code class="highlighter-rouge">hd</code>, <code class="highlighter-rouge">tl</code> and <code class="highlighter-rouge">cons</code>.</li>
+  <li>Local variable binding with <code class="highlighter-rouge">let</code> is very important (which also allows you to bind local/private functions as well)</li>
+  <li><code class="highlighter-rouge">cons</code> allows you to append to the beginning of a list</li>
+  <li>There is an option type that is <code class="highlighter-rouge">NONE</code> or <code class="highlighter-rouge">SOME v</code></li>
+  <li>This language doesn’t encourage mutation, which is a feature.  Otherwise, you can use a reference which is like a pointer to mutate a variable.</li>
+  <li><strong>pattern matching with a case expression</strong>
+    <ul>
+      <li>You can have nested patterns</li>
+      <li>You can pattern match against function arguments which allow for really nice syntax for achieving multiple dispatch type of functionality..
+  ```ml
+  case name 
+   NameType name =&gt; …
+ | (first, last) =&gt; …
+ | name =&gt; …</li>
+    </ul>
+
+    <p>```</p>
+  </li>
+  <li><strong>Tail recursion</strong> with accumulators.  Ex- factorial</li>
+  <li>The <code class="highlighter-rouge">fn</code> keyword is used to define <strong>anonymous functions</strong>.</li>
+  <li>ML uses <code class="highlighter-rouge">lexical scope</code> which means function is evaluated in the environment where the function was defined. <code class="highlighter-rouge">dynamic scope</code>, which is usually not desired, is the alternative where the function is evaluated in the in the environment it is called.</li>
+  <li><strong>Closure</strong> - the call stack has a “pair” that is the (function, environment when the function was defined).  This pair is called the <code class="highlighter-rouge">closure</code>.  The call stack has a snapshot of what the environment looked like at the time the function was defined.</li>
+  <li><code class="highlighter-rouge">fold</code> is like reduce.</li>
+  <li>ML supports <strong>function composition</strong> like this with  the keyword <code class="highlighter-rouge">o</code>:  <code class="highlighter-rouge">f1 o f2 o f3</code>
+    <ul>
+      <li>best to do a val binding to avoid unnecessary wrapping: <code class="highlighter-rouge">val newfunc = f1 o f2</code></li>
+      <li>with <code class="highlighter-rouge">o</code> you apply functions from right to left so <code class="highlighter-rouge">f1 o f2 x</code> is the same as <code class="highlighter-rouge">f1(f2(x))</code> there is an alternative that is left to right called the <code class="highlighter-rouge">pipeline operator</code>.</li>
+    </ul>
+  </li>
+  <li><strong>Currying and partial application</strong>
+    <ul>
+      <li>Universal way to make a func curryable:
+        <div class="language-ml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>  <span class="kr">fun</span> <span class="nf">myfunc</span> <span class="n">x</span>
+      <span class="kr">let</span> <span class="kr">fun</span> <span class="nf">f2</span> <span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="p">=</span> <span class="n">z</span>
+          <span class="kr">fun</span> <span class="nf">f1</span> <span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="p">=</span> <span class="n">f2</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+      <span class="n">begin</span>
+          <span class="n">f1</span>
+      <span class="kr">end</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+      </li>
+      <li>ML has first class support for currying so you don’t have to do the above hack.</li>
+    </ul>
+  </li>
+  <li>ML supports mutual recursion just like <code class="highlighter-rouge">let-rec</code> in racket.</li>
+</ul>
+
+<h2 id="racket-part-b">Racket (Part B)</h2>
+
+<h2 id="vim">VIM</h2>
+<p>For the Standard ML programming language I decided to force myself to use vim.  I added the following things to my <code class="highlighter-rouge">.vimrc</code> to make it manageable.  Note the plugin <code class="highlighter-rouge">jez/vim-better-sml</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+</pre></td><td class="rouge-code"><pre>" from https://github.com/jez/vim-as-an-ide
+set nocompatible
+
+inoremap &lt;C-e&gt; &lt;C-o&gt;A
+
+
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+
+" ----- Making Vim look good ------------------------------------------
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'tomasr/molokai'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+" ----- Vim as a programmer's text editor -----------------------------
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-easytags'
+Plugin 'majutsushi/tagbar'
+Plugin 'ctrlpvim/ctrlp.vim'
+" ----- Working with Git ----------------------------------------------
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
+Plugin 'Raimondi/delimitMate'
+Plugin 'jez/vim-better-sml'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'benmills/vimux'
+call vundle#end()
+
+filetype plugin indent on
+
+set number
+set ruler
+set showcmd
+set incsearch
+set hlsearch
+set backspace=indent,eol,start
+
+syntax on
+set mouse=a
+</pre></td></tr></tbody></table></code></pre></div></div>
+:ET
