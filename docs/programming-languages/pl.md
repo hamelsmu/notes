@@ -4,8 +4,6 @@ title: programming languages
 nav_order: 6
 ---
 
-## Programming Languages Notes
-
 High level takeaways after completing the [3-Part Coursera class Programming Languages](https://www.coursera.org/learn/programming-languages) with Dan Grossman.
 
 Your GitHub repo for this class (private) [is here](https://github.com/hamelsmu/programming-languages-class).
