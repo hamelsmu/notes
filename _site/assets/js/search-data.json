@@ -390,471 +390,465 @@
     "relUrl": "/docs/linux/bash_scripting.html"
   },"65": {
     "doc": "Python Concurrency",
-    "title": "Understand the world of Python concurrency: threads, processes, coroutines and asynchronous programming with a realistic examples.",
+    "title": "See this blog article.",
     "content": " ",
-    "url": "http://localhost:4000/docs/python/concurrency.html#understand-the-world-of-python-concurrency-threads-processes-coroutines-and-asynchronous-programming-with-a-realistic-examples",
-    "relUrl": "/docs/python/concurrency.html#understand-the-world-of-python-concurrency-threads-processes-coroutines-and-asynchronous-programming-with-a-realistic-examples"
+    "url": "http://localhost:4000/docs/python/concurrency.html#see-this-blog-article",
+    "relUrl": "/docs/python/concurrency.html#see-this-blog-article"
   },"66": {
     "doc": "Python Concurrency",
-    "title": "Motivation",
-    "content": "As a data scientist who is spending more and more time on software engineering, I was recently forced to confront an ugly gap in my knowledge of Python: concurrency. To be honest, I never completely understood how the terms async, threads, pools and coroutines were different and how these mechanisms could work together. Whenever I encountered talks or material that mentioned these terms, I was unable to grasp related concepts or follow along. Furthermore, I was guilty of incorrectly applying these mechanisms due to my lack of understanding. For example, I avoided using threads completely in favor of processes all the time. Most importantly, every time I tried to learn about the subject, the examples were a bit too abstract for me, and I hard time internalizing how everything worked. This changed when a friend of mine, Jeremy Howard, recommended a live coding talk by Daivd Beazley, an accomplished Python educator. Because of restrictions with this YouTube video, I couldn’t embed the video in this article, so you will have to open it in a different window. This talk is incredibly intimidating at first. Not only is it coded live from scratch, but it also jumps immediately into socket programming, something that I had never encountered as a data scientist. However, I was encouraged to take things slow and deeply understand this talk, and attempt to understand each piece bit by bit. This blog post documents what I learned along the way with the hopes that it will benefit others. ",
-    "url": "http://localhost:4000/docs/python/concurrency.html#motivation",
-    "relUrl": "/docs/python/concurrency.html#motivation"
-  },"67": {
-    "doc": "Python Concurrency",
-    "title": "Prerequisites",
-    "content": "Before getting started, David sets up the following infrastructure that is used to demonstrate threads and concurrency. ",
-    "url": "http://localhost:4000/docs/python/concurrency.html#prerequisites",
-    "relUrl": "/docs/python/concurrency.html#prerequisites"
-  },"68": {
-    "doc": "Python Concurrency",
-    "title": "A cpu-bound task: Fibonacci",
-    "content": "To demonstrate concurrency, it is useful to create a task that can saturate your CPU, (such as mathematical operations) for a noticeable period of time. For this purpose David uses a function that computes a Fibonacci number. | 1 2 3 4 . | #fib.py def fib(n): if n &lt;= 2: return 1 else: return fib(n-1) + fib(n-2) . | . This function is useful for threads as it will take much longer for large inputs versus smaller inputs1, which allows us to profile different workloads. ",
-    "url": "http://localhost:4000/docs/python/concurrency.html#a-cpu-bound-task-fibonacci",
-    "relUrl": "/docs/python/concurrency.html#a-cpu-bound-task-fibonacci"
-  },"69": {
-    "doc": "Python Concurrency",
-    "title": "A Simple Web Server",
-    "content": "It is also useful to have a real-word task that can benefit from threading. A web server is one of the best ways to illustrate the benefits of concurrency with both thread and processes. However, to really demonstrate how things work it is useful to use something that is sufficiently low level enough to see how the pieces work. For this, David sets up a web server using socket programming. If you aren’t familiar with socket programming (I’m willing to bet most people are not), please stop reading and complete this tutorial. To begin with, David starts with the below code (to which I’ve added some comments): . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 . | # server-1.py from socket import * from fib import fib def fib_server(address): sock = socket(AF_INET, SOCK_STREAM) sock.setsockopt(SOL_SOCKET, SO_REUSEADDR,1) sock.bind(address) sock.listen(5) while True: client,addr = sock.accept() # waits for a connection to be established print(\"Connection\", addr) fib_handler(client) # passes the client to a handler which will listen for input data. def fib_handler(client): while True: req = client.recv(100) # waits for data that sent by the client. if not req: break result = fib(int(req)) resp = str(result).encode('ascii') + b'\\n' client.send(resp) # sends data back to the client. print(\"Closed\") fib_server(('', 25000)) . | . Here is an explanation of this code: . | Lines 6-9 are socket programming boilerplate. It’s ok to just take this for granted as a reasonable way to set up a socket server. This also matches the the tutorial I linked to above. | Line 11 waits for an incoming connection from a client. Once a connection is made, the server can begin receiving data from a client. The code will stop execution on this line until a connection is made. | Line 13: Once a connection is established, the client object is passed to a function which can handle data sent by the client. | Line 17: waits for data to be sent by the client. The code will stop execution on this line until data is received from the client. | Line 21: The server sends a response back to the client. The code could stop execution on this line if the send buffers are full, but unlikely in this toy example. | . ",
-    "url": "http://localhost:4000/docs/python/concurrency.html#a-simple-web-server",
-    "relUrl": "/docs/python/concurrency.html#a-simple-web-server"
-  },"70": {
-    "doc": "Python Concurrency",
-    "title": "Testing the non-concurrent code",
-    "content": "In the above example, the server will only be able to accept a connection from a single client, because the call to fib_handler will never return (because it will run in an infinite loop unless a kill signal is received) which means that sock.accept() can only be called once. You can test this out by first running the server: . python server-1.py . Then establish a client: . telnet localhost 25000 . You can type numbers in as David does in his video and verifies that fibonacci numbers are returned. However, if you try to connect with another client at the same time from a different terminal session: . telnet localhost 25000 . You will notice that the second client just hangs and doesn’t return anything from the server. This is because the server is only able to accept a single connection. We can solve this with threads: . ",
-    "url": "http://localhost:4000/docs/python/concurrency.html#testing-the-non-concurrent-code",
-    "relUrl": "/docs/python/concurrency.html#testing-the-non-concurrent-code"
-  },"71": {
-    "doc": "Python Concurrency",
-    "title": "Threads",
-    "content": "A way to solve this issue is to use threads. If you haven’t encountered threads before, please go through this tutorial on threads. You can add threads to the handler so that more connections can be accepted by adding the following two lines code with comments below: . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 . | from socket import * from fib import fib from threading import Thread # Import the thread def fib_server(address): sock = socket(AF_INET, SOCK_STREAM) sock.setsockopt(SOL_SOCKET, SO_REUSEADDR,1) sock.bind(address) sock.listen(5) while True: client,addr = sock.accept() print(\"Connection\", addr) Thread(target=fib_handler, args=(client,)).start() ## Create and start the thread def fib_handler(client): while True: req = client.recv(100) if not req: break result = fib(int(req)) resp = str(result).encode('ascii') + b'\\n' client.send(resp) print(\"Closed\") fib_server(('', 25000)) . | . You can verify that this works by connecting two separate clients to the server by running the following command in two separate terminal shells: . telnet localhost 25000 . By executing the fib_handler in a thread, the main while loop in fib_server will continue, allowing sock.accept() to receive additional clients. ",
-    "url": "http://localhost:4000/docs/python/concurrency.html#threads",
-    "relUrl": "/docs/python/concurrency.html#threads"
-  },"72": {
-    "doc": "Python Concurrency",
-    "title": "Thread performance &amp; the GIL",
-    "content": "When code stops execution and waits for an external event to occur (like a connection to be made, or data to be sent), this is often referred to as blocking. One important utility of Python threads is that it allows you to force blocking process to share CPU resources better. However, Python thread’s share a single CPU due to Python’s Global Interpreter Lock (GIL). Therefore, you have to think carefully about what kind of tasks you execute on threads. If you try to execute CPU bound tasks the tasks will compete with each other and slow each other down. David demonstrates this with this script that sends a bunch of requests to our threaded server: . | 1 2 3 4 5 6 7 8 9 10 11 12 13 . | #perf1.py from socket import * import time sock = socket(AF_INET, SOCK_STREAM) sock.connect(('localhost', 25000)) while True: start = time.time() sock.send(b'30') resp = sock.recv(100) end = time.time() print(end-start) . | . If you run several instances of this script (after starting the server first): . python perf1.py . You will see the execution times for each script linearly increase as you increase the number of these scripts running in parallel. For this particular task, adding threads does not make anything faster. But why? This is because the fibonacci task is CPU bound so threads will compete with each other for resources on the same CPU core. Threads work by interleaving the execution of different tasks on your CPU. Only one thread runs at a time, and take turns executing in small bits until all threads are done. The details of this are carried about by your operating system, so you need not worry about how this happens (with one exception mentioned below). Note that this interleaving doesn’t always occur in a predictable way (but is not something you should worry about). Because you are restricted to a single CPU core in Python, interleaving a bunch of CPU bound tasks will not speed up the total runtime of those tasks. However, if your tasks involve lots of non-CPU time, such as waiting for network connections, or disk I/O interleaving tasks may result in a considerable speedup. A canonical way of simulating a non-cpu bound task in python is to use the built-in function time.sleep(). To check my understanding about threads and performance, I edited this code from the tutorial on threads mentioned to above, and changed time.sleep(2) to fib(20) and back again: . ```py {hl_lines=[7]} import logging import threading import time . def thread_function(name): logging.info(“Thread %s: starting”, name) time.sleep(2) ## Change this line of code to fib(20) logging.info(“Thread %s: finishing”, name) . if name == “main”: format = “%(asctime)s: %(message)s” start = time.time() logging.basicConfig(format=format, level=logging.INFO, datefmt=”%H:%M:%S”) . | 1 2 3 4 5 6 7 8 9 10 11 12 13 . | threads = list() for index in range(3): logging.info(\"Main : create and start thread %d.\", index) x = threading.Thread(target=thread_function, args=(index,)) threads.append(x) x.start() for index, thread in enumerate(threads): logging.info(\"Main : before joining thread %d.\", index) thread.join() logging.info(\"Main : thread %d done\", index) end = time.time() print(f'total time: {end-start}') ``` . | . As expected, increasing the number of threads while running time.sleep(2) did not increase the program’s overall execution time (the program runs in roughly 2 seconds). On the other hand, replacing time.sleep(2) with fib(20) causes this program’s running time to increase as more threads are added. This is because fib(20) is a cpu bound task so interleaving the task doesn’t really help much. Another interesting but less known aspect that David discusses is the relation between the following two types of tasks: . | things that take much longer to compute on the CPU, like fib(30), demonstrated with perf1.py. | things that compute relatively fast on the CPU, like fib(1), demonstrated with perf2.py. | . The Python GIL will prioritize the first type of task at the expense of the second if they are made to compete for resources with threads. You can follow along with a demonstration of this here. This is interesting because this is the opposite of how typical operating systems prioritize threads (by favoring shorter running tasks) and is something unique to the implementation of the Python GIL. More importantly, this behavior has a very practical consequence: if you are running a web-server where most tasks are fairly quick, one outlier expensive cpu-bound task can grind everything to a halt. ",
-    "url": "http://localhost:4000/docs/python/concurrency.html#thread-performance--the-gil",
-    "relUrl": "/docs/python/concurrency.html#thread-performance--the-gil"
-  },"73": {
-    "doc": "Python Concurrency",
-    "title": "Threads are not just about making things faster",
-    "content": "It is tempting to think of threads as a tool to make things run faster, but that’s not the only use case. Recall that the socket server used threads to allow multiple connections at once without any speedup. David illustrates another way to use threads with his code used to measure the runtime of short-running tasks: . perf2.py: ```py {hl_lines=[12, 19]} . ",
-    "url": "http://localhost:4000/docs/python/concurrency.html#threads-are-not-just-about-making-things-faster",
-    "relUrl": "/docs/python/concurrency.html#threads-are-not-just-about-making-things-faster"
-  },"74": {
-    "doc": "Python Concurrency",
-    "title": "perf2.py",
-    "content": " ",
-    "url": "http://localhost:4000/docs/python/concurrency.html#perf2py",
-    "relUrl": "/docs/python/concurrency.html#perf2py"
-  },"75": {
-    "doc": "Python Concurrency",
-    "title": "requests/sec of fast requests",
-    "content": "from socket import * import time . sock = socket(AF_INET, SOCK_STREAM) sock.connect((‘localhost’, 25000)) . n = 0 . from threading import Thread def monitor(): global n while True: time.sleep(1) print(n, ‘reqs/sec’) n = 0 Thread(target=monitor).start() . while True: sock.send(b’1’) resp =sock.recv(100) n += 1 . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 . | In this case David uses a single thread with blocking call to `sleep(1)` to make sure that `monitor` only prints out a metric once per second, while allowing the rest of the program to send requests hundreds of times per second. In other words, this is a clever use of threads and blocking that allow a part of the program to run at a specified time interval while allowing the rest of your program to run as usual. [^2] These different angles of looking at threads allowed me to understand threads more holistically. Threads are not only about making certain things run faster or run in parallel, but also allows you to control how your program is executed. # Processes For CPU Bound Tasks One way to solve the problem with the GIL and cpu-bound tasks competing for resources is to use processes instead of threads. Processes are different from threads in the following respects: - Threads share a memory space, whereas processes have a separate memory space. This is an important consideration if you need to share variables or data between tasks. - Processes have significant overhead compared to threads because data and program state has to be replicated across each process. - Unlike threads, processes are not constrained to run on a single CPU, so you can execute cpu-bound tasks in parallel on different cores. You can learn more about the differences between processes and threads in [this tutorial](https://realpython.com/python-concurrency). David uses python processes in the server by using a process pool.[^3] The relevant lines of code are highlighted below: ```py {hl_lines=[7, 9, \"27-28\"]} # server-3.py # Fib microservice from socket import * from fib import fib from threading import Thread from concurrent.futures import ProcessPoolExecutor as Pool pool = Pool(4) def fib_server(address): sock = socket(AF_INET, SOCK_STREAM) sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1) sock.bind(address) sock.listen(5) while True: client, addr = sock.accept() print(\"Connection\", addr) Thread(target=fib_handler, args=(client,), daemon=True).start() def fib_handler(client): while True: req = client.recv(100) if not req: break n = int(req) future = pool.submit(fib, n) result = future.result() resp = str(result).encode('ascii') + b'\\n' client.send(resp) print(\"Closed\") fib_server(('',25000)) . | . If you then start this version of the server with: . python server-3.py . And run the profiler perf2.py, we can make the following observations: . | The requests/sec are lower than the thread based version, because there is more overhead required to execute tasks in a pool. | However, if you also run perf1.py it will not materially interfere with the first task, as this will not compete for resources on the same CPU. | . This is a realistic example that allow you to gain more intuition about how threads and processes work. ",
-    "url": "http://localhost:4000/docs/python/concurrency.html#requestssec-of-fast-requests",
-    "relUrl": "/docs/python/concurrency.html#requestssec-of-fast-requests"
-  },"76": {
-    "doc": "Python Concurrency",
-    "title": "Asynchronous programming",
-    "content": "Recall that threads run one task at a time, and the operating system automatically decides when to interrupt each thread to allow the threads to take turns running. This is called pre-emptive multitasking since the operating systems, not you, determine when your thread makes the switch. When you don’t care about how tasks are interleaved, threads are great because you don’t have to worry about how they are scheduled. However, there is third type of concurrency paradigm in Python that allows you to control how this switching occurs: Asynchronous Programming. This is also called cooperative multitasking which means each task must announce when it wants to switch. Another term used for cooperative multitasking is a coroutine. One way to create coroutines in Python is by using the yield statement. David provides some intuition on how you can achieve multi-tasking with yield in the following code: . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 . | from collections import deque def countdown(n): while n &gt; 0: yield n n -=1 tasks = deque() tasks.extend([countdown(10), countdown(5), countdown(20)]) def run(): while tasks: task = tasks.popleft() try: x=next(task) print(x) tasks.append(task) except StopIteration: print(\"Task\") . | . When you run this code, you can see from the output the three countdown tasks are being interleaved: . | 1 2 3 4 5 6 7 8 9 10 11 12 . | &gt; run() 10 5 20 9 4 19 8 3 18 ... | . This clever use of yield allows you to pause execution of a task and move onto a different task kind of like threading, except you, not the operating system are controlling how compute is interleaved. This is the key intuition for understanding the rest of the talk, which goes on to to push this example further. One of the most popular ways to accomplish async programming is by using the various utilities in the built-in asyncio module, which uses similar yield statements under the hood. I didn’t end up diving deeply into the asyncio module or this particular flavor of programming as my goal was to understand the concept so that I wouldn’t be lost when encountering this in the wild. ",
-    "url": "http://localhost:4000/docs/python/concurrency.html#asynchronous-programming",
-    "relUrl": "/docs/python/concurrency.html#asynchronous-programming"
-  },"77": {
-    "doc": "Python Concurrency",
-    "title": "Conclusion",
-    "content": "This talk really helped me learn about various concurrency paradigms in Python: threading, processes, and async using coroutines. I hope that my commentary helps others follow along easier and get the same benefit that I did from it. ",
-    "url": "http://localhost:4000/docs/python/concurrency.html#conclusion",
-    "relUrl": "/docs/python/concurrency.html#conclusion"
-  },"78": {
-    "doc": "Python Concurrency",
-    "title": "Other random things",
-    "content": "In David’s code, deque from the collections module was introduced, which is a very handy data structure not only for async programming but also for threads because they are thread-safe, which means that you don’t have to worry about race conditions. Similarly, the queue module provides other types of thread-safe queues. Furthermore, one of my favorite python libraries, fastcore, contains a module called parallel which makes using threads and processes easy for many use cases. ",
-    "url": "http://localhost:4000/docs/python/concurrency.html#other-random-things",
-    "relUrl": "/docs/python/concurrency.html#other-random-things"
-  },"79": {
-    "doc": "Python Concurrency",
-    "title": "Resources",
-    "content": ". | GitHub repo that contains David’s code. | . | This fibonacci algorithm runs in O(n2) time. &#8617; . | . ",
-    "url": "http://localhost:4000/docs/python/concurrency.html#resources",
-    "relUrl": "/docs/python/concurrency.html#resources"
-  },"80": {
-    "doc": "Python Concurrency",
     "title": "Python Concurrency",
-    "content": " ",
+    "content": "Understand the world of Python concurrency: threads, processes, coroutines and asynchronous programming with a realistic examples. ",
     "url": "http://localhost:4000/docs/python/concurrency.html",
     "relUrl": "/docs/python/concurrency.html"
-  },"81": {
+  },"67": {
     "doc": "Cookbook",
     "title": "A Cookbook of Shell Scripts - Wicked Shell Scripts, 2d Edition",
     "content": "You should browse the table of contents of this book and use the shell scripts contained within off the shelf if possible. | GitHub: https://github.com/hamelsmu/wicked_cool_shell_scripts_2e/ | Link to book on GitHub: https://github.com/hamelsmu/wicked_cool_shell_scripts_2e/blob/master/WickedCoolShellScripts2E.pdf | Book: https://nostarch.com/wcss2 | . ",
     "url": "http://localhost:4000/docs/linux/cookbook.html#a-cookbook-of-shell-scripts---wicked-shell-scripts-2d-edition",
     "relUrl": "/docs/linux/cookbook.html#a-cookbook-of-shell-scripts---wicked-shell-scripts-2d-edition"
-  },"82": {
+  },"68": {
     "doc": "Cookbook",
     "title": "Things Learned From The Cookbook",
     "content": "In addition to just using the library of shell scripts, I also learned the following bash tidbits from this book. ",
     "url": "http://localhost:4000/docs/linux/cookbook.html#things-learned-from-the-cookbook",
     "relUrl": "/docs/linux/cookbook.html#things-learned-from-the-cookbook"
-  },"83": {
+  },"69": {
     "doc": "Cookbook",
     "title": "shift  and $#  pop args off and count args",
     "content": "shift.sh . | 1 2 3 4 5 . | #!/bin/bash while (( $# )); do echo \"process args: $1\" shift done . | . Results in: . | 1 2 3 4 . | $ ./shift.sh foo bar bash process args: foo process args: bar process args: bash . | . Using shift for CLI options: . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 . | #!/bin/bash # newquota--A frontend to quota that works with full-word flags a la GNU # quota has three possible flags, -g, -v, and -q, but this script # allows them to be '--group', '--verbose', and '--quiet' too: flags=\"\" realquota=\"$(which quota)\" while [ $# -gt 0 ] do case $1 in --help) echo \"Usage: $0 [--group --verbose --quiet -gvq]\" &gt;&amp;2 exit 1 ;; --group ) flags=\"$flags -g\"; shift ;; --verbose) flags=\"$flags -v\"; shift ;; --quiet) flags=\"$flags -q\"; shift ;; --) shift; break ;; *) break; # done with 'while' loop! esac done exec $realquota $flags \"$@\" . | . ",
     "url": "http://localhost:4000/docs/linux/cookbook.html#shift--and---pop-args-off-and-count-args",
     "relUrl": "/docs/linux/cookbook.html#shift--and---pop-args-off-and-count-args"
-  },"84": {
+  },"70": {
     "doc": "Cookbook",
     "title": "$* collect all arguments",
     "content": "shift2.sh . | 1 2 3 4 . | #!/bin/bash for var in $*; do echo $var done . | . Results in: . | 1 2 3 4 . | $ ./shift2.sh foo bar bash process args: foo process args: bar process args: bash . | . ",
     "url": "http://localhost:4000/docs/linux/cookbook.html#-collect-all-arguments",
     "relUrl": "/docs/linux/cookbook.html#-collect-all-arguments"
-  },"85": {
+  },"71": {
     "doc": "Cookbook",
     "title": "Multi Option Case Statement",
     "content": "| 1 2 3 4 5 6 7 8 9 10 11 12 . | while read command args do case $command in quit|exit) exit 0 ;; help|\\?) show_help ;; scale) scale=$args ;; *) scriptbc -p $scale \"$command\" \"$args\" ;; esac /bin/echo -n \"calc&gt; \" done . | . Another example of case statement . | 1 2 3 4 5 6 7 8 9 10 11 . | case $1 in 1 ) month=\"Jan\" ;; 2 ) month=\"Feb\" ;; 3 ) month=\"Mar\" ;; 4 ) month=\"Apr\" ;; 5 ) month=\"May\" ;; 6 ) month=\"Jun\" ;; 7 ) month=\"Jul\" ;; 8 ) month=\"Aug\" ;; 9 ) month=\"Sep\" ;; 10) month=\"Oct\" ;; 11) month=\"Nov\" ;; 12) month=\"Dec\" ;; * ) echo \"$0: Unknown numeric month value $1\" &gt;&amp;2; exit 1 esac return 0 . | . ",
     "url": "http://localhost:4000/docs/linux/cookbook.html#multi-option-case-statement",
     "relUrl": "/docs/linux/cookbook.html#multi-option-case-statement"
-  },"86": {
+  },"72": {
     "doc": "Cookbook",
     "title": "Collecting stdout with -",
     "content": "echo \"Enter something: \" | cat - . ",
     "url": "http://localhost:4000/docs/linux/cookbook.html#collecting-stdout-with--",
     "relUrl": "/docs/linux/cookbook.html#collecting-stdout-with--"
-  },"87": {
+  },"73": {
     "doc": "Cookbook",
     "title": "Formatting Long Lines fmt",
     "content": "Will make lines no longer than 30 characters, not cutting off any words. fmt -w30 long_text.txt . ",
     "url": "http://localhost:4000/docs/linux/cookbook.html#formatting-long-lines-fmt",
     "relUrl": "/docs/linux/cookbook.html#formatting-long-lines-fmt"
-  },"88": {
+  },"74": {
     "doc": "Cookbook",
     "title": "IFS - Internal Field Seperator",
     "content": "Sets the internal delimiter . ifs_variable.sh . | 1 2 3 4 5 6 7 . | #!/bin/bash IFS=\":\" var='a:b-c~d' for n in $var do echo \"$n\" done . | . Results in . | 1 2 3 . | $ ./1/ifs_variable.sh a b-c~d . | . IFS in Great Expectations Action . I’m using this in the Great Expectations Action to parse a list of arguments given as a string to an input . | 1 2 3 4 5 6 7 8 9 10 . | # Loop through checkpoints STATUS=0 IFS=',' for c in $INPUT_CHECKPOINTS;do echo \"\" echo \"Validating Checkpoint: ${c}\" if ! great_expectations checkpoint run $c; then STATUS=1 fi done . | . IFS for iterating through $PATH . | 1 2 3 4 5 . | #!/bin/bash IFS=\":\" for directory in $PATH ; do echo $directory done . | . IFS: Double vs. Single Quotes . With double quotes the outcome of the command expansion would be fed as one parameter to the source command. Without quotes it would be broken up into multiple parameters, depending on the value of IFS which contains space, TAB and newline by default. | 1 2 3 4 5 6 7 8 9 . | var=\"some value\" # $var fed into cmd as one parameter cmd \"$var\" # $var is fed into cmd as two parameters # delimted by the default IFS character, space cmd '$var' . | . ",
     "url": "http://localhost:4000/docs/linux/cookbook.html#ifs---internal-field-seperator",
     "relUrl": "/docs/linux/cookbook.html#ifs---internal-field-seperator"
-  },"89": {
+  },"75": {
     "doc": "Cookbook",
     "title": "$RANDOM",
     "content": "echo $RANDOM will print out a random number . ",
     "url": "http://localhost:4000/docs/linux/cookbook.html#random",
     "relUrl": "/docs/linux/cookbook.html#random"
-  },"90": {
+  },"76": {
     "doc": "Cookbook",
     "title": "Debugging Shell Scripts -x",
     "content": "Debug a script: . bash -x myscript.sh . OR, within a script: . | 1 2 3 . | set -x # start debugging ./myscript.sh set +x # stop debugging . | . All variables will be substituted and lines that are run will be printed to screen, showing the control flow of the program . ",
     "url": "http://localhost:4000/docs/linux/cookbook.html#debugging-shell-scripts--x",
     "relUrl": "/docs/linux/cookbook.html#debugging-shell-scripts--x"
-  },"91": {
+  },"77": {
     "doc": "Cookbook",
     "title": "Sourcing files with . ",
     "content": "So you can “import” scripts . | 1 2 3 . | . myscript.sh # is equivalent to source myscript.sh . | . ",
     "url": "http://localhost:4000/docs/linux/cookbook.html#sourcing-files-with--",
     "relUrl": "/docs/linux/cookbook.html#sourcing-files-with--"
-  },"92": {
+  },"78": {
     "doc": "Cookbook",
     "title": "Using functions to set exit codes",
     "content": "| 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 . | validAlphaNum() { # Validate arg: returns 0 if all upper+lower+digits, 1 otherwise. # Remove all unacceptable chars. validchars=\"$(echo $1 | sed -e 's/[^[:alnum:]]//g')\" if [ \"$validchars\" = \"$1\" ] ; then return 0 else return 1 fi } exit validAlphaNum . | . ",
     "url": "http://localhost:4000/docs/linux/cookbook.html#using-functions-to-set-exit-codes",
     "relUrl": "/docs/linux/cookbook.html#using-functions-to-set-exit-codes"
-  },"93": {
+  },"79": {
     "doc": "Cookbook",
     "title": "Know if someone running the script directly with  $BASH_SOURCE",
     "content": "The variable $BASH_SOURCE can let you differentiate between when a script is run standalone vs when its invoked from another script: . | 1 . | if [ \"$BASH_SOURCE\" = \"$0\" ] . | . ",
     "url": "http://localhost:4000/docs/linux/cookbook.html#know-if-someone-running-the-script-directly-with--bash_source",
     "relUrl": "/docs/linux/cookbook.html#know-if-someone-running-the-script-directly-with--bash_source"
-  },"94": {
+  },"80": {
     "doc": "Cookbook",
     "title": "xargs",
     "content": "https://www.cyberciti.biz/faq/linux-unix-bsd-xargs-construct-argument-lists-utility/ . | 1 2 3 4 . | &gt; echo 1 2 3 4 | xargs -n2 -I {} echo hello {} world hello 1 2 world hello 3 4 world . | . ",
     "url": "http://localhost:4000/docs/linux/cookbook.html#xargs",
     "relUrl": "/docs/linux/cookbook.html#xargs"
-  },"95": {
+  },"81": {
     "doc": "Cookbook",
     "title": "Cookbook",
     "content": " ",
     "url": "http://localhost:4000/docs/linux/cookbook.html",
     "relUrl": "/docs/linux/cookbook.html"
-  },"96": {
-    "doc": "fastai",
-    "title": "fastai",
-    "content": "Random notes on fast.ai . ",
-    "url": "http://localhost:4000/docs/fastai/",
-    "relUrl": "/docs/fastai/"
-  },"97": {
+  },"82": {
     "doc": "Linux & Bash Scripting",
     "title": "Linux & Bash Scripting",
     "content": "My personal notes on underrated Linux utilities that are useful when working on machine learning projects. Photo by Arget on Unsplash . ",
     "url": "http://localhost:4000/docs/linux/",
     "relUrl": "/docs/linux/"
-  },"98": {
+  },"83": {
     "doc": "python",
     "title": "python",
     "content": "My notes on interesting things in Python. ",
     "url": "http://localhost:4000/docs/python/",
     "relUrl": "/docs/python/"
-  },"99": {
+  },"84": {
+    "doc": "programming languages",
+    "title": "SML (Standard ML) Part A",
+    "content": ". | You setup vim to have an IDE for this. See these notes. | ML is a statically typed language with magical type inference that works really well. It automatically determines the types and is very intuitive and helpful. | Learned how to use recursion everywhere instead of loops, particularly with hd, tl and cons. | Local variable binding with let is very important (which also allows you to bind local/private functions as well) | cons allows you to append to the beginning of a list | There is an option type that is NONE or SOME v | This language doesn’t encourage mutation, which is a feature. Otherwise, you can use a reference which is like a pointer to mutate a variable. | pattern matching with a case expression case name (first, last) =&gt; . | You can have nested patterns | You can pattern match against function arguments which allow for really nice syntax for achieving multiple dispatch type of functionality.. | . | Tail recursion with accumulators. Ex- factorial | The fn keyword is used to define anonymous functions. | ML uses lexical scope which means function is evaluated in the environment where the function was defined. dynamic scope, which is usually not desired, is the alternative where the function is evaluated in the in the environment it is called. | Closure - the call stack has a “pair” that is the (function, environment when the function was defined). This pair is called the closure. The call stack has a snapshot of what the environment looked like at the time the function was defined. | fold is like reduce. | ML supports function composition like this with the keyword o: f1 o f2 o f3 . | best to do a val binding to avoid unnecessary wrapping: val newfunc = f1 o f2 | with o you apply functions from right to left so f1 o f2 x is the same as f1(f2(x)) there is an alternative that is left to right called the pipeline operator. | . | Currying and partial application . | Universal way to make a func curryable: | 1 2 3 4 5 6 . | fun myfunc x let fun f2 (z) = z fun f1 (y) = f2(y) begin f1 end . | . | ML has first class support for currying so you don’t have to do the above hack. | . | ML supports mutual recursion just like let-rec in racket. | . ",
+    "url": "http://localhost:4000/docs/programming-languages/#sml-standard-ml-part-a",
+    "relUrl": "/docs/programming-languages/#sml-standard-ml-part-a"
+  },"85": {
+    "doc": "programming languages",
+    "title": "Racket (Part B)",
+    "content": " ",
+    "url": "http://localhost:4000/docs/programming-languages/#racket-part-b",
+    "relUrl": "/docs/programming-languages/#racket-part-b"
+  },"86": {
+    "doc": "programming languages",
+    "title": "programming languages",
+    "content": "High level takeaways after completing the 3-Part Coursera class Programming Languages with Dan Grossman. Your GitHub repo for this class (private) is here. ",
+    "url": "http://localhost:4000/docs/programming-languages/",
+    "relUrl": "/docs/programming-languages/"
+  },"87": {
+    "doc": "fastai",
+    "title": "fastai",
+    "content": "Random notes on fast.ai . ",
+    "url": "http://localhost:4000/docs/fastai/",
+    "relUrl": "/docs/fastai/"
+  },"88": {
     "doc": "GitHub Actions",
     "title": "GitHub Actions",
     "content": " ",
     "url": "http://localhost:4000/docs/actions/",
     "relUrl": "/docs/actions/"
-  },"100": {
+  },"89": {
     "doc": "Jupyter",
     "title": "Jupyter",
     "content": " ",
     "url": "http://localhost:4000/docs/jupyter/",
     "relUrl": "/docs/jupyter/"
-  },"101": {
+  },"90": {
+    "doc": "How To Learn",
+    "title": "Focused vs Diffused Mode",
+    "content": "You can not access focus and diffused mode simultaneously. People have tried to access diffuse mode of thinking by bringing themselves to the point of sleep and waking up just as they fall asleep. For example, Salvador Dali - holding keys in your hand, and let the sound of keys falling the ground wake you up. Exercise, going for a walk good way to access diffuse thinking. You must take notes right away b/c diffuse thoughts may evaporate very fast. ",
+    "url": "http://localhost:4000/docs/how-to-learn/lhtl.html#focused-vs-diffused-mode",
+    "relUrl": "/docs/how-to-learn/lhtl.html#focused-vs-diffused-mode"
+  },"91": {
+    "doc": "How To Learn",
+    "title": "Procrastination Memory and Sleep",
+    "content": "They advocate the Pomodoro technique to combating procrastination. Its like HITT. Periodic relaxation (every ~ 30 minutes) is important for accessing your diffuse mode. “Its important for the mortar to dry”. Spaced repetition (like Anki) is important for building memory. i . Go over what you want to learn about right before you go to sleep, this will substantially improve the chances you will dream about it and form new connections about the subject. Exercise can help create new neurons in your hippocampus (new neurons can be created there in adulthood) and help them survive longer. ",
+    "url": "http://localhost:4000/docs/how-to-learn/lhtl.html#procrastination-memory-and-sleep",
+    "relUrl": "/docs/how-to-learn/lhtl.html#procrastination-memory-and-sleep"
+  },"92": {
+    "doc": "How To Learn",
+    "title": "Writing Tips Diffuse Mode",
+    "content": "Diffuse mode is very important for writing. Editing is like focus mode and creating ideas is diffuse mode. Some rules of thumb: . | Do not outline, make a mind map | Do not edit while you are writing (this is really hard to do -&gt; turn off monitor and just write).https://writeordie.com - app that forces you to stay in diffuse mode. You really cannot look at the screen. | Repeating again, do not look at screen while you are writing! Only when editing. | . ",
+    "url": "http://localhost:4000/docs/how-to-learn/lhtl.html#writing-tips-diffuse-mode",
+    "relUrl": "/docs/how-to-learn/lhtl.html#writing-tips-diffuse-mode"
+  },"93": {
+    "doc": "How To Learn",
+    "title": "Chunking",
+    "content": "“Tying your shoes”. Best chunks are subconscious. Spoken language is the best example of chunking. You have to practice to build chunks, you cannot just observe. You have to perform the task yourself. You should scan a chapter before you read it: section headings, pictures, etc. This can help you build chunks. ",
+    "url": "http://localhost:4000/docs/how-to-learn/lhtl.html#chunking",
+    "relUrl": "/docs/how-to-learn/lhtl.html#chunking"
+  },"94": {
+    "doc": "How To Learn",
+    "title": "Illusions of competence",
+    "content": "Right after you read something, look away and repeat to yourself what you recall. You can also draw a concept map. The recall process actually improves memory. Recall is better than re-reading. Re-reading is effective when you let time pass so you get spaced repetition. You need to test yourself to make sure you are competent. Recall is a form of testing. Recall outside your place of study to strengthen your memory. This is because you can get queues from where you are studying. ",
+    "url": "http://localhost:4000/docs/how-to-learn/lhtl.html#illusions-of-competence",
+    "relUrl": "/docs/how-to-learn/lhtl.html#illusions-of-competence"
+  },"95": {
+    "doc": "How To Learn",
+    "title": "Deliberate Practice",
+    "content": "Focus on the bits that you find difficult. Interleaving is important, meaning learning different subjects or even sections within one subject at once. Thomas S. Khun discovered that two types of people tend to make scientific breakthroughs: (1) young people (2) those who are trained in another discipline. ",
+    "url": "http://localhost:4000/docs/how-to-learn/lhtl.html#deliberate-practice",
+    "relUrl": "/docs/how-to-learn/lhtl.html#deliberate-practice"
+  },"96": {
+    "doc": "How To Learn",
+    "title": "Procrastination and Memory",
+    "content": "You have already learned about the Pomodoro technique. There are other techniques. Focus on the process, not the product. Don’t focus on completing the homework, focus on the process that leads you to complete the homework. Process is the small chunks of time to chip away at the task. This is the idea behind the Pomodoro. Your only goal is to finish the Pomodoro, for example. ",
+    "url": "http://localhost:4000/docs/how-to-learn/lhtl.html#procrastination-and-memory",
+    "relUrl": "/docs/how-to-learn/lhtl.html#procrastination-and-memory"
+  },"97": {
+    "doc": "How To Learn",
+    "title": "Juggling Life and Learning",
+    "content": "You should make to-do list the night before for the next day and write it down. This will allow your subconscious to work on how it will conquer that task. Furthermore, writing it down will allow you to free it from working memory. Plan your quitting time is important. ",
+    "url": "http://localhost:4000/docs/how-to-learn/lhtl.html#juggling-life-and-learning",
+    "relUrl": "/docs/how-to-learn/lhtl.html#juggling-life-and-learning"
+  },"98": {
+    "doc": "How To Learn",
+    "title": "How To Learn",
+    "content": "I read the book Mindshift and it was unituitively so good that I decided to take this class. As a parent, I learned a bunch of things that I think will be beneficial to my children’s education. Notes from class Learning how to learn. These notes are for me and may not make sense for others. ",
+    "url": "http://localhost:4000/docs/how-to-learn/lhtl.html",
+    "relUrl": "/docs/how-to-learn/lhtl.html"
+  },"99": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "References",
     "content": "Files associated with this tutorial can be found here. ",
     "url": "http://localhost:4000/docs/linux/linux.html#references",
     "relUrl": "/docs/linux/linux.html#references"
-  },"102": {
+  },"100": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "Managing Processes (ps, kill, pkill)",
     "content": "Kill Single Process (ps, kill) . A common scenario is that you might run a python script to train a model: . $ python train.py . Let’s say you want to kill this script for whatever reason. You might not always be able to type Cntrl + C to stop it, especially if this process is running in the background. (Aside: A way make a program run in the background is with a &amp; for example:$ python train.py &amp; ) . In order to find this running program, you can use the command ps . $ ps Gives you basic information (good enough most of the time) . Flags: . | -e Allows you to see all running processes including from other users . | -f Allows you to see additional information about each process . | . In order to kill the process you will want to identify it’s PID for example, if the PID is 501 you can kill this process with the command: . $ kill 501 . Killing Multiple Processes (pkill) . If you use process-based threading in python with a library like multi-processing, python will instantiate many processes for you. This is common thing to do in python for a task like data processing. Let’s consider the below example. When you run this in the background it will produce 8 processes: . | 1 2 3 4 5 6 7 8 9 10 . | from multiprocessing import Pool from time import sleep def f(x): sleep(1000) # simulate some computation return x*x if __name__ == '__main__': with Pool(8) as p: print(p.map(f, range(8))) . | . $ python train_multi.py &amp; . After a few seconds, calling the command ps will yield something like this: . | 1 2 3 4 5 6 7 8 9 10 . | PID TTY TIME CMD 3982 ttys002 0:00.09 ...MacOS/Python train_multi.py 4219 ttys002 0:00.00 ...MacOS/Python train_multi.py 4220 ttys002 0:00.00 ...MacOS/Python train_multi.py 4221 ttys002 0:00.00 ...MacOS/Python train_multi.py 4222 ttys002 0:00.00 ...MacOS/Python train_multi.py 4223 ttys002 0:00.00 ...MacOS/Python train_multi.py 4224 ttys002 0:00.00 ...MacOS/Python train_multi.py 4225 ttys002 0:00.00 ...MacOS/Python train_multi.py 4226 ttys002 0:00.00 ...MacOS/Python train_multi.py . | . You can find all processes with the file train_multi.py with the pkill command and the -f flag: . See Parent / Child Processes (pstree) . pstree is also a helpful utility to see parent/child relationships between processes. You can install pstree on a mac with brew install pstree . In the above example, there are 8 sub-processes created by one python process. Running the command . $ pstree -s train_multi.py . Will show the process hierarchy. The -s flag allows you to filter parents and descendants of processes containing a string in their command. In the below example, PID 41592 will kill all the 8 child processes seen below . Killing Process Options . Reminder: view processes with ps or top To show processes from all users ps aux . | To restart pid 6996 kill -1 6996 . | kill pid 6996 kill -9 6996 . | . You can kill processes by name (which is also usually listed as the command that started the processes). killall will search for the string int he relevant process. Bringing processes back into the foreground . Reminder you put processes in the background with &amp; example is myscript.sh &amp; . You can move processes back into the foreground with fg . fg 1234 brings process 1234 back into the foreground. ",
     "url": "http://localhost:4000/docs/linux/linux.html#managing-processes-ps-kill-pkill",
     "relUrl": "/docs/linux/linux.html#managing-processes-ps-kill-pkill"
-  },"103": {
+  },"101": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "Bundling &amp; Archiving Files (tar)",
     "content": "You commonly want to package a bunch of files together, such as a collection of photos or CSVs, and optionally compress these with its directory structure intact. A common tool for this is tar . This is how you would bundle and compress a directory of CSV files: . Sending An Archive To A Remote Machine . It is often the case you want to send data to a remote machine. The below command creates a directory called data , compresses all files in a local folder named csv_data , with the exception of the sub-directory csv_data/intermediate_files without creating any temporary files locally: . Optionally, create the directory on the remote machine: . Then, stream the archive directly to remote. Note that providing a — instead of a destination filename allows tar to write to a stream (stdout) that can be sent directly to the remote server. Moving Files In Different Directories Into An Archive . If your files exist in sibling directories, rather than under one parent directory you can use find along with tar . Suppose you want to archive all csv files relative to a directory: . When you archive files on the fly above with find you cannot compress the files until the archive is finished being built, therefore you have to compress the tar file with the gzip command: . $ gzip data.tar . Tip: some people like to use locate with updatedb instead of find. There are tradeoffs so make sure you read the documentation carefully! . Unpacking &amp; Decompressing Archives . You can decompress and unpack a tar file, for example data.tar.gz with the following command: . $ tar -xzvf data.tar.gz . If the data is not compressed, you can leave out the -z flag: . $ tar -xvf data.tar . ",
     "url": "http://localhost:4000/docs/linux/linux.html#bundling--archiving-files-tar",
     "relUrl": "/docs/linux/linux.html#bundling--archiving-files-tar"
-  },"104": {
+  },"102": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "File Permissions",
     "content": "Before we begin, we must introduce some nomenclature: . If you run the command ls -a you will see something similar to the below output for all of your files in the current directory. The file permissions are shown in three-character groupings for three different groups (nine characters total). These three groups are the owner , group , and other users. In this case, the owner name is hamel and the group name is staff . For the owner, the file permissions are rwx which means that the owner has read r , write w , and execute x permissions. For the group, the file permissions are r-x which means the group has read and execute permissions, but not write permissions. A group is a collection of users with common permissions. Finally, all other users have file permissions of r– which means only read permissions. Changing File Permissions . There are several ways to change file permissions. Method 1: Using Characters and +, - . Refer to the nomenclature above to follow along . | chmod o-r csvfiles.tar.gz . Removes - the ability of other users o to read r the file. | chmod g+w csvfiles.tar.gz . Adds + the ability of the group g to write w to the file. | chmod u+x csvfiles.tar.gz . Adds + the ability of the owner u to execute x the file. | chomd a+x csvfiles.tar.gz . Adds + the ability of all users a to execute x the file. | . Method 2: using numbers . This method works by adding up the numbers corresponding to the permissions separately for each user group (owner, group, others). For example: . | chmod 777 csvfiles.tar.gz . This gives all users the ability to read (4), write( 2), and execute (1) files. In other words 4+2+1 = 7, for the owner, group and other users. | chmod 732 csvfiles.tar.gz . This gives the owner the ability to read, write and execute ( 4+2+1=7), the group the ability to write and execute (2+1=3) and all other users only the ability to write (2). | . Changing Ownership . You can change the owner or group assigned to a file like this: . chown newuser:newgroup file . The :newgroup is optional, if you do not specify that the group will stay the same. ",
     "url": "http://localhost:4000/docs/linux/linux.html#file-permissions",
     "relUrl": "/docs/linux/linux.html#file-permissions"
-  },"105": {
+  },"103": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "Processes, Permissions and Moving Data",
     "content": ". | References | Managing Processes (ps, kill, pkill) . | Kill Single Process (ps, kill) | Killing Multiple Processes (pkill) | See Parent / Child Processes (pstree) | Killing Process Options | Bringing processes back into the foreground | . | Bundling &amp; Archiving Files (tar) . | Sending An Archive To A Remote Machine | Moving Files In Different Directories Into An Archive | Unpacking &amp; Decompressing Archives | . | File Permissions . | Changing File Permissions | Changing Ownership | . | . ",
     "url": "http://localhost:4000/docs/linux/linux.html",
     "relUrl": "/docs/linux/linux.html"
-  },"106": {
+  },"104": {
     "doc": "Misc Utilities",
     "title": "History",
     "content": ". | See history with history command | You will get a number for each history item. | You can replay any number n with command !n | History on OS X is stored in ~/.zsh_history | . !n refer to command number n in history when you call history . ",
     "url": "http://localhost:4000/docs/linux/misc_utils.html#history",
     "relUrl": "/docs/linux/misc_utils.html#history"
-  },"107": {
+  },"105": {
     "doc": "Misc Utilities",
     "title": "Diff",
     "content": "You can difff two files, you usually want to see a unified diff b/c that is easier to read . diff -u file1.txt file2.txt . ",
     "url": "http://localhost:4000/docs/linux/misc_utils.html#diff",
     "relUrl": "/docs/linux/misc_utils.html#diff"
-  },"108": {
+  },"106": {
     "doc": "Misc Utilities",
     "title": "Here Documents",
     "content": "Instead of using echo, our script now uses cat and a here document. The string EOF (meaning end of file, a common convention) was selected as the token and marks the end of the embedded text. Note that the token must appear alone and that there must not be trailing spaces on the line. Unlike Echo, all double quotes and single quotes are escaped. Here is an example of the same thing at the command line. | 1 2 3 4 5 6 7 8 9 10 11 . | [me@linuxbox ~]$ foo=\"some text\" [me@linuxbox ~]$ cat &lt;&lt; _EOF_ &gt; $foo &gt; \"$foo\" &gt; '$foo' &gt; \\$foo &gt; _EOF_ some text \"some text\" 'some text' $foo . | . ",
     "url": "http://localhost:4000/docs/linux/misc_utils.html#here-documents",
     "relUrl": "/docs/linux/misc_utils.html#here-documents"
-  },"109": {
+  },"107": {
     "doc": "Misc Utilities",
     "title": "Named Pipes with mkfifo",
     "content": "Named pipes are input/output buffers. You can fill up the buffer and then drain the buffer later. | Setup Named Pipe using mkfifo . | Fill up the named pipe, this will hang until the pipe is drained . | . Hamel: you can run this part in a sub shell . | In a NEW terminal window drain the pipe | . Hamel: put it all together in a script. You can drain the pipe as many times as you want. | 1 2 3 4 5 . | #!/bin/bash mkfifo pipe1 ls -l &gt; pipe1 &amp; cat &lt; pipe1 . | . ",
     "url": "http://localhost:4000/docs/linux/misc_utils.html#named-pipes-with-mkfifo",
     "relUrl": "/docs/linux/misc_utils.html#named-pipes-with-mkfifo"
-  },"110": {
+  },"108": {
     "doc": "Misc Utilities",
     "title": "Scan host for open ports w/ nmap",
     "content": ". | Lookup ip with nslookup | nmap -sT &lt;IP address&gt; | . You can scan a range of IPs for a mysql port like so: . nmap -sT 192.168.181.0/24 -p 3306 -oG MySQLScan . This is useful if you have a public server and you want to verify that a port is open. ",
     "url": "http://localhost:4000/docs/linux/misc_utils.html#scan-host-for-open-ports-w-nmap",
     "relUrl": "/docs/linux/misc_utils.html#scan-host-for-open-ports-w-nmap"
-  },"111": {
+  },"109": {
     "doc": "Misc Utilities",
     "title": "Devices /dev",
     "content": "Linux has a special directory that contains files representing attached devices. Important ones are sda1, sda2 , sda3, sdb and sdb1 . You can view a tree of your disks and the partitions with the utility lsblk . ",
     "url": "http://localhost:4000/docs/linux/misc_utils.html#devices-dev",
     "relUrl": "/docs/linux/misc_utils.html#devices-dev"
-  },"112": {
+  },"110": {
     "doc": "Misc Utilities",
     "title": "Mounting devices",
     "content": "Sometimes you need to mount these devices. Two common mount points are /mnt and /media. If you mount the device into an existing directory it will cover the contents of that directory making them invisible and unavailable. Ex: mount device to /mnt . mount /dev/sb1 /mnt . Ex: mount flash drive . mount /dev/sdc1 /media . You can unmount a device with unmount: . unmount /dev/sb1 . ",
     "url": "http://localhost:4000/docs/linux/misc_utils.html#mounting-devices",
     "relUrl": "/docs/linux/misc_utils.html#mounting-devices"
-  },"113": {
+  },"111": {
     "doc": "Misc Utilities",
     "title": "Getting information on mounted drives",
     "content": "df -h . ",
     "url": "http://localhost:4000/docs/linux/misc_utils.html#getting-information-on-mounted-drives",
     "relUrl": "/docs/linux/misc_utils.html#getting-information-on-mounted-drives"
-  },"114": {
+  },"112": {
     "doc": "Misc Utilities",
     "title": "Permanently deleting files with shred",
     "content": "This utility writes over files many times in order to erase things. Helpful for sensitive data. ",
     "url": "http://localhost:4000/docs/linux/misc_utils.html#permanently-deleting-files-with-shred",
     "relUrl": "/docs/linux/misc_utils.html#permanently-deleting-files-with-shred"
-  },"115": {
+  },"113": {
     "doc": "Misc Utilities",
     "title": "Masking your IP for web scraping",
     "content": "Look into proxy chains . Linux utility called proxychains which generally works as: . proxychains &lt;the command you want proxied&gt; &lt;arguments&gt; . proxychains defaults to using Tor if you don’t supply your own proxies. See: https://www.technocrazed.com/how-to-use-beagle-scraper-safely-to-scrape-e-commerce-platforms . ",
     "url": "http://localhost:4000/docs/linux/misc_utils.html#masking-your-ip-for-web-scraping",
     "relUrl": "/docs/linux/misc_utils.html#masking-your-ip-for-web-scraping"
-  },"116": {
+  },"114": {
     "doc": "Misc Utilities",
     "title": "Running Scripts At System Startup",
     "content": "Look at rc scripts. After the kernel has initialized all its modules, it starts adaemon known as init or initd, which runs scripts found in /etc/init.d/rc . You can use the utility update-rc.d to add a script to the startup procedure: . This is useful if for example you always want to start a database on system startup. ",
     "url": "http://localhost:4000/docs/linux/misc_utils.html#running-scripts-at-system-startup",
     "relUrl": "/docs/linux/misc_utils.html#running-scripts-at-system-startup"
-  },"117": {
+  },"115": {
     "doc": "Misc Utilities",
     "title": "Misc Utilities",
     "content": ". | History | Diff | Here Documents | Named Pipes with mkfifo | Scan host for open ports w/ nmap | Devices /dev . | Mounting devices | Getting information on mounted drives | Permanently deleting files with shred | . | Masking your IP for web scraping | Running Scripts At System Startup | . ",
     "url": "http://localhost:4000/docs/linux/misc_utils.html",
     "relUrl": "/docs/linux/misc_utils.html"
-  },"118": {
+  },"116": {
     "doc": "ocotokit.js",
     "title": "Introduction",
     "content": "ocotokit.js is a javascript library that can help you interact with the GitHub API in a easy manner. Some javascript knowledge is helpful, but not required for many simple tasks. You can use the octokit.js client along with the github-script action to quickly interface with the GitHub API to do useful things in Actions (like commenting on an issue.) . It is helpful to install node.js when developing scripts that interface with the GitHub API so you can test them locally. ",
     "url": "http://localhost:4000/docs/actions/ocotkit.html#introduction",
     "relUrl": "/docs/actions/ocotkit.html#introduction"
-  },"119": {
+  },"117": {
     "doc": "ocotokit.js",
     "title": "Example Octokit Scripts",
     "content": " ",
     "url": "http://localhost:4000/docs/actions/ocotkit.html#example-octokit-scripts",
     "relUrl": "/docs/actions/ocotkit.html#example-octokit-scripts"
-  },"120": {
+  },"118": {
     "doc": "ocotokit.js",
     "title": "Example 1: Create A Comment On A PR",
     "content": "Let’s say you want to programatically make a comment on a pull request with a url that includes the branch name, but you are only given the pull request number. We first lookup the branch name associated with the pull request and pass that to the method call that makes an issue comment: . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 . | //Instantiate octokit client const { Octokit } = require(\"@octokit/rest\"); const octokit = new Octokit({ auth: \"&lt;YOUR_PERSONAL_ACCESS_TOKEN&gt;\", }); //Take an action (create a comment) triggered by an issue comment // Get information about the pr octokit.pulls.get({ owner: 'hamelsmu', repo: 'test_html', pull_number: 1 }).then( (pr) =&gt; { // use the branch name from the pr to make a pr comment var BRANCH_NAME = pr.data.head.ref octokit.issues.createComment({ issue_number: 1, owner: 'hamelsmu', repo: 'test_html', body: `[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/hamelsmu/test_html/${BRANCH_NAME}) :point_left: Launch a binder notebook on this branch` }) }) . | . ",
     "url": "http://localhost:4000/docs/actions/ocotkit.html#example-1-create-a-comment-on-a-pr",
     "relUrl": "/docs/actions/ocotkit.html#example-1-create-a-comment-on-a-pr"
-  },"121": {
+  },"119": {
     "doc": "ocotokit.js",
     "title": "Example 2: Issue Comment",
     "content": "This is a simple example of how you can create an issue comment. | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 . | //Instantiate octokit client const { Octokit } = require(\"@octokit/rest\"); const octokit = new Octokit({ auth: \"&lt;YOUR_PERSONAL_ACCESS_TOKEN&gt;\", }); // Create an issue commment var BRANCH_NAME = 'hamelsmu-patch-1' octokit.issues.createComment({ issue_number: 1, owner: 'hamelsmu', repo: 'test_html', body: `[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/hamelsmu/test_html/${BRANCH_NAME}) :point_left: Launch a binder notebook on this branch` }) . | . ",
     "url": "http://localhost:4000/docs/actions/ocotkit.html#example-2-issue-comment",
     "relUrl": "/docs/actions/ocotkit.html#example-2-issue-comment"
-  },"122": {
+  },"120": {
     "doc": "ocotokit.js",
     "title": "MyBinder.org",
     "content": "The examples above were adapted to write these docs for mybinder.org. ",
     "url": "http://localhost:4000/docs/actions/ocotkit.html#mybinderorg",
     "relUrl": "/docs/actions/ocotkit.html#mybinderorg"
-  },"123": {
+  },"121": {
     "doc": "ocotokit.js",
     "title": "ocotokit.js",
     "content": " ",
     "url": "http://localhost:4000/docs/actions/ocotkit.html",
     "relUrl": "/docs/actions/ocotkit.html"
-  },"124": {
+  },"122": {
     "doc": "OSX Shell Tips",
     "title": "Key Repeat Rate",
     "content": "Add days to your lifespan by Increasing the key repeat rate. Run the following in the terminal then restart. Protip by Michael Musson. | 1 2 . | defaults write -g InitialKeyRepeat -int 13 # normal minimum is 15 (225 ms) defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms) . | . ",
     "url": "http://localhost:4000/docs/linux/osx.html#key-repeat-rate",
     "relUrl": "/docs/linux/osx.html#key-repeat-rate"
-  },"125": {
+  },"123": {
     "doc": "OSX Shell Tips",
     "title": "A better way to search text: ack",
     "content": "Install ack: . brew install ack . Search files for text, super fast and returns results in a very nice way. By default will search recursively from the current directory and it skips unimportant files by default. ack \"search string\" . ",
     "url": "http://localhost:4000/docs/linux/osx.html#a-better-way-to-search-text-ack",
     "relUrl": "/docs/linux/osx.html#a-better-way-to-search-text-ack"
-  },"126": {
+  },"124": {
     "doc": "OSX Shell Tips",
     "title": "Keyboard Tricks (OS X)",
     "content": "Set your option key to Esc+ in iTerm under Profiles&gt;Keys . | control-W delete word backwards | option-D delete word forwards | control-K delete until end of line | . ",
     "url": "http://localhost:4000/docs/linux/osx.html#keyboard-tricks-os-x",
     "relUrl": "/docs/linux/osx.html#keyboard-tricks-os-x"
-  },"127": {
+  },"125": {
     "doc": "OSX Shell Tips",
     "title": "My .zshrc file",
     "content": "Stored at ~/.zshrc . I used to have ohmyzsh but it made my shell too slow. This is good enough for me. | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 . | # #speed startup time https://medium.com/@dannysmith/little-thing-2-speeding-up-zsh-f1860390f92 autoload -Uz compinit for dump in ~/.zcompdump(N.mh+24); do compinit done compinit -C #### PROMPT='%(?.%F{green}√.%F{red}?%?)%f %B%F{157}%1~%f%b %F{231}%# ' autoload -Uz vcs_info precmd_vcs_info() { vcs_info } precmd_functions+=( precmd_vcs_info ) setopt prompt_subst RPROMPT=\\$vcs_info_msg_0_ zstyle ':vcs_info:git:*' formats '%F{141}(%b)%r%f' zstyle ':vcs_info:*' enable git alias ls=\"colorls\" alias python=\"python3\" # install jupyter kernel with pipenv function install-jupyter { if [ -n \"${PIPENV_ACTIVE+1}\" ]; then VENV_NAME=`echo ${VIRTUAL_ENV} | cut -d '/' -f 7` echo \"creating Jupyter kernel named $VENV_NAME\" pipenv install --skip-lock ipykernel python -m ipykernel install --user --name=$VENV_NAME fi } ## automatically activate pipenv shell upon cd function auto_pipenv_shell { if [ ! -n \"${PIPENV_ACTIVE+1}\" ]; then if [ -f \"Pipfile\" ] ; then pipenv shell fi fi } function cd { builtin cd \"$@\" auto_pipenv_shell } #extra stuff export CLICOLOR=1 export LSCOLORS=GxFxCxDxBxegedabagaced GREP_OPTIONS=\"--color=always\";export GREP_OPTIONS __git_files () { _wanted files expl 'local files' _files } . | . ",
     "url": "http://localhost:4000/docs/linux/osx.html#my-zshrc-file",
     "relUrl": "/docs/linux/osx.html#my-zshrc-file"
-  },"128": {
+  },"126": {
     "doc": "OSX Shell Tips",
     "title": "OSX Shell Tips",
     "content": " ",
     "url": "http://localhost:4000/docs/linux/osx.html",
     "relUrl": "/docs/linux/osx.html"
-  },"129": {
+  },"127": {
     "doc": "Remote Browser For Jupyter",
     "title": "Background",
     "content": "It is very common to connect to a remote Jupyter server with your local browser. However, if you lose connection with your remote server, logs printed to the screen may stop streaming. This is common when training deep learning models where training runs can last days or weeks where progress bars are printed to the screen in a notebook. To avoid the issue with your browser loosing connection you can run the browser remotely on the same machine as the Jupyter server, even if your remote server does not have a desktop/GUI interface. ",
     "url": "http://localhost:4000/docs/jupyter/remote_browser.html#background",
     "relUrl": "/docs/jupyter/remote_browser.html#background"
-  },"130": {
+  },"128": {
     "doc": "Remote Browser For Jupyter",
     "title": "fast.ai",
     "content": "The below youtube link (at timestamp 1:58:33), from fastai Lesson 10 Part 2 (2018) will walk you through how to accomplish this. ",
     "url": "http://localhost:4000/docs/jupyter/remote_browser.html#fastai",
     "relUrl": "/docs/jupyter/remote_browser.html#fastai"
-  },"131": {
+  },"129": {
     "doc": "Remote Browser For Jupyter",
     "title": "Remote Browser For Jupyter",
     "content": " ",
     "url": "http://localhost:4000/docs/jupyter/remote_browser.html",
     "relUrl": "/docs/jupyter/remote_browser.html"
-  },"132": {
+  },"130": {
     "doc": "Resources",
     "title": "Introduction",
     "content": "These are resources that can help you get started with GitHub Actions: . | Talk: Getting started with Actions | Blog: An Intro To Actions For Data Scientists | . ",
     "url": "http://localhost:4000/docs/actions/resources.html#introduction",
     "relUrl": "/docs/actions/resources.html#introduction"
-  },"133": {
+  },"131": {
     "doc": "Resources",
     "title": "Going Deeper",
     "content": "Once you have a basic understanding, these resources can help you learn more. | See mlops-github.com for a collection of resources specifically targeted at Data Scientists using GitHub Actions. | Actions official documentation. | . ",
     "url": "http://localhost:4000/docs/actions/resources.html#going-deeper",
     "relUrl": "/docs/actions/resources.html#going-deeper"
-  },"134": {
+  },"132": {
     "doc": "Resources",
     "title": "Resources",
     "content": " ",
     "url": "http://localhost:4000/docs/actions/resources.html",
     "relUrl": "/docs/actions/resources.html"
-  },"135": {
+  },"133": {
     "doc": "fastcore.utils",
     "title": "Things I Learned From fastcore.utils",
     "content": "Some notes I took while documenting this module. | Things I Learned From fastcore.utils | Important Reading Materials . | Defining classes with type | Avoid boilerplate when defining new classes w/ store_attr | Utilities I’m likely to use in other projects . | Multiprocessing | Functions on Functions | . | . | Other . | Class Decorators | . | . ",
     "url": "http://localhost:4000/docs/fastai/utils.html#things-i-learned-from-fastcoreutils",
     "relUrl": "/docs/fastai/utils.html#things-i-learned-from-fastcoreutils"
-  },"136": {
+  },"134": {
     "doc": "fastcore.utils",
     "title": "Important Reading Materials",
     "content": ". | Real Python Metaclasses blog post | fastcore.utils docs: http://fastcore.fast.ai/utils.html | . ",
     "url": "http://localhost:4000/docs/fastai/utils.html#important-reading-materials",
     "relUrl": "/docs/fastai/utils.html#important-reading-materials"
-  },"137": {
+  },"135": {
     "doc": "fastcore.utils",
     "title": "Defining classes with type",
     "content": "You can use type to also define classes. This can be useful when you want to programmatically define classes, and is new to python 3. | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 . | Foo = type( 'Foo', (), { 'attr': 100, 'attr_val': lambda x : x.attr } ) &gt;&gt;&gt; x = Foo() &gt;&gt;&gt; x.attr 100 &gt;&gt;&gt; x.attr_val() 100 . | . This is used in fastcore.utils.get_class http://fastcore.fast.ai/utils.html#get_class. ",
     "url": "http://localhost:4000/docs/fastai/utils.html#defining-classes-with-type",
     "relUrl": "/docs/fastai/utils.html#defining-classes-with-type"
-  },"138": {
+  },"136": {
     "doc": "fastcore.utils",
     "title": "Avoid boilerplate when defining new classes w/ store_attr",
     "content": "Use fast core.utils.store_attr: http://fastcore.fast.ai/utils.html#get_class . The old way . | 1 2 3 4 5 . | class T: def __init__(self, a,b,c): self.a = a self.b = b self.c = c . | . The new way . | 1 2 . | class T: def __init__(self, a,b,c): store_attr(self, 'a,b,c') . | . ",
     "url": "http://localhost:4000/docs/fastai/utils.html#avoid-boilerplate-when-defining-new-classes-w-store_attr",
     "relUrl": "/docs/fastai/utils.html#avoid-boilerplate-when-defining-new-classes-w-store_attr"
-  },"139": {
+  },"137": {
     "doc": "fastcore.utils",
     "title": "Utilities I’m likely to use in other projects",
     "content": "Suggest going through http://fastcore.fast.ai/utils.html and taking a look. The below utilities are well documented, but this is a quick list of things I especially liked. You can accomplish the same things without these utilities, but these utilities involve writing less code. | mk_class: quickly add a bunch of attributes to a class | wrap_class: add new methods to an a class with a simple decorator | store_attr: already discussed above. | groupby: similar to scala groupby | merge: merge dicts | fasttuple: a tuple on steroids | Infinite Lists: useful for padding and testing | chunked: for batching and organizing stuff | Pathlib.Path Extensions: A better Pathlib.Path. http://fastcore.fast.ai/utils.html#Extensions-to-Pathlib.Path | . Multiprocessing . Extends python’s multiprocessing http://fastcore.fast.ai/utils.html#Multiprocessing. Has features like: . | progress bars | better default behavior | ability to pause to mitigate race conditions with external services: http://fastcore.fast.ai/utils.html#parallel | parallel_chunks: processing things in batches on each worker, ex: if you have a vectorized operation to perform in chunks | . Functions on Functions . This is a functional programming toolkit that is my favorite part of this library. http://fastcore.fast.ai/utils.html#Functions-on-Functions . | compose: functional programming - compose several functions | maps: a map that also composes functions | partialler: partial that copies the docstring | mapped: A more robust map | using_attr: change the way a function uses its inputs (see docs) | Self: with an uppercase S - a better lambda | . ",
     "url": "http://localhost:4000/docs/fastai/utils.html#utilities-im-likely-to-use-in-other-projects",
     "relUrl": "/docs/fastai/utils.html#utilities-im-likely-to-use-in-other-projects"
-  },"140": {
+  },"138": {
     "doc": "fastcore.utils",
     "title": "Other",
     "content": " ",
     "url": "http://localhost:4000/docs/fastai/utils.html#other",
     "relUrl": "/docs/fastai/utils.html#other"
-  },"141": {
+  },"139": {
     "doc": "fastcore.utils",
     "title": "Class Decorators",
     "content": "I did not know you could have decorators on classes. I though it was only for functions. Learned this from Real Python Metaclasses blog post. | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 . | def decorator(cls): class NewClass(cls): attr = 100 return NewClass @decorator class X: pass @decorator class Y: pass @decorator class Z: pass &gt;&gt;&gt; X.attr 100 &gt;&gt;&gt; Y.attr 100 &gt;&gt;&gt; Z.attr 100 . | . ",
     "url": "http://localhost:4000/docs/fastai/utils.html#class-decorators",
     "relUrl": "/docs/fastai/utils.html#class-decorators"
-  },"142": {
+  },"140": {
     "doc": "fastcore.utils",
     "title": "fastcore.utils",
     "content": " ",
     "url": "http://localhost:4000/docs/fastai/utils.html",
     "relUrl": "/docs/fastai/utils.html"
+  },"141": {
+    "doc": "VIM",
+    "title": "VIM",
+    "content": "For the Standard ML programming language I decided to force myself to use vim. I added the following things to my .vimrc to make it manageable. Note the plugin jez/vim-better-sml . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 . | \" from https://github.com/jez/vim-as-an-ide set nocompatible inoremap &lt;C-e&gt; &lt;C-o&gt;A filetype off set rtp+=~/.vim/bundle/Vundle.vim call vundle#begin() Plugin 'VundleVim/Vundle.vim' \" ----- Making Vim look good ------------------------------------------ Plugin 'altercation/vim-colors-solarized' Plugin 'tomasr/molokai' Plugin 'vim-airline/vim-airline' Plugin 'vim-airline/vim-airline-themes' \" ----- Vim as a programmer's text editor ----------------------------- Plugin 'scrooloose/nerdtree' Plugin 'jistr/vim-nerdtree-tabs' Plugin 'vim-syntastic/syntastic' Plugin 'xolox/vim-misc' Plugin 'xolox/vim-easytags' Plugin 'majutsushi/tagbar' Plugin 'ctrlpvim/ctrlp.vim' \" ----- Working with Git ---------------------------------------------- Plugin 'airblade/vim-gitgutter' Plugin 'tpope/vim-fugitive' Plugin 'Raimondi/delimitMate' Plugin 'jez/vim-better-sml' Plugin 'christoomey/vim-tmux-navigator' Plugin 'benmills/vimux' call vundle#end() filetype plugin indent on set number set ruler set showcmd set incsearch set hlsearch set backspace=indent,eol,start syntax on set mouse=a . | . ",
+    "url": "http://localhost:4000/docs/programming-languages/vim.html",
+    "relUrl": "/docs/programming-languages/vim.html"
   }
 }
