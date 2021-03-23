@@ -491,11 +491,11 @@
     "url": "https://notes.hamel.dev/docs/linux/cookbook.html",
     "relUrl": "/docs/linux/cookbook.html"
   },"82": {
-    "doc": "python",
-    "title": "python",
-    "content": "My notes on interesting things in Python. ",
-    "url": "https://notes.hamel.dev/docs/python/",
-    "relUrl": "/docs/python/"
+    "doc": "Jupyter",
+    "title": "Jupyter",
+    "content": " ",
+    "url": "https://notes.hamel.dev/docs/jupyter/",
+    "relUrl": "/docs/jupyter/"
   },"83": {
     "doc": "Linux & Bash Scripting",
     "title": "Linux & Bash Scripting",
@@ -503,348 +503,294 @@
     "url": "https://notes.hamel.dev/docs/linux/",
     "relUrl": "/docs/linux/"
   },"84": {
+    "doc": "python",
+    "title": "python",
+    "content": "My notes on interesting things in Python. ",
+    "url": "https://notes.hamel.dev/docs/python/",
+    "relUrl": "/docs/python/"
+  },"85": {
     "doc": "GitHub Actions",
     "title": "GitHub Actions",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/actions/",
     "relUrl": "/docs/actions/"
-  },"85": {
-    "doc": "fastai",
-    "title": "fastai",
-    "content": "Random notes on fast.ai . ",
-    "url": "https://notes.hamel.dev/docs/fastai/",
-    "relUrl": "/docs/fastai/"
   },"86": {
-    "doc": "Jupyter",
-    "title": "Jupyter",
-    "content": " ",
-    "url": "https://notes.hamel.dev/docs/jupyter/",
-    "relUrl": "/docs/jupyter/"
-  },"87": {
     "doc": "programming languages",
     "title": "SML (Standard ML) Part A",
     "content": ". | You setup vim to have an IDE for this. See these notes. | ML is a statically typed language with magical type inference that works really well. It automatically determines the types and is very intuitive and helpful. | Learned how to use recursion everywhere instead of loops, particularly with hd, tl and cons. | Local variable binding with let is very important (which also allows you to bind local/private functions as well) | cons allows you to append to the beginning of a list | There is an option type that is NONE or SOME v | This language doesn’t encourage mutation, which is a feature. Otherwise, you can use a reference which is like a pointer to mutate a variable. | pattern matching with a case expression case name (first, last) =&gt; . | You can have nested patterns | You can pattern match against function arguments which allow for really nice syntax for achieving multiple dispatch type of functionality.. | . | Tail recursion with accumulators. Ex- factorial | The fn keyword is used to define anonymous functions. | ML uses lexical scope which means function is evaluated in the environment where the function was defined. dynamic scope, which is usually not desired, is the alternative where the function is evaluated in the in the environment it is called. | Closure - the call stack has a “pair” that is the (function, environment when the function was defined). This pair is called the closure. The call stack has a snapshot of what the environment looked like at the time the function was defined. | fold is like reduce. | ML supports function composition like this with the keyword o: f1 o f2 o f3 . | best to do a val binding to avoid unnecessary wrapping: val newfunc = f1 o f2 | with o you apply functions from right to left so f1 o f2 x is the same as f1(f2(x)) there is an alternative that is left to right called the pipeline operator. | . | Currying and partial application . | Universal way to make a func curryable: | 1 2 3 4 5 6 . | fun myfunc x let fun f2 (z) = z fun f1 (y) = f2(y) begin f1 end . | . | ML has first class support for currying so you don’t have to do the above hack. | . | ML supports mutual recursion just like let-rec in racket. | . ",
     "url": "https://notes.hamel.dev/docs/programming-languages/#sml-standard-ml-part-a",
     "relUrl": "/docs/programming-languages/#sml-standard-ml-part-a"
-  },"88": {
+  },"87": {
     "doc": "programming languages",
     "title": "Racket (Part B)",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/programming-languages/#racket-part-b",
     "relUrl": "/docs/programming-languages/#racket-part-b"
-  },"89": {
+  },"88": {
     "doc": "programming languages",
     "title": "programming languages",
     "content": "High level takeaways after completing the 3-Part Coursera class Programming Languages with Dan Grossman. Your GitHub repo for this class (private) is here. ",
     "url": "https://notes.hamel.dev/docs/programming-languages/",
     "relUrl": "/docs/programming-languages/"
-  },"90": {
+  },"89": {
     "doc": "How To Learn",
     "title": "Focused vs Diffused Mode",
     "content": "You can not access focus and diffused mode simultaneously. People have tried to access diffuse mode of thinking by bringing themselves to the point of sleep and waking up just as they fall asleep. For example, Salvador Dali - holding keys in your hand, and let the sound of keys falling the ground wake you up. Exercise, going for a walk good way to access diffuse thinking. You must take notes right away b/c diffuse thoughts may evaporate very fast. ",
     "url": "https://notes.hamel.dev/docs/how-to-learn/lhtl.html#focused-vs-diffused-mode",
     "relUrl": "/docs/how-to-learn/lhtl.html#focused-vs-diffused-mode"
-  },"91": {
+  },"90": {
     "doc": "How To Learn",
     "title": "Procrastination Memory and Sleep",
     "content": "They advocate the Pomodoro technique to combating procrastination. Its like HITT. Periodic relaxation (every ~ 30 minutes) is important for accessing your diffuse mode. “Its important for the mortar to dry”. Spaced repetition (like Anki) is important for building memory. i . Go over what you want to learn about right before you go to sleep, this will substantially improve the chances you will dream about it and form new connections about the subject. Exercise can help create new neurons in your hippocampus (new neurons can be created there in adulthood) and help them survive longer. ",
     "url": "https://notes.hamel.dev/docs/how-to-learn/lhtl.html#procrastination-memory-and-sleep",
     "relUrl": "/docs/how-to-learn/lhtl.html#procrastination-memory-and-sleep"
-  },"92": {
+  },"91": {
     "doc": "How To Learn",
     "title": "Writing Tips Diffuse Mode",
     "content": "Diffuse mode is very important for writing. Editing is like focus mode and creating ideas is diffuse mode. Some rules of thumb: . | Do not outline, make a mind map | Do not edit while you are writing (this is really hard to do -&gt; turn off monitor and just write).https://writeordie.com - app that forces you to stay in diffuse mode. You really cannot look at the screen. | Repeating again, do not look at screen while you are writing! Only when editing. | . ",
     "url": "https://notes.hamel.dev/docs/how-to-learn/lhtl.html#writing-tips-diffuse-mode",
     "relUrl": "/docs/how-to-learn/lhtl.html#writing-tips-diffuse-mode"
-  },"93": {
+  },"92": {
     "doc": "How To Learn",
     "title": "Chunking",
     "content": "“Tying your shoes”. Best chunks are subconscious. Spoken language is the best example of chunking. You have to practice to build chunks, you cannot just observe. You have to perform the task yourself. You should scan a chapter before you read it: section headings, pictures, etc. This can help you build chunks. ",
     "url": "https://notes.hamel.dev/docs/how-to-learn/lhtl.html#chunking",
     "relUrl": "/docs/how-to-learn/lhtl.html#chunking"
-  },"94": {
+  },"93": {
     "doc": "How To Learn",
     "title": "Illusions of competence",
     "content": "Right after you read something, look away and repeat to yourself what you recall. You can also draw a concept map. The recall process actually improves memory. Recall is better than re-reading. Re-reading is effective when you let time pass so you get spaced repetition. You need to test yourself to make sure you are competent. Recall is a form of testing. Recall outside your place of study to strengthen your memory. This is because you can get queues from where you are studying. ",
     "url": "https://notes.hamel.dev/docs/how-to-learn/lhtl.html#illusions-of-competence",
     "relUrl": "/docs/how-to-learn/lhtl.html#illusions-of-competence"
-  },"95": {
+  },"94": {
     "doc": "How To Learn",
     "title": "Deliberate Practice",
     "content": "Focus on the bits that you find difficult. Interleaving is important, meaning learning different subjects or even sections within one subject at once. Thomas S. Khun discovered that two types of people tend to make scientific breakthroughs: (1) young people (2) those who are trained in another discipline. ",
     "url": "https://notes.hamel.dev/docs/how-to-learn/lhtl.html#deliberate-practice",
     "relUrl": "/docs/how-to-learn/lhtl.html#deliberate-practice"
-  },"96": {
+  },"95": {
     "doc": "How To Learn",
     "title": "Procrastination and Memory",
     "content": "You have already learned about the Pomodoro technique. There are other techniques. Focus on the process, not the product. Don’t focus on completing the homework, focus on the process that leads you to complete the homework. Process is the small chunks of time to chip away at the task. This is the idea behind the Pomodoro. Your only goal is to finish the Pomodoro, for example. ",
     "url": "https://notes.hamel.dev/docs/how-to-learn/lhtl.html#procrastination-and-memory",
     "relUrl": "/docs/how-to-learn/lhtl.html#procrastination-and-memory"
-  },"97": {
+  },"96": {
     "doc": "How To Learn",
     "title": "Juggling Life and Learning",
     "content": "You should make to-do list the night before for the next day and write it down. This will allow your subconscious to work on how it will conquer that task. Furthermore, writing it down will allow you to free it from working memory. Plan your quitting time is important. ",
     "url": "https://notes.hamel.dev/docs/how-to-learn/lhtl.html#juggling-life-and-learning",
     "relUrl": "/docs/how-to-learn/lhtl.html#juggling-life-and-learning"
-  },"98": {
+  },"97": {
     "doc": "How To Learn",
     "title": "How To Learn",
     "content": "I read the book Mindshift and it was unituitively so good that I decided to take this class. As a parent, I learned a bunch of things that I think will be beneficial to my children’s education. Notes from class Learning how to learn. These notes are for me and may not make sense for others. ",
     "url": "https://notes.hamel.dev/docs/how-to-learn/lhtl.html",
     "relUrl": "/docs/how-to-learn/lhtl.html"
-  },"99": {
+  },"98": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "References",
     "content": "Files associated with this tutorial can be found here. ",
     "url": "https://notes.hamel.dev/docs/linux/linux.html#references",
     "relUrl": "/docs/linux/linux.html#references"
-  },"100": {
+  },"99": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "Managing Processes (ps, kill, pkill)",
     "content": "Kill Single Process (ps, kill) . A common scenario is that you might run a python script to train a model: . $ python train.py . Let’s say you want to kill this script for whatever reason. You might not always be able to type Cntrl + C to stop it, especially if this process is running in the background. (Aside: A way make a program run in the background is with a &amp; for example:$ python train.py &amp; ) . In order to find this running program, you can use the command ps . $ ps Gives you basic information (good enough most of the time) . Flags: . | -e Allows you to see all running processes including from other users . | -f Allows you to see additional information about each process . | . In order to kill the process you will want to identify it’s PID for example, if the PID is 501 you can kill this process with the command: . $ kill 501 . Killing Multiple Processes (pkill) . If you use process-based threading in python with a library like multi-processing, python will instantiate many processes for you. This is common thing to do in python for a task like data processing. Let’s consider the below example. When you run this in the background it will produce 8 processes: . | 1 2 3 4 5 6 7 8 9 10 . | from multiprocessing import Pool from time import sleep def f(x): sleep(1000) # simulate some computation return x*x if __name__ == '__main__': with Pool(8) as p: print(p.map(f, range(8))) . | . $ python train_multi.py &amp; . After a few seconds, calling the command ps will yield something like this: . | 1 2 3 4 5 6 7 8 9 10 . | PID TTY TIME CMD 3982 ttys002 0:00.09 ...MacOS/Python train_multi.py 4219 ttys002 0:00.00 ...MacOS/Python train_multi.py 4220 ttys002 0:00.00 ...MacOS/Python train_multi.py 4221 ttys002 0:00.00 ...MacOS/Python train_multi.py 4222 ttys002 0:00.00 ...MacOS/Python train_multi.py 4223 ttys002 0:00.00 ...MacOS/Python train_multi.py 4224 ttys002 0:00.00 ...MacOS/Python train_multi.py 4225 ttys002 0:00.00 ...MacOS/Python train_multi.py 4226 ttys002 0:00.00 ...MacOS/Python train_multi.py . | . You can find all processes with the file train_multi.py with the pkill command and the -f flag: . See Parent / Child Processes (pstree) . pstree is also a helpful utility to see parent/child relationships between processes. You can install pstree on a mac with brew install pstree . In the above example, there are 8 sub-processes created by one python process. Running the command . $ pstree -s train_multi.py . Will show the process hierarchy. The -s flag allows you to filter parents and descendants of processes containing a string in their command. In the below example, PID 41592 will kill all the 8 child processes seen below . Killing Process Options . Reminder: view processes with ps or top To show processes from all users ps aux . | To restart pid 6996 kill -1 6996 . | kill pid 6996 kill -9 6996 . | . You can kill processes by name (which is also usually listed as the command that started the processes). killall will search for the string int he relevant process. Bringing processes back into the foreground . Reminder you put processes in the background with &amp; example is myscript.sh &amp; . You can move processes back into the foreground with fg . fg 1234 brings process 1234 back into the foreground. ",
     "url": "https://notes.hamel.dev/docs/linux/linux.html#managing-processes-ps-kill-pkill",
     "relUrl": "/docs/linux/linux.html#managing-processes-ps-kill-pkill"
-  },"101": {
+  },"100": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "Bundling &amp; Archiving Files (tar)",
     "content": "You commonly want to package a bunch of files together, such as a collection of photos or CSVs, and optionally compress these with its directory structure intact. A common tool for this is tar . This is how you would bundle and compress a directory of CSV files: . Sending An Archive To A Remote Machine . It is often the case you want to send data to a remote machine. The below command creates a directory called data , compresses all files in a local folder named csv_data , with the exception of the sub-directory csv_data/intermediate_files without creating any temporary files locally: . Optionally, create the directory on the remote machine: . Then, stream the archive directly to remote. Note that providing a — instead of a destination filename allows tar to write to a stream (stdout) that can be sent directly to the remote server. Moving Files In Different Directories Into An Archive . If your files exist in sibling directories, rather than under one parent directory you can use find along with tar . Suppose you want to archive all csv files relative to a directory: . When you archive files on the fly above with find you cannot compress the files until the archive is finished being built, therefore you have to compress the tar file with the gzip command: . $ gzip data.tar . Tip: some people like to use locate with updatedb instead of find. There are tradeoffs so make sure you read the documentation carefully! . Unpacking &amp; Decompressing Archives . You can decompress and unpack a tar file, for example data.tar.gz with the following command: . $ tar -xzvf data.tar.gz . If the data is not compressed, you can leave out the -z flag: . $ tar -xvf data.tar . ",
     "url": "https://notes.hamel.dev/docs/linux/linux.html#bundling--archiving-files-tar",
     "relUrl": "/docs/linux/linux.html#bundling--archiving-files-tar"
-  },"102": {
+  },"101": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "File Permissions",
     "content": "Before we begin, we must introduce some nomenclature: . If you run the command ls -a you will see something similar to the below output for all of your files in the current directory. The file permissions are shown in three-character groupings for three different groups (nine characters total). These three groups are the owner , group , and other users. In this case, the owner name is hamel and the group name is staff . For the owner, the file permissions are rwx which means that the owner has read r , write w , and execute x permissions. For the group, the file permissions are r-x which means the group has read and execute permissions, but not write permissions. A group is a collection of users with common permissions. Finally, all other users have file permissions of r– which means only read permissions. Changing File Permissions . There are several ways to change file permissions. Method 1: Using Characters and +, - . Refer to the nomenclature above to follow along . | chmod o-r csvfiles.tar.gz . Removes - the ability of other users o to read r the file. | chmod g+w csvfiles.tar.gz . Adds + the ability of the group g to write w to the file. | chmod u+x csvfiles.tar.gz . Adds + the ability of the owner u to execute x the file. | chomd a+x csvfiles.tar.gz . Adds + the ability of all users a to execute x the file. | . Method 2: using numbers . This method works by adding up the numbers corresponding to the permissions separately for each user group (owner, group, others). For example: . | chmod 777 csvfiles.tar.gz . This gives all users the ability to read (4), write( 2), and execute (1) files. In other words 4+2+1 = 7, for the owner, group and other users. | chmod 732 csvfiles.tar.gz . This gives the owner the ability to read, write and execute ( 4+2+1=7), the group the ability to write and execute (2+1=3) and all other users only the ability to write (2). | . Changing Ownership . You can change the owner or group assigned to a file like this: . chown newuser:newgroup file . The :newgroup is optional, if you do not specify that the group will stay the same. ",
     "url": "https://notes.hamel.dev/docs/linux/linux.html#file-permissions",
     "relUrl": "/docs/linux/linux.html#file-permissions"
-  },"103": {
+  },"102": {
     "doc": "Processes, Permissions and Moving Data",
     "title": "Processes, Permissions and Moving Data",
     "content": ". | References | Managing Processes (ps, kill, pkill) . | Kill Single Process (ps, kill) | Killing Multiple Processes (pkill) | See Parent / Child Processes (pstree) | Killing Process Options | Bringing processes back into the foreground | . | Bundling &amp; Archiving Files (tar) . | Sending An Archive To A Remote Machine | Moving Files In Different Directories Into An Archive | Unpacking &amp; Decompressing Archives | . | File Permissions . | Changing File Permissions | Changing Ownership | . | . ",
     "url": "https://notes.hamel.dev/docs/linux/linux.html",
     "relUrl": "/docs/linux/linux.html"
-  },"104": {
+  },"103": {
     "doc": "Misc Utilities",
     "title": "History",
     "content": ". | See history with history command | You will get a number for each history item. | You can replay any number n with command !n | History on OS X is stored in ~/.zsh_history | . !n refer to command number n in history when you call history . ",
     "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#history",
     "relUrl": "/docs/linux/misc_utils.html#history"
-  },"105": {
+  },"104": {
     "doc": "Misc Utilities",
     "title": "Diff",
     "content": "You can difff two files, you usually want to see a unified diff b/c that is easier to read . diff -u file1.txt file2.txt . ",
     "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#diff",
     "relUrl": "/docs/linux/misc_utils.html#diff"
-  },"106": {
+  },"105": {
     "doc": "Misc Utilities",
     "title": "Here Documents",
     "content": "Instead of using echo, our script now uses cat and a here document. The string EOF (meaning end of file, a common convention) was selected as the token and marks the end of the embedded text. Note that the token must appear alone and that there must not be trailing spaces on the line. Unlike Echo, all double quotes and single quotes are escaped. Here is an example of the same thing at the command line. | 1 2 3 4 5 6 7 8 9 10 11 . | [me@linuxbox ~]$ foo=\"some text\" [me@linuxbox ~]$ cat &lt;&lt; _EOF_ &gt; $foo &gt; \"$foo\" &gt; '$foo' &gt; \\$foo &gt; _EOF_ some text \"some text\" 'some text' $foo . | . ",
     "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#here-documents",
     "relUrl": "/docs/linux/misc_utils.html#here-documents"
-  },"107": {
+  },"106": {
     "doc": "Misc Utilities",
     "title": "Named Pipes with mkfifo",
     "content": "Named pipes are input/output buffers. You can fill up the buffer and then drain the buffer later. | Setup Named Pipe using mkfifo . | Fill up the named pipe, this will hang until the pipe is drained . | . Hamel: you can run this part in a sub shell . | In a NEW terminal window drain the pipe | . Hamel: put it all together in a script. You can drain the pipe as many times as you want. | 1 2 3 4 5 . | #!/bin/bash mkfifo pipe1 ls -l &gt; pipe1 &amp; cat &lt; pipe1 . | . ",
     "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#named-pipes-with-mkfifo",
     "relUrl": "/docs/linux/misc_utils.html#named-pipes-with-mkfifo"
-  },"108": {
+  },"107": {
     "doc": "Misc Utilities",
     "title": "Scan host for open ports w/ nmap",
     "content": ". | Lookup ip with nslookup | nmap -sT &lt;IP address&gt; | . You can scan a range of IPs for a mysql port like so: . nmap -sT 192.168.181.0/24 -p 3306 -oG MySQLScan . This is useful if you have a public server and you want to verify that a port is open. ",
     "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#scan-host-for-open-ports-w-nmap",
     "relUrl": "/docs/linux/misc_utils.html#scan-host-for-open-ports-w-nmap"
-  },"109": {
+  },"108": {
     "doc": "Misc Utilities",
     "title": "Devices /dev",
     "content": "Linux has a special directory that contains files representing attached devices. Important ones are sda1, sda2 , sda3, sdb and sdb1 . You can view a tree of your disks and the partitions with the utility lsblk . ",
     "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#devices-dev",
     "relUrl": "/docs/linux/misc_utils.html#devices-dev"
-  },"110": {
+  },"109": {
     "doc": "Misc Utilities",
     "title": "Mounting devices",
     "content": "Sometimes you need to mount these devices. Two common mount points are /mnt and /media. If you mount the device into an existing directory it will cover the contents of that directory making them invisible and unavailable. Ex: mount device to /mnt . mount /dev/sb1 /mnt . Ex: mount flash drive . mount /dev/sdc1 /media . You can unmount a device with unmount: . unmount /dev/sb1 . ",
     "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#mounting-devices",
     "relUrl": "/docs/linux/misc_utils.html#mounting-devices"
-  },"111": {
+  },"110": {
     "doc": "Misc Utilities",
     "title": "Getting information on mounted drives",
     "content": "df -h . ",
     "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#getting-information-on-mounted-drives",
     "relUrl": "/docs/linux/misc_utils.html#getting-information-on-mounted-drives"
-  },"112": {
+  },"111": {
     "doc": "Misc Utilities",
     "title": "Permanently deleting files with shred",
     "content": "This utility writes over files many times in order to erase things. Helpful for sensitive data. ",
     "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#permanently-deleting-files-with-shred",
     "relUrl": "/docs/linux/misc_utils.html#permanently-deleting-files-with-shred"
-  },"113": {
+  },"112": {
     "doc": "Misc Utilities",
     "title": "Masking your IP for web scraping",
     "content": "Look into proxy chains . Linux utility called proxychains which generally works as: . proxychains &lt;the command you want proxied&gt; &lt;arguments&gt; . proxychains defaults to using Tor if you don’t supply your own proxies. See: https://www.technocrazed.com/how-to-use-beagle-scraper-safely-to-scrape-e-commerce-platforms . ",
     "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#masking-your-ip-for-web-scraping",
     "relUrl": "/docs/linux/misc_utils.html#masking-your-ip-for-web-scraping"
-  },"114": {
+  },"113": {
     "doc": "Misc Utilities",
     "title": "Running Scripts At System Startup",
     "content": "Look at rc scripts. After the kernel has initialized all its modules, it starts adaemon known as init or initd, which runs scripts found in /etc/init.d/rc . You can use the utility update-rc.d to add a script to the startup procedure: . This is useful if for example you always want to start a database on system startup. ",
     "url": "https://notes.hamel.dev/docs/linux/misc_utils.html#running-scripts-at-system-startup",
     "relUrl": "/docs/linux/misc_utils.html#running-scripts-at-system-startup"
-  },"115": {
+  },"114": {
     "doc": "Misc Utilities",
     "title": "Misc Utilities",
     "content": ". | History | Diff | Here Documents | Named Pipes with mkfifo | Scan host for open ports w/ nmap | Devices /dev . | Mounting devices | Getting information on mounted drives | Permanently deleting files with shred | . | Masking your IP for web scraping | Running Scripts At System Startup | . ",
     "url": "https://notes.hamel.dev/docs/linux/misc_utils.html",
     "relUrl": "/docs/linux/misc_utils.html"
-  },"116": {
+  },"115": {
     "doc": "ocotokit.js",
     "title": "Introduction",
     "content": "ocotokit.js is a javascript library that can help you interact with the GitHub API in a easy manner. Some javascript knowledge is helpful, but not required for many simple tasks. You can use the octokit.js client along with the github-script action to quickly interface with the GitHub API to do useful things in Actions (like commenting on an issue.) . It is helpful to install node.js when developing scripts that interface with the GitHub API so you can test them locally. ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html#introduction",
     "relUrl": "/docs/actions/ocotkit.html#introduction"
-  },"117": {
+  },"116": {
     "doc": "ocotokit.js",
     "title": "Example Octokit Scripts",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html#example-octokit-scripts",
     "relUrl": "/docs/actions/ocotkit.html#example-octokit-scripts"
-  },"118": {
+  },"117": {
     "doc": "ocotokit.js",
     "title": "Example 1: Create A Comment On A PR",
     "content": "Let’s say you want to programatically make a comment on a pull request with a url that includes the branch name, but you are only given the pull request number. We first lookup the branch name associated with the pull request and pass that to the method call that makes an issue comment: . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 . | //Instantiate octokit client const { Octokit } = require(\"@octokit/rest\"); const octokit = new Octokit({ auth: \"&lt;YOUR_PERSONAL_ACCESS_TOKEN&gt;\", }); //Take an action (create a comment) triggered by an issue comment // Get information about the pr octokit.pulls.get({ owner: 'hamelsmu', repo: 'test_html', pull_number: 1 }).then( (pr) =&gt; { // use the branch name from the pr to make a pr comment var BRANCH_NAME = pr.data.head.ref octokit.issues.createComment({ issue_number: 1, owner: 'hamelsmu', repo: 'test_html', body: `[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/hamelsmu/test_html/${BRANCH_NAME}) :point_left: Launch a binder notebook on this branch` }) }) . | . ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html#example-1-create-a-comment-on-a-pr",
     "relUrl": "/docs/actions/ocotkit.html#example-1-create-a-comment-on-a-pr"
-  },"119": {
+  },"118": {
     "doc": "ocotokit.js",
     "title": "Example 2: Issue Comment",
     "content": "This is a simple example of how you can create an issue comment. | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 . | //Instantiate octokit client const { Octokit } = require(\"@octokit/rest\"); const octokit = new Octokit({ auth: \"&lt;YOUR_PERSONAL_ACCESS_TOKEN&gt;\", }); // Create an issue commment var BRANCH_NAME = 'hamelsmu-patch-1' octokit.issues.createComment({ issue_number: 1, owner: 'hamelsmu', repo: 'test_html', body: `[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/hamelsmu/test_html/${BRANCH_NAME}) :point_left: Launch a binder notebook on this branch` }) . | . ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html#example-2-issue-comment",
     "relUrl": "/docs/actions/ocotkit.html#example-2-issue-comment"
-  },"120": {
+  },"119": {
     "doc": "ocotokit.js",
     "title": "MyBinder.org",
     "content": "The examples above were adapted to write these docs for mybinder.org. ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html#mybinderorg",
     "relUrl": "/docs/actions/ocotkit.html#mybinderorg"
-  },"121": {
+  },"120": {
     "doc": "ocotokit.js",
     "title": "ocotokit.js",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/actions/ocotkit.html",
     "relUrl": "/docs/actions/ocotkit.html"
-  },"122": {
+  },"121": {
     "doc": "OSX Shell Tips",
     "title": "Key Repeat Rate",
     "content": "Add days to your lifespan by Increasing the key repeat rate. Run the following in the terminal then restart. Protip by Michael Musson. | 1 2 . | defaults write -g InitialKeyRepeat -int 13 # normal minimum is 15 (225 ms) defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms) . | . ",
     "url": "https://notes.hamel.dev/docs/linux/osx.html#key-repeat-rate",
     "relUrl": "/docs/linux/osx.html#key-repeat-rate"
-  },"123": {
+  },"122": {
     "doc": "OSX Shell Tips",
     "title": "A better way to search text: ack",
     "content": "Install ack: . brew install ack . Search files for text, super fast and returns results in a very nice way. By default will search recursively from the current directory and it skips unimportant files by default. ack \"search string\" . ",
     "url": "https://notes.hamel.dev/docs/linux/osx.html#a-better-way-to-search-text-ack",
     "relUrl": "/docs/linux/osx.html#a-better-way-to-search-text-ack"
-  },"124": {
+  },"123": {
     "doc": "OSX Shell Tips",
     "title": "Keyboard Tricks (OS X)",
     "content": "Set your option key to Esc+ in iTerm under Profiles&gt;Keys . | control-W delete word backwards | option-D delete word forwards | control-K delete until end of line | . ",
     "url": "https://notes.hamel.dev/docs/linux/osx.html#keyboard-tricks-os-x",
     "relUrl": "/docs/linux/osx.html#keyboard-tricks-os-x"
-  },"125": {
+  },"124": {
     "doc": "OSX Shell Tips",
     "title": "My .zshrc file",
     "content": "Stored at ~/.zshrc . I used to have ohmyzsh but it made my shell too slow. This is good enough for me. | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 . | # #speed startup time https://medium.com/@dannysmith/little-thing-2-speeding-up-zsh-f1860390f92 autoload -Uz compinit for dump in ~/.zcompdump(N.mh+24); do compinit done compinit -C #### PROMPT='%(?.%F{green}√.%F{red}?%?)%f %B%F{157}%1~%f%b %F{231}%# ' autoload -Uz vcs_info precmd_vcs_info() { vcs_info } precmd_functions+=( precmd_vcs_info ) setopt prompt_subst RPROMPT=\\$vcs_info_msg_0_ zstyle ':vcs_info:git:*' formats '%F{141}(%b)%r%f' zstyle ':vcs_info:*' enable git alias ls=\"colorls\" alias python=\"python3\" # install jupyter kernel with pipenv function install-jupyter { if [ -n \"${PIPENV_ACTIVE+1}\" ]; then VENV_NAME=`echo ${VIRTUAL_ENV} | cut -d '/' -f 7` echo \"creating Jupyter kernel named $VENV_NAME\" pipenv install --skip-lock ipykernel python -m ipykernel install --user --name=$VENV_NAME fi } ## automatically activate pipenv shell upon cd function auto_pipenv_shell { if [ ! -n \"${PIPENV_ACTIVE+1}\" ]; then if [ -f \"Pipfile\" ] ; then pipenv shell fi fi } function cd { builtin cd \"$@\" auto_pipenv_shell } #extra stuff export CLICOLOR=1 export LSCOLORS=GxFxCxDxBxegedabagaced GREP_OPTIONS=\"--color=always\";export GREP_OPTIONS __git_files () { _wanted files expl 'local files' _files } . | . ",
     "url": "https://notes.hamel.dev/docs/linux/osx.html#my-zshrc-file",
     "relUrl": "/docs/linux/osx.html#my-zshrc-file"
-  },"126": {
+  },"125": {
     "doc": "OSX Shell Tips",
     "title": "OSX Shell Tips",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/linux/osx.html",
     "relUrl": "/docs/linux/osx.html"
-  },"127": {
+  },"126": {
     "doc": "Remote Browser For Jupyter",
     "title": "Background",
     "content": "It is very common to connect to a remote Jupyter server with your local browser. However, if you lose connection with your remote server, logs printed to the screen may stop streaming. This is common when training deep learning models where training runs can last days or weeks where progress bars are printed to the screen in a notebook. To avoid the issue with your browser loosing connection you can run the browser remotely on the same machine as the Jupyter server, even if your remote server does not have a desktop/GUI interface. ",
     "url": "https://notes.hamel.dev/docs/jupyter/remote_browser.html#background",
     "relUrl": "/docs/jupyter/remote_browser.html#background"
-  },"128": {
+  },"127": {
     "doc": "Remote Browser For Jupyter",
     "title": "fast.ai",
     "content": "The below youtube link (at timestamp 1:58:33), from fastai Lesson 10 Part 2 (2018) will walk you through how to accomplish this. ",
     "url": "https://notes.hamel.dev/docs/jupyter/remote_browser.html#fastai",
     "relUrl": "/docs/jupyter/remote_browser.html#fastai"
-  },"129": {
+  },"128": {
     "doc": "Remote Browser For Jupyter",
     "title": "Remote Browser For Jupyter",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/jupyter/remote_browser.html",
     "relUrl": "/docs/jupyter/remote_browser.html"
-  },"130": {
+  },"129": {
     "doc": "Resources",
     "title": "Introduction",
     "content": "These are resources that can help you get started with GitHub Actions: . | Talk: Getting started with Actions | Blog: An Intro To Actions For Data Scientists | . ",
     "url": "https://notes.hamel.dev/docs/actions/resources.html#introduction",
     "relUrl": "/docs/actions/resources.html#introduction"
-  },"131": {
+  },"130": {
     "doc": "Resources",
     "title": "Going Deeper",
     "content": "Once you have a basic understanding, these resources can help you learn more. | See mlops-github.com for a collection of resources specifically targeted at Data Scientists using GitHub Actions. | Actions official documentation. | . ",
     "url": "https://notes.hamel.dev/docs/actions/resources.html#going-deeper",
     "relUrl": "/docs/actions/resources.html#going-deeper"
-  },"132": {
+  },"131": {
     "doc": "Resources",
     "title": "Resources",
     "content": " ",
     "url": "https://notes.hamel.dev/docs/actions/resources.html",
     "relUrl": "/docs/actions/resources.html"
-  },"133": {
-    "doc": "fastcore.utils",
-    "title": "Things I Learned From fastcore.utils",
-    "content": "Some notes I took while documenting this module. | Things I Learned From fastcore.utils | Important Reading Materials . | Defining classes with type | Avoid boilerplate when defining new classes w/ store_attr | Utilities I’m likely to use in other projects . | Multiprocessing | Functions on Functions | . | . | Other . | Class Decorators | . | . ",
-    "url": "https://notes.hamel.dev/docs/fastai/utils.html#things-i-learned-from-fastcoreutils",
-    "relUrl": "/docs/fastai/utils.html#things-i-learned-from-fastcoreutils"
-  },"134": {
-    "doc": "fastcore.utils",
-    "title": "Important Reading Materials",
-    "content": ". | Real Python Metaclasses blog post | fastcore.utils docs: http://fastcore.fast.ai/utils.html | . ",
-    "url": "https://notes.hamel.dev/docs/fastai/utils.html#important-reading-materials",
-    "relUrl": "/docs/fastai/utils.html#important-reading-materials"
-  },"135": {
-    "doc": "fastcore.utils",
-    "title": "Defining classes with type",
-    "content": "You can use type to also define classes. This can be useful when you want to programmatically define classes, and is new to python 3. | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 . | Foo = type( 'Foo', (), { 'attr': 100, 'attr_val': lambda x : x.attr } ) &gt;&gt;&gt; x = Foo() &gt;&gt;&gt; x.attr 100 &gt;&gt;&gt; x.attr_val() 100 . | . This is used in fastcore.utils.get_class http://fastcore.fast.ai/utils.html#get_class. ",
-    "url": "https://notes.hamel.dev/docs/fastai/utils.html#defining-classes-with-type",
-    "relUrl": "/docs/fastai/utils.html#defining-classes-with-type"
-  },"136": {
-    "doc": "fastcore.utils",
-    "title": "Avoid boilerplate when defining new classes w/ store_attr",
-    "content": "Use fast core.utils.store_attr: http://fastcore.fast.ai/utils.html#get_class . The old way . | 1 2 3 4 5 . | class T: def __init__(self, a,b,c): self.a = a self.b = b self.c = c . | . The new way . | 1 2 . | class T: def __init__(self, a,b,c): store_attr(self, 'a,b,c') . | . ",
-    "url": "https://notes.hamel.dev/docs/fastai/utils.html#avoid-boilerplate-when-defining-new-classes-w-store_attr",
-    "relUrl": "/docs/fastai/utils.html#avoid-boilerplate-when-defining-new-classes-w-store_attr"
-  },"137": {
-    "doc": "fastcore.utils",
-    "title": "Utilities I’m likely to use in other projects",
-    "content": "Suggest going through http://fastcore.fast.ai/utils.html and taking a look. The below utilities are well documented, but this is a quick list of things I especially liked. You can accomplish the same things without these utilities, but these utilities involve writing less code. | mk_class: quickly add a bunch of attributes to a class | wrap_class: add new methods to an a class with a simple decorator | store_attr: already discussed above. | groupby: similar to scala groupby | merge: merge dicts | fasttuple: a tuple on steroids | Infinite Lists: useful for padding and testing | chunked: for batching and organizing stuff | Pathlib.Path Extensions: A better Pathlib.Path. http://fastcore.fast.ai/utils.html#Extensions-to-Pathlib.Path | . Multiprocessing . Extends python’s multiprocessing http://fastcore.fast.ai/utils.html#Multiprocessing. Has features like: . | progress bars | better default behavior | ability to pause to mitigate race conditions with external services: http://fastcore.fast.ai/utils.html#parallel | parallel_chunks: processing things in batches on each worker, ex: if you have a vectorized operation to perform in chunks | . Functions on Functions . This is a functional programming toolkit that is my favorite part of this library. http://fastcore.fast.ai/utils.html#Functions-on-Functions . | compose: functional programming - compose several functions | maps: a map that also composes functions | partialler: partial that copies the docstring | mapped: A more robust map | using_attr: change the way a function uses its inputs (see docs) | Self: with an uppercase S - a better lambda | . ",
-    "url": "https://notes.hamel.dev/docs/fastai/utils.html#utilities-im-likely-to-use-in-other-projects",
-    "relUrl": "/docs/fastai/utils.html#utilities-im-likely-to-use-in-other-projects"
-  },"138": {
-    "doc": "fastcore.utils",
-    "title": "Other",
-    "content": " ",
-    "url": "https://notes.hamel.dev/docs/fastai/utils.html#other",
-    "relUrl": "/docs/fastai/utils.html#other"
-  },"139": {
-    "doc": "fastcore.utils",
-    "title": "Class Decorators",
-    "content": "I did not know you could have decorators on classes. I though it was only for functions. Learned this from Real Python Metaclasses blog post. | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 . | def decorator(cls): class NewClass(cls): attr = 100 return NewClass @decorator class X: pass @decorator class Y: pass @decorator class Z: pass &gt;&gt;&gt; X.attr 100 &gt;&gt;&gt; Y.attr 100 &gt;&gt;&gt; Z.attr 100 . | . ",
-    "url": "https://notes.hamel.dev/docs/fastai/utils.html#class-decorators",
-    "relUrl": "/docs/fastai/utils.html#class-decorators"
-  },"140": {
-    "doc": "fastcore.utils",
-    "title": "fastcore.utils",
-    "content": " ",
-    "url": "https://notes.hamel.dev/docs/fastai/utils.html",
-    "relUrl": "/docs/fastai/utils.html"
-  },"141": {
+  },"132": {
     "doc": "VIM",
     "title": "VIM",
     "content": "For the Standard ML programming language I decided to force myself to use vim. I added the following things to my .vimrc to make it manageable. Note the plugin jez/vim-better-sml . | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 . | \" from https://github.com/jez/vim-as-an-ide set nocompatible inoremap &lt;C-e&gt; &lt;C-o&gt;A filetype off set rtp+=~/.vim/bundle/Vundle.vim call vundle#begin() Plugin 'VundleVim/Vundle.vim' \" ----- Making Vim look good ------------------------------------------ Plugin 'altercation/vim-colors-solarized' Plugin 'tomasr/molokai' Plugin 'vim-airline/vim-airline' Plugin 'vim-airline/vim-airline-themes' \" ----- Vim as a programmer's text editor ----------------------------- Plugin 'scrooloose/nerdtree' Plugin 'jistr/vim-nerdtree-tabs' Plugin 'vim-syntastic/syntastic' Plugin 'xolox/vim-misc' Plugin 'xolox/vim-easytags' Plugin 'majutsushi/tagbar' Plugin 'ctrlpvim/ctrlp.vim' \" ----- Working with Git ---------------------------------------------- Plugin 'airblade/vim-gitgutter' Plugin 'tpope/vim-fugitive' Plugin 'Raimondi/delimitMate' Plugin 'jez/vim-better-sml' Plugin 'christoomey/vim-tmux-navigator' Plugin 'benmills/vimux' call vundle#end() filetype plugin indent on set number set ruler set showcmd set incsearch set hlsearch set backspace=indent,eol,start syntax on set mouse=a . | . ",
