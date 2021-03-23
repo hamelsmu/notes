@@ -1,0 +1,99 @@
+I"ù<h2 id="vim">VIM</h2>
+<p>For the Standard ML programming language I decided to force myself to use vim.  I added the following things to my <code class="highlighter-rouge">.vimrc</code> to make it manageable.  Note the plugin <code class="highlighter-rouge">jez/vim-better-sml</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+</pre></td><td class="rouge-code"><pre>" from https://github.com/jez/vim-as-an-ide
+set nocompatible
+
+inoremap &lt;C-e&gt; &lt;C-o&gt;A
+
+
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+
+" ----- Making Vim look good ------------------------------------------
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'tomasr/molokai'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+" ----- Vim as a programmer's text editor -----------------------------
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-easytags'
+Plugin 'majutsushi/tagbar'
+Plugin 'ctrlpvim/ctrlp.vim'
+" ----- Working with Git ----------------------------------------------
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
+Plugin 'Raimondi/delimitMate'
+Plugin 'jez/vim-better-sml'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'benmills/vimux'
+call vundle#end()
+
+filetype plugin indent on
+
+set number
+set ruler
+set showcmd
+set incsearch
+set hlsearch
+set backspace=indent,eol,start
+
+syntax on
+set mouse=a
+</pre></td></tr></tbody></table></code></pre></div></div>
+:ET

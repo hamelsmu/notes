@@ -1,0 +1,236 @@
+<h1 id="a-cookbook-of-shell-scripts---wicked-shell-scripts-2d-edition">A Cookbook of Shell Scripts - Wicked Shell Scripts, 2d Edition</h1>
+
+<p>You should browse the table of contents of <a href="https://nostarch.com/wcss2">this book</a> and use the shell scripts contained within off the shelf if possible.</p>
+
+<ul>
+  <li>GitHub: https://github.com/hamelsmu/wicked_cool_shell_scripts_2e/</li>
+  <li>Link to book on GitHub:  https://github.com/hamelsmu/wicked_cool_shell_scripts_2e/blob/master/WickedCoolShellScripts2E.pdf</li>
+  <li>Book: https://nostarch.com/wcss2</li>
+</ul>
+
+<h1 id="things-learned-from-the-cookbook">Things Learned From The Cookbook</h1>
+<p>In addition to just using the library of shell scripts,  I also learned the following bash tidbits from this book.</p>
+
+<h2 id="shift--and---pop-args-off-and-count-args"><code class="highlighter-rouge">shift</code>  and <code class="highlighter-rouge">$#</code>  pop args off and count args</h2>
+<p>shift.sh</p>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="k">while</span> <span class="o">((</span> <span class="nv">$# </span><span class="o">))</span><span class="p">;</span> <span class="k">do
+    </span><span class="nb">echo</span> <span class="s2">"process args: </span><span class="nv">$1</span><span class="s2">"</span>
+    <span class="nb">shift
+</span><span class="k">done</span>
+</code></pre></div></div>
+
+<p>Results in:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./shift.sh foo bar bash                                                                             
+process args: foo
+process args: bar
+process args: bash
+</code></pre></div></div>
+
+<h3 id="using-shift-for-cli-options">Using shift for CLI options:</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="c"># newquota--A frontend to quota that works with full-word flags a la GNU</span>
+
+<span class="c"># quota has three possible flags, -g, -v, and -q, but this script</span>
+<span class="c">#   allows them to be '--group', '--verbose', and '--quiet' too:</span>
+
+<span class="nv">flags</span><span class="o">=</span><span class="s2">""</span>
+<span class="nv">realquota</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span>which quota<span class="si">)</span><span class="s2">"</span>
+
+<span class="k">while</span> <span class="o">[</span> <span class="nv">$# </span><span class="nt">-gt</span> 0 <span class="o">]</span>
+<span class="k">do
+  case</span> <span class="nv">$1</span>
+  <span class="k">in</span>
+    <span class="nt">--help</span><span class="p">)</span>  <span class="nb">echo</span> <span class="s2">"Usage: </span><span class="nv">$0</span><span class="s2"> [--group --verbose --quiet -gvq]"</span> <span class="o">&gt;</span>&amp;2
+                       <span class="nb">exit </span>1 <span class="p">;;</span>
+    <span class="nt">--group</span> <span class="p">)</span>  <span class="nv">flags</span><span class="o">=</span><span class="s2">"</span><span class="nv">$flags</span><span class="s2"> -g"</span><span class="p">;</span>       <span class="nb">shift</span> <span class="p">;;</span>
+    <span class="nt">--verbose</span><span class="p">)</span>  <span class="nv">flags</span><span class="o">=</span><span class="s2">"</span><span class="nv">$flags</span><span class="s2"> -v"</span><span class="p">;</span>   <span class="nb">shift</span> <span class="p">;;</span>
+    <span class="nt">--quiet</span><span class="p">)</span>  <span class="nv">flags</span><span class="o">=</span><span class="s2">"</span><span class="nv">$flags</span><span class="s2"> -q"</span><span class="p">;</span>       <span class="nb">shift</span> <span class="p">;;</span>
+    <span class="nt">--</span><span class="p">)</span>  <span class="nb">shift</span><span class="p">;</span>           <span class="nb">break</span> <span class="p">;;</span>
+    <span class="k">*</span><span class="p">)</span>  <span class="nb">break</span><span class="p">;</span>          <span class="c"># done with 'while' loop!</span>
+  <span class="k">esac
+done
+
+</span><span class="nb">exec</span> <span class="nv">$realquota</span> <span class="nv">$flags</span> <span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+
+</code></pre></div></div>
+
+<h2 id="-collect-all-arguments"><code class="highlighter-rouge">$*</code> collect all arguments</h2>
+<p>shift2.sh</p>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="k">for </span>var <span class="k">in</span> <span class="nv">$*</span><span class="p">;</span> <span class="k">do
+    </span><span class="nb">echo</span> <span class="nv">$var</span>
+<span class="k">done</span>
+</code></pre></div></div>
+
+<p>Results in:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./shift2.sh foo bar bash                                                                             
+process args: foo
+process args: bar
+process args: bash
+</code></pre></div></div>
+
+<h2 id="multi-option-case-statement">Multi Option Case Statement</h2>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while </span><span class="nb">read command </span>args
+<span class="k">do
+  case</span> <span class="nv">$command</span>
+  <span class="k">in
+    </span>quit|exit<span class="p">)</span> <span class="nb">exit </span>0                                  <span class="p">;;</span>
+    <span class="nb">help</span><span class="p">|</span><span class="se">\?</span><span class="p">)</span>   show_help                               <span class="p">;;</span>
+    scale<span class="p">)</span>     <span class="nv">scale</span><span class="o">=</span><span class="nv">$args</span>                             <span class="p">;;</span>
+    <span class="k">*</span><span class="p">)</span>         scriptbc <span class="nt">-p</span> <span class="nv">$scale</span> <span class="s2">"</span><span class="nv">$command</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$args</span><span class="s2">"</span>  <span class="p">;;</span>
+  <span class="k">esac</span>
+
+  /bin/echo <span class="nt">-n</span> <span class="s2">"calc&gt; "</span>
+<span class="k">done</span>
+</code></pre></div></div>
+
+<h3 id="another-example-of-case-statement">Another example of case statement</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">case</span> <span class="nv">$1</span> <span class="k">in
+    </span>1 <span class="p">)</span> <span class="nv">month</span><span class="o">=</span><span class="s2">"Jan"</span>    <span class="p">;;</span>  2 <span class="p">)</span> <span class="nv">month</span><span class="o">=</span><span class="s2">"Feb"</span>    <span class="p">;;</span>
+    3 <span class="p">)</span> <span class="nv">month</span><span class="o">=</span><span class="s2">"Mar"</span>    <span class="p">;;</span>  4 <span class="p">)</span> <span class="nv">month</span><span class="o">=</span><span class="s2">"Apr"</span>    <span class="p">;;</span>
+    5 <span class="p">)</span> <span class="nv">month</span><span class="o">=</span><span class="s2">"May"</span>    <span class="p">;;</span>  6 <span class="p">)</span> <span class="nv">month</span><span class="o">=</span><span class="s2">"Jun"</span>    <span class="p">;;</span>
+    7 <span class="p">)</span> <span class="nv">month</span><span class="o">=</span><span class="s2">"Jul"</span>    <span class="p">;;</span>  8 <span class="p">)</span> <span class="nv">month</span><span class="o">=</span><span class="s2">"Aug"</span>    <span class="p">;;</span>
+    9 <span class="p">)</span> <span class="nv">month</span><span class="o">=</span><span class="s2">"Sep"</span>    <span class="p">;;</span>  10<span class="p">)</span> <span class="nv">month</span><span class="o">=</span><span class="s2">"Oct"</span>    <span class="p">;;</span>
+    11<span class="p">)</span> <span class="nv">month</span><span class="o">=</span><span class="s2">"Nov"</span>    <span class="p">;;</span>  12<span class="p">)</span> <span class="nv">month</span><span class="o">=</span><span class="s2">"Dec"</span>    <span class="p">;;</span>
+    <span class="k">*</span> <span class="p">)</span> <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$0</span><span class="s2">: Unknown numeric month value </span><span class="nv">$1</span><span class="s2">"</span> <span class="o">&gt;</span>&amp;2<span class="p">;</span> <span class="nb">exit </span>1
+  <span class="k">esac
+  return </span>0
+
+</code></pre></div></div>
+
+<h2 id="collecting-stdout-with--">Collecting stdout with <code class="highlighter-rouge">-</code></h2>
+
+<p><code class="highlighter-rouge">echo "Enter something: " | cat -</code></p>
+
+<h2 id="formatting-long-lines-fmt">Formatting Long Lines <code class="highlighter-rouge">fmt</code></h2>
+<p>Will make lines no longer than 30 characters, not cutting off any words.</p>
+
+<p><code class="highlighter-rouge">fmt -w30 long_text.txt</code></p>
+
+<h2 id="ifs---internal-field-seperator">IFS - Internal Field Seperator</h2>
+<p>Sets the internal delimiter</p>
+
+<p>ifs_variable.sh</p>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="nv">IFS</span><span class="o">=</span><span class="s2">":"</span>
+<span class="nv">var</span><span class="o">=</span><span class="s1">'a:b-c~d'</span>
+<span class="k">for </span>n <span class="k">in</span> <span class="nv">$var</span>
+<span class="k">do
+    </span><span class="nb">echo</span> <span class="s2">"</span><span class="nv">$n</span><span class="s2">"</span>
+<span class="k">done</span>
+</code></pre></div></div>
+
+<p>Results in</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./1/ifs_variable.sh
+a
+b-c~d
+</code></pre></div></div>
+
+<h3 id="ifs-in-great-expectations-action">IFS in Great Expectations Action</h3>
+
+<p>I’m using this in the <a href="https://github.com/superconductive/great_expectations_action">Great Expectations Action</a> to parse a list of arguments given as a string to an input</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Loop through checkpoints</span>
+<span class="nv">STATUS</span><span class="o">=</span>0
+<span class="nv">IFS</span><span class="o">=</span><span class="s1">','</span>
+<span class="k">for </span>c <span class="k">in</span> <span class="nv">$INPUT_CHECKPOINTS</span><span class="p">;</span><span class="k">do
+    </span><span class="nb">echo</span> <span class="s2">""</span>
+    <span class="nb">echo</span> <span class="s2">"Validating Checkpoint: </span><span class="k">${</span><span class="nv">c</span><span class="k">}</span><span class="s2">"</span>
+    <span class="k">if</span> <span class="o">!</span> great_expectations checkpoint run <span class="nv">$c</span><span class="p">;</span> <span class="k">then
+        </span><span class="nv">STATUS</span><span class="o">=</span>1
+    <span class="k">fi
+done</span>
+</code></pre></div></div>
+
+<h3 id="ifs-for-iterating-through-path">IFS for iterating through $PATH</h3>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="nv">IFS</span><span class="o">=</span><span class="s2">":"</span>
+<span class="k">for </span>directory <span class="k">in</span> <span class="nv">$PATH</span> <span class="p">;</span> <span class="k">do
+   </span><span class="nb">echo</span> <span class="nv">$directory</span>
+<span class="k">done</span>
+</code></pre></div></div>
+
+<h3 id="ifs-double-vs-single-quotes">IFS: Double vs. Single Quotes</h3>
+
+<p>With double quotes the outcome of the command expansion would be fed as one parameter to the source command. Without quotes it would be broken up into multiple parameters, depending on the value of IFS which contains space, TAB and newline by default.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">var</span><span class="o">=</span><span class="s2">"some value"</span>
+
+<span class="c"># $var fed into cmd as one parameter</span>
+cmd <span class="s2">"</span><span class="nv">$var</span><span class="s2">"</span>
+
+<span class="c"># $var is fed into cmd as two parameters</span>
+<span class="c">#  delimted by the default IFS character, space</span>
+cmd <span class="s1">'$var'</span>
+
+</code></pre></div></div>
+
+<h2 id="random">$RANDOM</h2>
+<p><code class="highlighter-rouge">echo $RANDOM</code> will print out a random number</p>
+
+<h2 id="debugging-shell-scripts--x">Debugging Shell Scripts <code class="highlighter-rouge">-x</code></h2>
+
+<p>Debug a script:</p>
+
+<p><code class="highlighter-rouge">bash -x myscript.sh</code></p>
+
+<p>OR, within a script:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set</span> <span class="nt">-x</span> <span class="c"># start debugging</span>
+./myscript.sh
+<span class="nb">set</span> +x <span class="c"># stop debugging</span>
+</code></pre></div></div>
+
+<p>All variables will be substituted and lines that are run will be printed to screen, showing the control flow of the program</p>
+
+<h2 id="sourcing-files-with--">Sourcing files with <code class="highlighter-rouge">. </code></h2>
+
+<p>So you can “import” scripts</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">.</span> myscript.sh
+<span class="c"># is equivalent to</span>
+<span class="nb">source </span>myscript.sh
+</code></pre></div></div>
+
+<h2 id="using-functions-to-set-exit-codes">Using functions to set exit codes</h2>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+validAlphaNum<span class="o">()</span>
+<span class="o">{</span>
+  <span class="c"># Validate arg: returns 0 if all upper+lower+digits, 1 otherwise.</span>
+  <span class="c"># Remove all unacceptable chars.</span>
+  <span class="nv">validchars</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nb">echo</span> <span class="nv">$1</span> | <span class="nb">sed</span> <span class="nt">-e</span> <span class="s1">'s/[^[:alnum:]]//g'</span><span class="si">)</span><span class="s2">"</span>
+
+  <span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$validchars</span><span class="s2">"</span> <span class="o">=</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="o">]</span> <span class="p">;</span> <span class="k">then
+    return </span>0
+  <span class="k">else
+    return </span>1
+  <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="nb">exit </span>validAlphaNum
+
+</code></pre></div></div>
+
+<h2 id="know-if-someone-running-the-script-directly-with--bash_source">Know if someone running the script directly with  <code class="highlighter-rouge">$BASH_SOURCE</code></h2>
+<p>The variable <code class="highlighter-rouge">$BASH_SOURCE</code> can let you differentiate between when a script is run standalone vs when its invoked from another script:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$BASH_SOURCE</span><span class="s2">"</span> <span class="o">=</span> <span class="s2">"</span><span class="nv">$0</span><span class="s2">"</span> <span class="o">]</span>
+</code></pre></div></div>
+
+<h2 id="xargs"><code class="highlighter-rouge">xargs</code></h2>
+
+<p>https://www.cyberciti.biz/faq/linux-unix-bsd-xargs-construct-argument-lists-utility/</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">echo </span>1 2 3 4 | xargs <span class="nt">-n2</span> <span class="nt">-I</span> <span class="o">{}</span> <span class="nb">echo </span>hello <span class="o">{}</span> world                                                                                                                                                                                                                                                   
+hello 1 2 world
+hello 3 4 world
+
+</code></pre></div></div>
