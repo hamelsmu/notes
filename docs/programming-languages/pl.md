@@ -17,12 +17,15 @@ Your GitHub repo for this class (private) [is here](https://github.com/hamelsmu/
 - `cons` allows you to append to the beginning of a list
 - There is an option type that is `NONE` or `SOME v`
 - This language doesn't encourage mutation, which is a feature.  Otherwise, you can use a reference which is like a pointer to mutate a variable.
-- **pattern matching with a case expression**:  This is one of the coolest things that I learned, and [is coming to Python v 3.10](https://www.python.org/dev/peps/pep-0636/).
+- **pattern matching with a case expression**:  This is one of the coolest things that I learned, and something similar [is coming to Python v 3.10](https://www.python.org/dev/peps/pep-0636/).
     - You can have nested patterns
-    - You can pattern match against function arguments which allow for really nice syntax for achieving multiple dispatch type of functionality..
+    - You can pattern match against function arguments which allow for really nice syntax for achieving multiple dispatch type of functionality.. (not sure about python)
+    - You can pattern match against types as well as data structures.
+    - You can have constants in there as well.
     ```ml
     case name 
          NameType name => ...
+       | (first, "MyLastName") => ...
        | (first, last) => ...
        | name => ...
        | _ => ...
