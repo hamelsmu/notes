@@ -272,9 +272,7 @@
 
 <p>newlines are important.  The syntax can change without them.</p>
 
-<ul>
-  <li>Dynamic class definitions.  The following code will result in <code class="highlighter-rouge">Class</code> with the methods <code class="highlighter-rouge">foo</code> and <code class="highlighter-rouge">bar</code>!  The second one doesn’t override the first one!</li>
-</ul>
+<p>Dynamic class definitions.  The following code will result in <code class="highlighter-rouge">Class</code> with the methods <code class="highlighter-rouge">foo</code> and <code class="highlighter-rouge">bar</code>!  The second one doesn’t override the first one!</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
@@ -287,7 +285,6 @@
 9
 10
 11
-12
 </pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">Class</span>
 	<span class="k">def</span> <span class="nf">foo</span>
 	<span class="o">...</span>
@@ -299,15 +296,14 @@
 	<span class="o">...</span>
 	<span class="k">end</span>
 <span class="k">end</span>
-
 </pre></td></tr></tbody></table></div></code></pre></div></div>
-      <h4 id="blocks">
+      <h3 id="blocks">
         
         
           <a href="#blocks" class="anchor-heading" aria-labelledby="blocks"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Blocks
         
         
-      </h4>
+      </h3>
     
 
 <p>They also have a very convenient lambda like thing called <code class="highlighter-rouge">Blocks</code>:</p>
@@ -315,9 +311,7 @@
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
 2
 3
-4
 </pre></td><td class="rouge-code"><pre><span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span> 
-
 <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">].</span><span class="nf">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">sum</span> <span class="o">+=</span> <span class="n">x</span> 
                <span class="nb">puts</span> <span class="n">sum</span> <span class="p">}</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
@@ -383,8 +377,8 @@
 2
 3
 </pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">Child</span> <span class="o">&lt;</span> <span class="no">Parent</span>
- <span class="o">...</span><span class="p">.</span>
-<span class="nf">end</span>
+ <span class="o">...</span>
+<span class="k">end</span>
 </pre></td></tr></tbody></table></div></code></pre></div></div>
       <h3 id="typing">
         
