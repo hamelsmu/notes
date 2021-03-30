@@ -219,7 +219,32 @@
       </h2>
     
 
-<p>TODO</p>
+<p>Racket is related to Lisp and Scheme. Everything is a function.  Parenthesis for everything. The position of parenthesis changes the meaning of the code.</p>
+
+<ul>
+  <li>Racket has dynamic typing, unlike SML.</li>
+  <li>Thunks: Wrap a function in a zero argument function to delay evaluation. Applications:
+    <ul>
+      <li>Streams: the function will return a tuple of (value, func), and when you call func it will return (value, func) so you get one value at a time. This is not specific to Racket.</li>
+      <li>Lazy evaluation:  You can use thunks to delay execution like a promise to a later time.  This is an example of lazy evalution that doesn’t actually evaluate anything until being forced to:</li>
+    </ul>
+  </li>
+</ul>
+
+<pre><code class="language-rkt">(define (my-delay f) (mcons #f f))
+
+(define (my-force th)
+
+(if (mcar th) (mcdr th) (begin (set-mcar! th #t) (set-mcdr! th ((mcdr th))) (mcdr th))))
+</code></pre>
+
+<p>Racket allows you use <strong>macros</strong> that will evaluate before the code is run and that will “expand” into valid racket syntax.</p>
+
+<p>You implemented your own small programming language.  This used recursive calls to evluate expressions with the base case being the values (Integer, strings, etc).
+	- Interperter: write a program in another language A that takes programs in B and produces answers directly. A better term would be “evaluator”.
+	- Compiler: write program in another language A that takes programs in B and produces an equivalent program in langauage C.  A better term here would be “translator”.</p>
+
+<p>Closures: for lexical scope, the interpreter has a stack of tuples.  The tuples are (1) the function to be called (2) the environment, which contains the value of all variables at the time the function was defined.  You also have to track the arguments for the function seperately, so you can evaluate the arguments in the environment the function was run in.</p>
       <h2 id="ruby-part-c">
         
         
@@ -229,7 +254,148 @@
       </h2>
     
 
-<p>TODO</p><hr />
+<p>I didn’t spend too much time on this as these are concepts I was mostly familiar with.</p>
+
+<ul>
+  <li>Ruby is OOP, dynamically typed.</li>
+  <li>
+    <p>Ruby is pure OOP, even top level functions and variables are part of the built-in <code class="highlighter-rouge">Object</code> class.</p>
+  </li>
+  <li>They have fastcore like shortcuts for getters and setters:</li>
+</ul>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="nb">attr_reader</span> <span class="ss">:y</span><span class="p">,</span> <span class="ss">:z</span> <span class="c1"># defines getters </span>
+<span class="nb">attr_accessor</span> <span class="ss">:x</span> <span class="c1"># defines getters and setters</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>newlines are important.  The syntax can change without them.</p>
+
+<ul>
+  <li>Dynamic class definitions.  The following code will result in <code class="highlighter-rouge">Class</code> with the methods <code class="highlighter-rouge">foo</code> and <code class="highlighter-rouge">bar</code>!  The second one doesn’t override the first one!</li>
+</ul>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">Class</span>
+	<span class="k">def</span> <span class="nf">foo</span>
+	<span class="o">...</span>
+	<span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Class</span>
+	<span class="k">def</span> <span class="nf">bar</span>
+	<span class="o">...</span>
+	<span class="k">end</span>
+<span class="k">end</span>
+
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+      <h4 id="blocks">
+        
+        
+          <a href="#blocks" class="anchor-heading" aria-labelledby="blocks"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Blocks
+        
+        
+      </h4>
+    
+
+<p>They also have a very convenient lambda like thing called <code class="highlighter-rouge">Blocks</code>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span> 
+
+<span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">].</span><span class="nf">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">sum</span> <span class="o">+=</span> <span class="n">x</span> 
+               <span class="nb">puts</span> <span class="n">sum</span> <span class="p">}</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>You can use Blocks to make accumulators too, and even use <code class="highlighter-rouge">inject</code> to initialize the accumulator:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">sum</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">].</span><span class="nf">inject</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">acc</span><span class="p">,</span><span class="n">elt</span><span class="o">|</span> <span class="n">acc</span> <span class="o">+</span> <span class="n">elt</span> <span class="p">}</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p>To use blocks in a method, you will have to look that up in the docs. This involves the <code class="highlighter-rouge">yield</code> keyword.  For example, this code will print “hi” 3 times:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">foo</span> <span class="n">x</span> 
+  <span class="k">if</span> <span class="n">x</span> 
+    <span class="k">yield</span> 
+   <span class="k">else</span> 
+    <span class="k">yield</span> 
+    <span class="k">yield</span> 
+   <span class="k">end</span> 
+<span class="k">end</span> 
+
+<span class="n">foo</span> <span class="p">(</span><span class="kp">true</span><span class="p">)</span> <span class="p">{</span> <span class="nb">puts</span> <span class="s2">"hi"</span> <span class="p">}</span> 
+<span class="n">foo</span> <span class="p">(</span><span class="kp">false</span><span class="p">)</span> <span class="p">{</span> <span class="nb">puts</span> <span class="s2">"hi"</span> <span class="p">}</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+
+<p><code class="highlighter-rouge">Blocks</code> are not first class functions even though they kind of look like lambdas.  Lets say you wanted to map over an array but wanted to return an array of functions instead of values.  The way to do this is to use the keyword <code class="highlighter-rouge">lambda</code>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">y</span><span class="p">}</span> <span class="p">}</span> <span class="c1"># wrong, a syntax error</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="nb">lambda</span> <span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="n">y</span><span class="p">}</span> <span class="p">}</span> <span class="c1"># this will work</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+      <h4 id="subclassing">
+        
+        
+          <a href="#subclassing" class="anchor-heading" aria-labelledby="subclassing"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Subclassing
+        
+        
+      </h4>
+    
+
+<ul>
+  <li><code class="highlighter-rouge">super</code> calls the same method in the parent class.  You dont have to do super.method_name(), just <code class="highlighter-rouge">super</code>.</li>
+  <li>Instance variables are preceeded with <code class="highlighter-rouge">@</code></li>
+</ul>
+
+<p>Child classes are defined like this:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">Child</span> <span class="o">&lt;</span> <span class="no">Parent</span>
+ <span class="o">...</span><span class="p">.</span>
+<span class="nf">end</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
+      <h3 id="typing">
+        
+        
+          <a href="#typing" class="anchor-heading" aria-labelledby="typing"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Typing
+        
+        
+      </h3>
+    
+
+<p>They discussed the various ways different type systems are constructed.  The interface idiom, that is familar to you from Golang (but not specific to Golang) was introduced.</p><hr />
       <h2 id="vim">
         
         
