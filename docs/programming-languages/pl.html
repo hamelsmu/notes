@@ -231,12 +231,17 @@
   </li>
 </ul>
 
-<pre><code class="language-rkt">(define (my-delay f) (mcons #f f))
+<div class="language-racket highlighter-rouge"><div class="highlight"><pre class="highlight"><code><div class="table-wrapper"><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">my-delay</span> <span class="nv">f</span><span class="p">)</span> <span class="p">(</span><span class="nb">mcons</span> <span class="no">#f</span> <span class="nv">f</span><span class="p">))</span>
 
-(define (my-force th)
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">my-force</span> <span class="nv">th</span><span class="p">)</span>
 
-(if (mcar th) (mcdr th) (begin (set-mcar! th #t) (set-mcdr! th ((mcdr th))) (mcdr th))))
-</code></pre>
+<span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">mcar</span> <span class="nv">th</span><span class="p">)</span> <span class="p">(</span><span class="nb">mcdr</span> <span class="nv">th</span><span class="p">)</span> <span class="p">(</span><span class="k">begin</span> <span class="p">(</span><span class="nb">set-mcar!</span> <span class="nv">th</span> <span class="no">#t</span><span class="p">)</span> <span class="p">(</span><span class="nb">set-mcdr!</span> <span class="nv">th</span> <span class="p">((</span><span class="nb">mcdr</span> <span class="nv">th</span><span class="p">)))</span> <span class="p">(</span><span class="nb">mcdr</span> <span class="nv">th</span><span class="p">))))</span>
+</pre></td></tr></tbody></table></div></code></pre></div></div>
 
 <p>Racket allows you use <strong>macros</strong> that will evaluate before the code is run and that will “expand” into valid racket syntax.</p>
 
