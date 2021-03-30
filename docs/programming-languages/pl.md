@@ -96,7 +96,7 @@ attr_accessor :x # defines getters and setters
 
 newlines are important.  The syntax can change without them.
 
-- Dynamic class definitions.  The following code will result in `Class` with the methods `foo` and `bar`!  The second one doesn't override the first one!
+Dynamic class definitions.  The following code will result in `Class` with the methods `foo` and `bar`!  The second one doesn't override the first one!
 
 ```ruby
 class Class
@@ -110,15 +110,14 @@ class Class
 	...
 	end
 end
-
 ```
-#### Blocks
+
+### Blocks
 
 They also have a very convenient lambda like thing called `Blocks`:
 
 ```ruby
 sum = 0 
-
 [4,6,8].each { |x| sum += x 
                puts sum }
 ```
@@ -162,7 +161,7 @@ Child classes are defined like this:
 
 ```ruby
 class Child < Parent
- ....
+ ...
 end
 ```
 
