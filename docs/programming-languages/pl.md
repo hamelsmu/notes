@@ -62,7 +62,7 @@ Racket is related to Lisp and Scheme. Everything is a function.  Parenthesis for
 	- Streams: the function will return a tuple of (value, func), and when you call func it will return (value, func) so you get one value at a time. This is not specific to Racket.
 	- Lazy evaluation:  You can use thunks to delay execution like a promise to a later time.  This is an example of lazy evalution that doesn't actually evaluate anything until being forced to: 
 
-```rkt
+```racket
 (define (my-delay f) (mcons #f f))
 
 (define (my-force th)
