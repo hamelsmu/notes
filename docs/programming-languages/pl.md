@@ -55,11 +55,120 @@ Your GitHub repo for this class (private) [is here](https://github.com/hamelsmu/
 
 ## Racket (Part B)
 
-TODO
+Racket is related to Lisp and Scheme. Everything is a function.  Parenthesis for everything. The position of parenthesis changes the meaning of the code.
+
+- Racket has dynamic typing, unlike SML. 
+- Thunks: Wrap a function in a zero argument function to delay evaluation. Applications:
+	- Streams: the function will return a tuple of (value, func), and when you call func it will return (value, func) so you get one value at a time. This is not specific to Racket.
+	- Lazy evaluation:  You can use thunks to delay execution like a promise to a later time.  This is an example of lazy evalution that doesn't actually evaluate anything until being forced to: 
+
+```rkt
+(define (my-delay f) (mcons #f f))
+
+(define (my-force th)
+
+(if (mcar th) (mcdr th) (begin (set-mcar! th #t) (set-mcdr! th ((mcdr th))) (mcdr th))))
+```
+
+Racket allows you use **macros** that will evaluate before the code is run and that will "expand" into valid racket syntax.  
+
+You implemented your own small programming language.  This used recursive calls to evluate expressions with the base case being the values (Integer, strings, etc).
+	- Interperter: write a program in another language A that takes programs in B and produces answers directly. A better term would be "evaluator".
+	- Compiler: write program in another language A that takes programs in B and produces an equivalent program in langauage C.  A better term here would be "translator".
+
+Closures: for lexical scope, the interpreter has a stack of tuples.  The tuples are (1) the function to be called (2) the environment, which contains the value of all variables at the time the function was defined.  You also have to track the arguments for the function seperately, so you can evaluate the arguments in the environment the function was run in. 
+
+
 
 ## Ruby (Part C)
 
-TODO
+I didn't spend too much time on this as these are concepts I was mostly familiar with.  
+
+- Ruby is OOP, dynamically typed. 
+- Ruby is pure OOP, even top level functions and variables are part of the built-in `Object` class.
+
+- They have fastcore like shortcuts for getters and setters:
+
+```ruby
+attr_reader :y, :z # defines getters 
+attr_accessor :x # defines getters and setters
+```
+
+newlines are important.  The syntax can change without them.
+
+- Dynamic class definitions.  The following code will result in `Class` with the methods `foo` and `bar`!  The second one doesn't override the first one!
+
+```ruby
+class Class
+	def foo
+	...
+	end
+end
+
+class Class
+	def bar
+	...
+	end
+end
+
+```
+#### Blocks
+
+They also have a very convenient lambda like thing called `Blocks`:
+
+```ruby
+sum = 0 
+
+[4,6,8].each { |x| sum += x 
+               puts sum }
+```
+
+You can use Blocks to make accumulators too, and even use `inject` to initialize the accumulator:
+
+```ruby
+sum = [4,6,8].inject(0) { |acc,elt| acc + elt }
+```
+
+To use blocks in a method, you will have to look that up in the docs. This involves the `yield` keyword.  For example, this code will print "hi" 3 times:
+
+```ruby
+def foo x 
+  if x 
+    yield 
+   else 
+    yield 
+    yield 
+   end 
+end 
+
+foo (true) { puts "hi" } 
+foo (false) { puts "hi" }
+```
+
+`Blocks` are not first class functions even though they kind of look like lambdas.  Lets say you wanted to map over an array but wanted to return an array of functions instead of values.  The way to do this is to use the keyword `lambda`:
+
+```ruby
+c = a.map {|x| {|y| x >= y} } # wrong, a syntax error
+
+c = a.map {|x| lambda {|y| x >= y} } # this will work
+```
+
+#### Subclassing
+
+- `super` calls the same method in the parent class.  You dont have to do super.method_name(), just `super`. 
+- Instance variables are preceeded with `@`
+
+Child classes are defined like this:
+
+```ruby
+class Child < Parent
+ ....
+end
+```
+
+### Typing
+
+They discussed the various ways different type systems are constructed.  The interface idiom, that is familar to you from Golang (but not specific to Golang) was introduced.
 
 ---
 
