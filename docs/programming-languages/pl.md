@@ -82,7 +82,7 @@ Closures: for lexical scope, the interpreter has a stack of tuples.  The tuples 
 
 ## Ruby (Part C)
 
-I didn't spend too much time on this as these are concepts I was mostly familiar with.  
+I didn't spend too much time some concepts I was mostly familiar with this.  
 
 - Ruby is OOP, dynamically typed. 
 - Ruby is pure OOP, even top level functions and variables are part of the built-in `Object` class.
@@ -98,19 +98,20 @@ newlines are important.  The syntax can change without them.
 
 Dynamic class definitions.  The following code will result in `Class` with the methods `foo` and `bar`!  The second one doesn't override the first one!
 
-```ruby
+```rb
 class Class
-	def foo
-	...
-	end
+    def foo
+        ...
+    end
 end
 
 class Class
-	def bar
-	...
-	end
+    def bar
+        ...
+    end
 end
 ```
+
 
 ### Blocks
 
