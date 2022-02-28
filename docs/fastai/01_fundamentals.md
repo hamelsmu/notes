@@ -1,5 +1,4 @@
 ---
-layout: default
 title: Book Chapters 1-4
 ---
 
