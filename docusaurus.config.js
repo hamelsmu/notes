@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: "Hamel's Notes",
   tagline: "Notes from Hamel",
-  url: 'https://notes.hamel.dev/',
+  url: 'https://notes.hamel.dev',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -25,7 +25,7 @@ const config = {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/hamelsmu/notes/tree/master/notes/',
+          editUrl: 'https://github.com/hamelsmu/notes/tree/master/',
         },
         blog: false,
         theme: {
