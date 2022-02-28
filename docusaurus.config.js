@@ -25,7 +25,7 @@ const config = {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/hamelsmu/notes/edit/master/',
+          editUrl: 'https://github.dev/hamelsmu/notes/blob/master/',
         },
         blog: false,
         theme: {
@@ -38,6 +38,10 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      colorMode: {
+        defaultMode: 'dark', 
+        respectPrefersColorScheme: true,
+      },
       algolia: {
         // The application ID provided by Algolia
         appId: 'N4X7RUH2CX',
@@ -52,17 +56,6 @@ const config = {
           src: 'img/logo.svg',
         },
         items: [
-          {
-            type: 'doc',
-            docId: 'intro',
-            position: 'left',
-            label: 'Notes',
-          },
-          {
-            to: 'https://github.com/facebook/docusaurus',
-            label: 'GitHub',
-            position: 'right',
-          },
         ],
       },
       footer: {
