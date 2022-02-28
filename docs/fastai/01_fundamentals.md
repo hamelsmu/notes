@@ -6,7 +6,7 @@ title: Book Chapters 1-4
 
 import TOCInline from '@theme/TOCInline';
 
-<TOCInline toc={toc} />;
+<TOCInline toc={toc} />
 
 
 ## DataLoaders
