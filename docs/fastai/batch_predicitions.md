@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Batch Predictions
+parent: fastai notes
 ---
 
 # How to make batch predictions in fastai

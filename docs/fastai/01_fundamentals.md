@@ -1,9 +1,10 @@
 ---
 layout: default
-title: Fastai Notes
+title: Book Chapters 1-4
+parent: fastai notes
 ---
 
-# Fastai Notes
+# fastai fundamentals from the Course/Book
 
 <details open markdown="block">
   <summary>
