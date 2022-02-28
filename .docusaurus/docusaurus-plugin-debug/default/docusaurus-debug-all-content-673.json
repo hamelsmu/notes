@@ -174,8 +174,8 @@
                 "permalink": "/fastai/fundamentals"
               },
               "next": {
-                "title": "Remote Browser For Jupyter",
-                "permalink": "/jupyter/remote_browser"
+                "title": "How To Learn",
+                "permalink": "/how-to-learn/lhtl"
               }
             },
             {
@@ -222,12 +222,12 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "programming languages",
-                "permalink": "/programming-languages/pl"
+                "title": "Batch Predictions",
+                "permalink": "/fastai/batch_predicitions"
               },
               "next": {
-                "title": "Linux & Bash Scripting",
-                "permalink": "/linux/"
+                "title": "Remote Browser For Jupyter",
+                "permalink": "/jupyter/remote_browser"
               }
             },
             {
@@ -271,8 +271,8 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "Batch Predictions",
-                "permalink": "/fastai/batch_predicitions"
+                "title": "How To Learn",
+                "permalink": "/how-to-learn/lhtl"
               },
               "next": {
                 "title": "programming languages",
@@ -349,8 +349,8 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "How To Learn",
-                "permalink": "/how-to-learn/lhtl"
+                "title": "programming languages",
+                "permalink": "/programming-languages/pl"
               },
               "next": {
                 "title": "Cheatsheet",
@@ -451,8 +451,8 @@
                 "permalink": "/jupyter/remote_browser"
               },
               "next": {
-                "title": "How To Learn",
-                "permalink": "/how-to-learn/lhtl"
+                "title": "Linux & Bash Scripting",
+                "permalink": "/linux/"
               }
             }
           ],
@@ -516,6 +516,18 @@
               },
               {
                 "type": "category",
+                "label": "how-to-learn",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "how-to-learn/lhtl"
+                  }
+                ]
+              },
+              {
+                "type": "category",
                 "label": "jupyter",
                 "collapsible": true,
                 "collapsed": true,
@@ -535,18 +547,6 @@
                   {
                     "type": "doc",
                     "id": "programming-languages/pl"
-                  }
-                ]
-              },
-              {
-                "type": "category",
-                "label": "how-to-learn",
-                "collapsible": true,
-                "collapsed": true,
-                "items": [
-                  {
-                    "type": "doc",
-                    "id": "how-to-learn/lhtl"
                   }
                 ]
               },
@@ -610,7 +610,7 @@
   "docusaurus-theme-classic": {
     "default": null
   },
-  "@cmfcmf/docusaurus-search-local": {
+  "docusaurus-theme-search-algolia": {
     "default": null
   }
 }

@@ -7,6 +7,6 @@ build: .FORCE
 	yarn build
 
 deploy: .FORCE
-	GIT_USER=hamelsmu yarn deploy
+	GIT_USER="hamelsmu" yarn deploy
 
 .FORCE:

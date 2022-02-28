@@ -38,6 +38,13 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      algolia: {
+        // The application ID provided by Algolia
+        appId: 'N4X7RUH2CX',
+        // Public API key: it is safe to commit it
+        apiKey: 'c0bc0e84a6540a9356caa61a1d87cf90',
+        indexName: 'notes',
+      },
       navbar: {
         title: 'Notes',
         logo: {

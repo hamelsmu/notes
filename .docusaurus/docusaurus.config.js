@@ -31,6 +31,14 @@ export default {
     ]
   ],
   "themeConfig": {
+    "algolia": {
+      "appId": "N4X7RUH2CX",
+      "apiKey": "c0bc0e84a6540a9356caa61a1d87cf90",
+      "indexName": "notes",
+      "contextualSearch": true,
+      "searchParameters": {},
+      "searchPagePath": "search"
+    },
     "navbar": {
       "title": "Notes",
       "logo": {

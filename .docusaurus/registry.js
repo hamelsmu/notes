@@ -1,6 +1,7 @@
 export default {
   '0e384e19': [() => import(/* webpackChunkName: '0e384e19' */ '@site/docs/intro.md'), '@site/docs/intro.md', require.resolveWeak('@site/docs/intro.md')],
   '17896441': [() => import(/* webpackChunkName: '17896441' */ '@theme/DocItem'), '@theme/DocItem', require.resolveWeak('@theme/DocItem')],
+  '1a4e3797': [() => import(/* webpackChunkName: '1a4e3797' */ '@theme/SearchPage'), '@theme/SearchPage', require.resolveWeak('@theme/SearchPage')],
   '1be78505': [() => import(/* webpackChunkName: '1be78505' */ '@theme/DocPage'), '@theme/DocPage', require.resolveWeak('@theme/DocPage')],
   '1f17f8ab': [() => import(/* webpackChunkName: '1f17f8ab' */ '@site/docs/jupyter/remote_browser.md'), '@site/docs/jupyter/remote_browser.md', require.resolveWeak('@site/docs/jupyter/remote_browser.md')],
   '1f391b9e': [() => import(/* webpackChunkName: '1f391b9e' */ '@theme/MDXPage'), '@theme/MDXPage', require.resolveWeak('@theme/MDXPage')],
