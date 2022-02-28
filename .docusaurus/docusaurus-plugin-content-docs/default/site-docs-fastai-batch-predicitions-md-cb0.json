@@ -1,0 +1,22 @@
+{
+  "unversionedId": "fastai/batch_predicitions",
+  "id": "fastai/batch_predicitions",
+  "title": "Batch Predictions",
+  "description": "Making batch predictions on new data is not provided \"out of the box\" in fastai.  This is how you can achieve that:",
+  "source": "@site/docs/fastai/batch_predicitions.md",
+  "sourceDirName": "fastai",
+  "slug": "/fastai/batch_predicitions",
+  "permalink": "/fastai/batch_predicitions",
+  "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/fastai/batch_predicitions.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "layout": "default",
+    "title": "Batch Predictions"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Book Chapters 1-4",
+    "permalink": "/fastai/fundamentals"
+  }
+}

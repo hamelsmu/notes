@@ -1,0 +1,25 @@
+{
+  "unversionedId": "linux/cookbook",
+  "id": "linux/cookbook",
+  "title": "Cookbook",
+  "description": "You should browse the table of contents of this book and use the shell scripts contained within off the shelf if possible.",
+  "source": "@site/docs/linux/cookbook.md",
+  "sourceDirName": "linux",
+  "slug": "/linux/cookbook",
+  "permalink": "/linux/cookbook",
+  "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/linux/cookbook.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "title": "Cookbook"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Cheatsheet",
+    "permalink": "/linux/bash_scripting"
+  },
+  "next": {
+    "title": "Misc Utilities",
+    "permalink": "/linux/misc_utils"
+  }
+}

@@ -1,0 +1,32 @@
+I"K<h1 id="create-a-blog-post">Create a Blog Post</h1>
+
+<p>Docusaurus creates a <strong>page for each blog post</strong>, but also a <strong>blog index page</strong>, a <strong>tag system</strong>, an <strong>RSS</strong> feed…</p>
+
+<h2 id="create-your-first-post">Create your first Post</h2>
+
+<p>Create a file at <code class="highlighter-rouge">blog/2021-02-28-greetings.md</code>:</p>
+
+<h2 id="md-titleblog2021-02-28-greetingsmd">```md title=”blog/2021-02-28-greetings.md”</h2>
+<p>slug: greetings
+title: Greetings!
+authors:</p>
+<ul>
+  <li>name: Joel Marcey
+title: Co-creator of Docusaurus 1
+url: https://github.com/JoelMarcey
+image_url: https://github.com/JoelMarcey.png</li>
+  <li>name: Sébastien Lorber
+title: Docusaurus maintainer
+url: https://sebastienlorber.com
+image_url: https://github.com/slorber.png
+tags: [greetings]
+—</li>
+</ul>
+
+<p>Congratulations, you have made your first post!</p>
+
+<p>Feel free to play around and edit this post as much you like.
+```</p>
+
+<p>A new blog post is now available at <code class="highlighter-rouge">http://localhost:3000/blog/greetings</code>.</p>
+:ET

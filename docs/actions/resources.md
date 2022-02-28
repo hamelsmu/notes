@@ -1,8 +1,6 @@
 ---
-layout: default
 title: Resources
-parent: GitHub Actions
-nav_order: 1
+sidebar_position: 3
 ---
 
 # Introduction

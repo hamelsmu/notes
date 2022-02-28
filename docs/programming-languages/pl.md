@@ -1,7 +1,6 @@
 ---
-layout: default
 title: programming languages
-nav_order: 6
+sidebar_position: 6
 ---
 
 High level takeaways after completing the [3-Part Coursera class Programming Languages](https://www.coursera.org/learn/programming-languages) with Dan Grossman.

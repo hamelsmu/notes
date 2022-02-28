@@ -1,8 +1,6 @@
 ---
-layout: default
 title: ocotokit.js
-parent: GitHub Actions
-nav_order: 3
+sidebar_position: 3
 ---
 
 # Introduction

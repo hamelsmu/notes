@@ -1,19 +1,14 @@
 ---
 layout: default
 title: Book Chapters 1-4
-parent: fastai notes
 ---
 
 # fastai fundamentals from the Course/Book
 
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
+import TOCInline from '@theme/TOCInline';
+
+<TOCInline toc={toc} />;
+
 
 ## DataLoaders
 

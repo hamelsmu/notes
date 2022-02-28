@@ -1,0 +1,28 @@
+{
+  "unversionedId": "linux/index",
+  "id": "linux/index",
+  "title": "Linux & Bash Scripting",
+  "description": "My personal notes on underrated Linux utilities that are useful when working on machine learning projects.",
+  "source": "@site/docs/linux/index.md",
+  "sourceDirName": "linux",
+  "slug": "/linux/",
+  "permalink": "/linux/",
+  "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/linux/index.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 5,
+  "frontMatter": {
+    "layout": "default",
+    "title": "Linux & Bash Scripting",
+    "sidebar_position": 5
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Remote Browser For Jupyter",
+    "permalink": "/jupyter/remote_browser"
+  },
+  "next": {
+    "title": "Cheatsheet",
+    "permalink": "/linux/bash_scripting"
+  }
+}

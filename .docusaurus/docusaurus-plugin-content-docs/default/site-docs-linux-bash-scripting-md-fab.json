@@ -1,0 +1,25 @@
+{
+  "unversionedId": "linux/bash_scripting",
+  "id": "linux/bash_scripting",
+  "title": "Cheatsheet",
+  "description": "- Link to class.",
+  "source": "@site/docs/linux/bash_scripting.md",
+  "sourceDirName": "linux",
+  "slug": "/linux/bash_scripting",
+  "permalink": "/linux/bash_scripting",
+  "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/linux/bash_scripting.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "title": "Cheatsheet"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Linux & Bash Scripting",
+    "permalink": "/linux/"
+  },
+  "next": {
+    "title": "Cookbook",
+    "permalink": "/linux/cookbook"
+  }
+}

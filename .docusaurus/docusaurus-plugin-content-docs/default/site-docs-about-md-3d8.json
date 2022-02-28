@@ -1,0 +1,28 @@
+{
+  "unversionedId": "about",
+  "id": "about",
+  "title": "About",
+  "description": "These docs are hosted on GitHub: hamelsmu/notes.",
+  "source": "@site/docs/about.md",
+  "sourceDirName": ".",
+  "slug": "/about",
+  "permalink": "/about",
+  "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/about.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 15,
+  "frontMatter": {
+    "title": "About",
+    "permalink": "/about",
+    "sidebar_position": 15
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Python Concurrency",
+    "permalink": "/concurrency"
+  },
+  "next": {
+    "title": "Docker",
+    "permalink": "/docker/Docker-In-Action"
+  }
+}
