@@ -13,7 +13,7 @@ const config = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
+  organizationName: 'hamelsmu', // Usually your GitHub org/user name.
   projectName: 'notes', // Usually your repo name.
   plugins: [],
   presets: [
