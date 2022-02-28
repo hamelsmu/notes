@@ -1,8 +1,7 @@
 ---
 layout: default
 title: Linux & Bash Scripting
-nav_order: 2
-has_children: true
+sidebar_position: 5
 ---
 
 My personal notes on underrated Linux utilities that are useful when working on machine learning projects.

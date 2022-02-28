@@ -1,8 +1,5 @@
 ---
-layout: default
 title: Remote Browser For Jupyter
-parent: Jupyter
-nav_order: 1
 ---
 
 ## Background

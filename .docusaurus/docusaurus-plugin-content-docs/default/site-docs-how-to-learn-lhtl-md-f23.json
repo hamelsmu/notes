@@ -1,0 +1,25 @@
+{
+  "unversionedId": "how-to-learn/lhtl",
+  "id": "how-to-learn/lhtl",
+  "title": "How To Learn",
+  "description": "I read the book Mindshift and it was unituitively so good that I decided to take this class.  As a parent, I learned a bunch of things that I think will be beneficial to my children's education.",
+  "source": "@site/docs/how-to-learn/lhtl.md",
+  "sourceDirName": "how-to-learn",
+  "slug": "/how-to-learn/lhtl",
+  "permalink": "/how-to-learn/lhtl",
+  "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/how-to-learn/lhtl.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "title": "How To Learn"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Batch Predictions",
+    "permalink": "/fastai/batch_predicitions"
+  },
+  "next": {
+    "title": "Remote Browser For Jupyter",
+    "permalink": "/jupyter/remote_browser"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "unversionedId": "linux/permprocdata",
+  "id": "linux/permprocdata",
+  "title": "Processes, Permissions and Moving Data",
+  "description": ";",
+  "source": "@site/docs/linux/permprocdata.md",
+  "sourceDirName": "linux",
+  "slug": "/linux/permprocdata",
+  "permalink": "/linux/permprocdata",
+  "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/linux/permprocdata.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "title": "Processes, Permissions and Moving Data"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "OSX Shell Tips",
+    "permalink": "/linux/osx"
+  },
+  "next": {
+    "title": "programming languages",
+    "permalink": "/programming-languages/pl"
+  }
+}

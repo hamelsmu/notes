@@ -1,22 +1,14 @@
 ---
-layout: default
 title: Cheatsheet
-parent: Linux & Bash Scripting
-nav_order: 3
 ---
 
 # Bash Scripting Class Linux Academy
 - [Link](https://linuxacademy.com/linux/training/course/name/the-system-administrators-guidep-to-bash-scripting) to class.
 - [Link](https://github.com/hamelsmu/bash_scripting) to GitHub repo
 
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
+import TOCInline from '@theme/TOCInline';
+
+<TOCInline toc={toc} />;
 
 ## History of Bash
 
@@ -104,9 +96,6 @@ export PATH
 
 You can also run `chmod 755`
 
-### Introduction
-
-- See [these notes](Shell_Scripting.md) on what makes a shell script, accessing environment variables.
 
 ### Using Variables on The Command Line
 
@@ -139,8 +128,6 @@ You can also run `chmod 755`
 
 
 ### Using Variables in Scripts
-
-- Illustrative script [varexample.sh](varexample.sh)
 
     ```bash
     MYUSERNAME='hamel'
@@ -330,7 +317,7 @@ OME HOSTNAME HOSTTYPE
 Hello-Foo-World Hello-Bar-World Hello-Baz-World
 ```
 
-![](Linux%20Command%20Line%202E/FFE1D5B6-3600-45F3-98EA-E5D8D8E38339.png)
+![](Linux_Command_Line_2E/FFE1D5B6-3600-45F3-98EA-E5D8D8E38339.png)
 
 
 ## Parameter Expansion, Like Coalesce
@@ -340,7 +327,7 @@ Hello-Foo-World Hello-Bar-World Hello-Baz-World
 
 If parameter is unset (i.e., does not exist) or is empty, this expansion results in the value of word. If parameter is not empty, the expansion results in the value of parameter.
 
-![](Linux%20Command%20Line%202E/B8AEEDCB-6411-4AAB-9A5E-60DFBF77338A.png)
+![](Linux_Command_Line_2E/B8AEEDCB-6411-4AAB-9A5E-60DFBF77338A.png)
 
 # Types of Variables
 
@@ -439,8 +426,6 @@ You can have spaces in values if you enclose the spaces in double-quotes.
 
 ### Iterating Through Arrays
 
-See [./array.sh](./array.sh)
-
 ```bash
 #!/bin/bash
 # simple array list and loop for display
@@ -457,8 +442,6 @@ done
 You cannot decrease the size of the array, you can only increase the size of the array.
 
 ### Passing Variables to Scripts at the Command Line
-
-see [./cli_args.sh](cli_args.sh)
 
 ```bash
 echo “The following item was passed to the script at run time $1”
@@ -488,7 +471,7 @@ if [ $GUESS -eq 3 ]
 fi
 ```
 
-Test if a file exists [iffileexists.sh](./iffileexists.sh)
+Test if a file exists
 
 ```bash
 FILENAME=$1
@@ -565,21 +548,21 @@ Hamel's Note: Use Double Brackets `[[ ]]`, not single brackets
 ## File Expressions
 
 
-![](Linux%20Command%20Line%202E/04C3BAEC-A2B6-4EDF-B61D-7F290E5C94BE.png)
+![](Linux_Command_Line_2E/04C3BAEC-A2B6-4EDF-B61D-7F290E5C94BE.png)
 
 
-![](Linux%20Command%20Line%202E/C96B41FA-AF66-421D-96BC-B3EA0FA39139.png)
+![](Linux_Command_Line_2E/C96B41FA-AF66-421D-96BC-B3EA0FA39139.png)
 
 
 ## String Expressions
 
 
-![](Linux%20Command%20Line%202E/7E21E94F-714E-48EB-9819-6CF33D414404.png)
+![](Linux_Command_Line_2E/7E21E94F-714E-48EB-9819-6CF33D414404.png)
 
 ## Integer Expressions
 
 
-![](Linux%20Command%20Line%202E/1F1BC194-36CA-4949-83A5-0EB99A150F18.png)
+![](Linux_Command_Line_2E/1F1BC194-36CA-4949-83A5-0EB99A150F18.png)
 
 # Aside: Output Streams
 
@@ -651,7 +634,7 @@ case $MENUCHOICE in
 Allow many matches to occur
 
 
-![](Linux%20Command%20Line%202E/B619EA40-60AC-43A9-91F2-D38B9AF88B29.png)
+![](Linux_Command_Line_2E/B619EA40-60AC-43A9-91F2-D38B9AF88B29.png)
 
 ## While Loop
 
@@ -673,7 +656,7 @@ done
 
 ## Asynchronous Execution with `wait`
 
-![](Linux%20Command%20Line%202E/D58576C6-9AEA-4124-8575-2A3406CC6590.png)
+![](Linux_Command_Line_2E/D58576C6-9AEA-4124-8575-2A3406CC6590.png)
 
 
 This is the most straightforward implementation of async I have ever seen.  You basically decide when to block and wait for a process that you previously decided to run in a child process.  
@@ -724,7 +707,7 @@ done < “$FILE”
 
 ## Reading Files with loops
 
-![](Linux%20Command%20Line%202E/D08C1840-7C02-4212-AC01-C968DB36EC81.png)
+![](Linux_Command_Line_2E/D08C1840-7C02-4212-AC01-C968DB36EC81.png)
 
 ## File Descriptors
 
@@ -1012,8 +995,6 @@ fi
 
 Dissappears unless you sleep (see below).  Does not come with any buttons. 
 
-see [exercises/26_dialog.sh](exercises/26_dialog.sh)
-
 ```bash
 # globals
 INFOBOX=${INFOBOX=dialog}
@@ -1032,7 +1013,6 @@ funcDisplayInfoBox () {
 
 Msgbox - dissapears unless you sleep pass `--msgbox` argument, comes with default ok button and stays on screen.
 
-see [exercises/27_msgbox.sh](exercises/27_msgbox.sh)
 
 ```bash
 # global

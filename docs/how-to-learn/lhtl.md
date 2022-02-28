@@ -1,7 +1,5 @@
 ---
 title: How To Learn
-layout: default
-nav_order: 50
 ---
 
 I read the book [Mindshift](https://www.amazon.com/Mindshit-Obstacles-Learning-Discover-Potential/dp/1101982853) and it was unituitively so good that I decided to take this class.  As a parent, I learned a bunch of things that I think will be beneficial to my children's education.

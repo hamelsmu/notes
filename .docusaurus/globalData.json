@@ -1,0 +1,112 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "path": "/",
+      "versions": [
+        {
+          "name": "current",
+          "label": "Next",
+          "isLast": true,
+          "path": "/",
+          "mainDocId": "intro",
+          "docs": [
+            {
+              "id": "actions/index",
+              "path": "/actions/",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "actions/ocotkit",
+              "path": "/actions/ocotkit",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "actions/resources",
+              "path": "/actions/resources",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "concurrency",
+              "path": "/concurrency",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "docker/Docker-In-Action",
+              "path": "/docker/Docker-In-Action",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "fastai/batch_predicitions",
+              "path": "/fastai/batch_predicitions",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "fastai/fundamentals",
+              "path": "/fastai/fundamentals",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "how-to-learn/lhtl",
+              "path": "/how-to-learn/lhtl",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "intro",
+              "path": "/",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "jupyter/remote_browser",
+              "path": "/jupyter/remote_browser",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "linux/bash_scripting",
+              "path": "/linux/bash_scripting",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "linux/cookbook",
+              "path": "/linux/cookbook",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "linux/index",
+              "path": "/linux/",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "linux/misc_utils",
+              "path": "/linux/misc_utils",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "linux/osx",
+              "path": "/linux/osx",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "linux/permprocdata",
+              "path": "/linux/permprocdata",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "programming-languages/pl",
+              "path": "/programming-languages/pl",
+              "sidebar": "tutorialSidebar"
+            }
+          ],
+          "sidebars": {
+            "tutorialSidebar": {
+              "link": {
+                "path": "/",
+                "label": "intro"
+              }
+            }
+          }
+        }
+      ],
+      "breadcrumbs": true
+    }
+  }
+}

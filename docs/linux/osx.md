@@ -1,8 +1,5 @@
 ---
-layout: default
 title: OSX Shell Tips
-parent: Linux & Bash Scripting
-nav_order: 99
 ---
 
 # Key Repeat Rate

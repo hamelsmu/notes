@@ -1,19 +1,13 @@
 ---
 layout: default
 title: Docker
-nav_order: 2
 ---
 
 Notes from the book [Docker In Action](https://www.manning.com/books/docker-in-action-second-edition?utm_source=google&utm_medium=search&utm_campaign=dynamicsearch&gclid=CjwKCAjwmMX4BRAAEiwA-zM4JtyXLeFoALyh7xvEtg9B7nTbf3VeOFzo6Sdu119z94d6cll6XsbKgxoCRmMQAvD_BwE)
 
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-1. TOC
-{:toc}
-</details>
+import TOCInline from '@theme/TOCInline';
+
+<TOCInline toc={toc} />;
 
 
 # Chapter 1
@@ -242,7 +236,7 @@ Syntax is `-p <host-interface>:<host-port>:<target-port>/<protocol>`
 # Chapter 6 Isolation
 ### Limit resources: Memory, CPU, 
 - `-m` or `--memory` 
-	- <number><optional unit>where unit = b, k, m or g
+	- number, where unit = b, k, m or g
 	- memory limits are not reservations, just caps
 - `--cpu-shares` 
 	- is a weight you set that is used to calculate % of CPU usage allowed

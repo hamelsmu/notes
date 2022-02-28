@@ -1,0 +1,73 @@
+I"<h1 id="create-a-document">Create a Document</h1>
+
+<p>Documents are <strong>groups of pages</strong> connected through:</p>
+
+<ul>
+  <li>a <strong>sidebar</strong></li>
+  <li><strong>previous/next navigation</strong></li>
+  <li><strong>versioning</strong></li>
+</ul>
+
+<h2 id="create-your-first-doc">Create your first Doc</h2>
+
+<p>Create a markdown file at <code class="highlighter-rouge">docs/hello.md</code>:</p>
+
+<p>```md title=”docs/hello.md”</p>
+<h1 id="hello">Hello</h1>
+
+<p>This is my <strong>first Docusaurus document</strong>!</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="rouge-code"><pre>
+A new document is now available at `http://localhost:3000/docs/hello`.
+
+## Configure the Sidebar
+
+Docusaurus automatically **creates a sidebar** from the `docs` folder.
+
+Add metadata to customize the sidebar label and position:
+
+```md title="docs/hello.md" {1-4}
+---
+sidebar_label: 'Hi!'
+sidebar_position: 3
+---
+
+# Hello
+
+This is my **first Docusaurus document**!
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>It is also possible to create your sidebar explicitly in <code class="highlighter-rouge">sidebars.js</code>:</p>
+
+<p>```diff title=”sidebars.js”
+module.exports = {
+  tutorialSidebar: [
+    {
+      type: ‘category’,
+      label: ‘Tutorial’,</p>
+<ul>
+  <li>items: […],</li>
+  <li>items: [‘hello’],
+    },
+  ],
+};
+```</li>
+</ul>
+:ET

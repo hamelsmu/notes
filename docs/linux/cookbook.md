@@ -1,8 +1,5 @@
 ---
-layout: default
 title: Cookbook
-parent: Linux & Bash Scripting
-nav_order: 2
 ---
 
 

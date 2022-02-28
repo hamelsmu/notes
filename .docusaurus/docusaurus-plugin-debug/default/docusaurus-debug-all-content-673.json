@@ -1,0 +1,616 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "loadedVersions": [
+        {
+          "versionName": "current",
+          "versionLabel": "Next",
+          "versionPath": "/",
+          "tagsPath": "/tags",
+          "versionEditUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs",
+          "versionEditUrlLocalized": "https://github.com/hamelsmu/notes/tree/master/notes/i18n/en/docusaurus-plugin-content-docs/current",
+          "versionBanner": null,
+          "versionBadge": false,
+          "versionClassName": "docs-version-current",
+          "isLast": true,
+          "routePriority": -1,
+          "sidebarFilePath": "/Users/hamel/github/notes/sidebars.js",
+          "contentPath": "/Users/hamel/github/notes/docs",
+          "contentPathLocalized": "/Users/hamel/github/notes/i18n/en/docusaurus-plugin-content-docs/current",
+          "docs": [
+            {
+              "unversionedId": "actions/index",
+              "id": "actions/index",
+              "title": "GitHub Actions",
+              "description": "",
+              "source": "@site/docs/actions/index.md",
+              "sourceDirName": "actions",
+              "slug": "/actions/",
+              "permalink": "/actions/",
+              "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/actions/index.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 3,
+              "frontMatter": {
+                "title": "GitHub Actions",
+                "sidebar_position": 3
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Python Concurrency",
+                "permalink": "/concurrency"
+              },
+              "next": {
+                "title": "ocotokit.js",
+                "permalink": "/actions/ocotkit"
+              }
+            },
+            {
+              "unversionedId": "actions/ocotkit",
+              "id": "actions/ocotkit",
+              "title": "ocotokit.js",
+              "description": "ocotokit.js is a javascript library that can help you interact with the GitHub API in a easy manner.  Some javascript knowledge is helpful, but not required for many simple tasks.",
+              "source": "@site/docs/actions/ocotkit.md",
+              "sourceDirName": "actions",
+              "slug": "/actions/ocotkit",
+              "permalink": "/actions/ocotkit",
+              "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/actions/ocotkit.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 3,
+              "frontMatter": {
+                "title": "ocotokit.js",
+                "sidebar_position": 3
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "GitHub Actions",
+                "permalink": "/actions/"
+              },
+              "next": {
+                "title": "Resources",
+                "permalink": "/actions/resources"
+              }
+            },
+            {
+              "unversionedId": "actions/resources",
+              "id": "actions/resources",
+              "title": "Resources",
+              "description": "These are resources that can help you get started with GitHub Actions:",
+              "source": "@site/docs/actions/resources.md",
+              "sourceDirName": "actions",
+              "slug": "/actions/resources",
+              "permalink": "/actions/resources",
+              "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/actions/resources.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 3,
+              "frontMatter": {
+                "title": "Resources",
+                "sidebar_position": 3
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "ocotokit.js",
+                "permalink": "/actions/ocotkit"
+              },
+              "next": {
+                "title": "Docker",
+                "permalink": "/docker/Docker-In-Action"
+              }
+            },
+            {
+              "unversionedId": "concurrency",
+              "id": "concurrency",
+              "title": "Python Concurrency",
+              "description": "Understand the world of Python concurrency: threads, processes, coroutines and asynchronous programming with a realistic examples.",
+              "source": "@site/docs/concurrency.md",
+              "sourceDirName": ".",
+              "slug": "/concurrency",
+              "permalink": "/concurrency",
+              "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/concurrency.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 9,
+              "frontMatter": {
+                "title": "Python Concurrency",
+                "sidebar_position": 9
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Hamel's Notes",
+                "permalink": "/"
+              },
+              "next": {
+                "title": "GitHub Actions",
+                "permalink": "/actions/"
+              }
+            },
+            {
+              "unversionedId": "docker/Docker-In-Action",
+              "id": "docker/Docker-In-Action",
+              "title": "Docker",
+              "description": "Notes from the book Docker In Action",
+              "source": "@site/docs/docker/Docker-In-Action.md",
+              "sourceDirName": "docker",
+              "slug": "/docker/Docker-In-Action",
+              "permalink": "/docker/Docker-In-Action",
+              "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/docker/Docker-In-Action.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {
+                "layout": "default",
+                "title": "Docker"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Resources",
+                "permalink": "/actions/resources"
+              },
+              "next": {
+                "title": "Book Chapters 1-4",
+                "permalink": "/fastai/fundamentals"
+              }
+            },
+            {
+              "unversionedId": "fastai/batch_predicitions",
+              "id": "fastai/batch_predicitions",
+              "title": "Batch Predictions",
+              "description": "Making batch predictions on new data is not provided \"out of the box\" in fastai.  This is how you can achieve that:",
+              "source": "@site/docs/fastai/batch_predicitions.md",
+              "sourceDirName": "fastai",
+              "slug": "/fastai/batch_predicitions",
+              "permalink": "/fastai/batch_predicitions",
+              "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/fastai/batch_predicitions.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {
+                "layout": "default",
+                "title": "Batch Predictions"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Book Chapters 1-4",
+                "permalink": "/fastai/fundamentals"
+              },
+              "next": {
+                "title": "Remote Browser For Jupyter",
+                "permalink": "/jupyter/remote_browser"
+              }
+            },
+            {
+              "unversionedId": "fastai/fundamentals",
+              "id": "fastai/fundamentals",
+              "title": "Book Chapters 1-4",
+              "description": ";",
+              "source": "@site/docs/fastai/01_fundamentals.md",
+              "sourceDirName": "fastai",
+              "slug": "/fastai/fundamentals",
+              "permalink": "/fastai/fundamentals",
+              "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/fastai/01_fundamentals.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 1,
+              "frontMatter": {
+                "layout": "default",
+                "title": "Book Chapters 1-4"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Docker",
+                "permalink": "/docker/Docker-In-Action"
+              },
+              "next": {
+                "title": "Batch Predictions",
+                "permalink": "/fastai/batch_predicitions"
+              }
+            },
+            {
+              "unversionedId": "how-to-learn/lhtl",
+              "id": "how-to-learn/lhtl",
+              "title": "How To Learn",
+              "description": "I read the book Mindshift and it was unituitively so good that I decided to take this class.  As a parent, I learned a bunch of things that I think will be beneficial to my children's education.",
+              "source": "@site/docs/how-to-learn/lhtl.md",
+              "sourceDirName": "how-to-learn",
+              "slug": "/how-to-learn/lhtl",
+              "permalink": "/how-to-learn/lhtl",
+              "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/how-to-learn/lhtl.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {
+                "title": "How To Learn"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "programming languages",
+                "permalink": "/programming-languages/pl"
+              },
+              "next": {
+                "title": "Linux & Bash Scripting",
+                "permalink": "/linux/"
+              }
+            },
+            {
+              "unversionedId": "intro",
+              "id": "intro",
+              "title": "Hamel's Notes",
+              "description": "This is a place where I share some of my notes.",
+              "source": "@site/docs/intro.md",
+              "sourceDirName": ".",
+              "slug": "/",
+              "permalink": "/",
+              "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/intro.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 1,
+              "frontMatter": {
+                "id": "intro",
+                "slug": "/",
+                "sidebar_position": 1
+              },
+              "sidebar": "tutorialSidebar",
+              "next": {
+                "title": "Python Concurrency",
+                "permalink": "/concurrency"
+              }
+            },
+            {
+              "unversionedId": "jupyter/remote_browser",
+              "id": "jupyter/remote_browser",
+              "title": "Remote Browser For Jupyter",
+              "description": "Background",
+              "source": "@site/docs/jupyter/remote_browser.md",
+              "sourceDirName": "jupyter",
+              "slug": "/jupyter/remote_browser",
+              "permalink": "/jupyter/remote_browser",
+              "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/jupyter/remote_browser.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {
+                "title": "Remote Browser For Jupyter"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Batch Predictions",
+                "permalink": "/fastai/batch_predicitions"
+              },
+              "next": {
+                "title": "programming languages",
+                "permalink": "/programming-languages/pl"
+              }
+            },
+            {
+              "unversionedId": "linux/bash_scripting",
+              "id": "linux/bash_scripting",
+              "title": "Cheatsheet",
+              "description": "- Link to class.",
+              "source": "@site/docs/linux/bash_scripting.md",
+              "sourceDirName": "linux",
+              "slug": "/linux/bash_scripting",
+              "permalink": "/linux/bash_scripting",
+              "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/linux/bash_scripting.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {
+                "title": "Cheatsheet"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Linux & Bash Scripting",
+                "permalink": "/linux/"
+              },
+              "next": {
+                "title": "Cookbook",
+                "permalink": "/linux/cookbook"
+              }
+            },
+            {
+              "unversionedId": "linux/cookbook",
+              "id": "linux/cookbook",
+              "title": "Cookbook",
+              "description": "You should browse the table of contents of this book and use the shell scripts contained within off the shelf if possible.",
+              "source": "@site/docs/linux/cookbook.md",
+              "sourceDirName": "linux",
+              "slug": "/linux/cookbook",
+              "permalink": "/linux/cookbook",
+              "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/linux/cookbook.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {
+                "title": "Cookbook"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Cheatsheet",
+                "permalink": "/linux/bash_scripting"
+              },
+              "next": {
+                "title": "Misc Utilities",
+                "permalink": "/linux/misc_utils"
+              }
+            },
+            {
+              "unversionedId": "linux/index",
+              "id": "linux/index",
+              "title": "Linux & Bash Scripting",
+              "description": "My personal notes on underrated Linux utilities that are useful when working on machine learning projects.",
+              "source": "@site/docs/linux/index.md",
+              "sourceDirName": "linux",
+              "slug": "/linux/",
+              "permalink": "/linux/",
+              "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/linux/index.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 5,
+              "frontMatter": {
+                "layout": "default",
+                "title": "Linux & Bash Scripting",
+                "sidebar_position": 5
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "How To Learn",
+                "permalink": "/how-to-learn/lhtl"
+              },
+              "next": {
+                "title": "Cheatsheet",
+                "permalink": "/linux/bash_scripting"
+              }
+            },
+            {
+              "unversionedId": "linux/misc_utils",
+              "id": "linux/misc_utils",
+              "title": "Misc Utilities",
+              "description": ";",
+              "source": "@site/docs/linux/misc_utils.md",
+              "sourceDirName": "linux",
+              "slug": "/linux/misc_utils",
+              "permalink": "/linux/misc_utils",
+              "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/linux/misc_utils.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {
+                "title": "Misc Utilities"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Cookbook",
+                "permalink": "/linux/cookbook"
+              },
+              "next": {
+                "title": "OSX Shell Tips",
+                "permalink": "/linux/osx"
+              }
+            },
+            {
+              "unversionedId": "linux/osx",
+              "id": "linux/osx",
+              "title": "OSX Shell Tips",
+              "description": "Add days to your lifespan by Increasing the key repeat rate. Run the following in the terminal then restart.  Protip by Michael Musson.",
+              "source": "@site/docs/linux/osx.md",
+              "sourceDirName": "linux",
+              "slug": "/linux/osx",
+              "permalink": "/linux/osx",
+              "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/linux/osx.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {
+                "title": "OSX Shell Tips"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Misc Utilities",
+                "permalink": "/linux/misc_utils"
+              },
+              "next": {
+                "title": "Processes, Permissions and Moving Data",
+                "permalink": "/linux/permprocdata"
+              }
+            },
+            {
+              "unversionedId": "linux/permprocdata",
+              "id": "linux/permprocdata",
+              "title": "Processes, Permissions and Moving Data",
+              "description": ";",
+              "source": "@site/docs/linux/permprocdata.md",
+              "sourceDirName": "linux",
+              "slug": "/linux/permprocdata",
+              "permalink": "/linux/permprocdata",
+              "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/linux/permprocdata.md",
+              "tags": [],
+              "version": "current",
+              "frontMatter": {
+                "title": "Processes, Permissions and Moving Data"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "OSX Shell Tips",
+                "permalink": "/linux/osx"
+              }
+            },
+            {
+              "unversionedId": "programming-languages/pl",
+              "id": "programming-languages/pl",
+              "title": "programming languages",
+              "description": "High level takeaways after completing the 3-Part Coursera class Programming Languages with Dan Grossman.",
+              "source": "@site/docs/programming-languages/pl.md",
+              "sourceDirName": "programming-languages",
+              "slug": "/programming-languages/pl",
+              "permalink": "/programming-languages/pl",
+              "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/programming-languages/pl.md",
+              "tags": [],
+              "version": "current",
+              "sidebarPosition": 6,
+              "frontMatter": {
+                "title": "programming languages",
+                "sidebar_position": 6
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Remote Browser For Jupyter",
+                "permalink": "/jupyter/remote_browser"
+              },
+              "next": {
+                "title": "How To Learn",
+                "permalink": "/how-to-learn/lhtl"
+              }
+            }
+          ],
+          "sidebars": {
+            "tutorialSidebar": [
+              {
+                "type": "doc",
+                "id": "intro"
+              },
+              {
+                "type": "doc",
+                "id": "concurrency"
+              },
+              {
+                "type": "category",
+                "label": "actions",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "actions/ocotkit"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "actions/resources"
+                  }
+                ],
+                "link": {
+                  "type": "doc",
+                  "id": "actions/index"
+                }
+              },
+              {
+                "type": "category",
+                "label": "docker",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "docker/Docker-In-Action"
+                  }
+                ]
+              },
+              {
+                "type": "category",
+                "label": "fastai",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "fastai/fundamentals"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "fastai/batch_predicitions"
+                  }
+                ]
+              },
+              {
+                "type": "category",
+                "label": "jupyter",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "jupyter/remote_browser"
+                  }
+                ]
+              },
+              {
+                "type": "category",
+                "label": "programming-languages",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "programming-languages/pl"
+                  }
+                ]
+              },
+              {
+                "type": "category",
+                "label": "how-to-learn",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "how-to-learn/lhtl"
+                  }
+                ]
+              },
+              {
+                "type": "category",
+                "label": "linux",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "linux/bash_scripting"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "linux/cookbook"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "linux/misc_utils"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "linux/osx"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "linux/permprocdata"
+                  }
+                ],
+                "link": {
+                  "type": "doc",
+                  "id": "linux/index"
+                }
+              }
+            ]
+          },
+          "mainDocId": "intro",
+          "categoryGeneratedIndices": []
+        }
+      ]
+    }
+  },
+  "docusaurus-plugin-content-pages": {
+    "default": [
+      {
+        "type": "mdx",
+        "permalink": "/markdown-page",
+        "source": "@site/src/pages/markdown-page.md",
+        "title": "Markdown page example",
+        "description": "You don't need React to write simple standalone pages.",
+        "frontMatter": {
+          "title": "Markdown page example"
+        }
+      }
+    ]
+  },
+  "docusaurus-plugin-debug": {
+    "default": null
+  },
+  "docusaurus-theme-classic": {
+    "default": null
+  },
+  "@cmfcmf/docusaurus-search-local": {
+    "default": null
+  }
+}

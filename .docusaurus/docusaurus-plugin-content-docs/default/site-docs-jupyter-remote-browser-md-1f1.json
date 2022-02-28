@@ -1,0 +1,25 @@
+{
+  "unversionedId": "jupyter/remote_browser",
+  "id": "jupyter/remote_browser",
+  "title": "Remote Browser For Jupyter",
+  "description": "Background",
+  "source": "@site/docs/jupyter/remote_browser.md",
+  "sourceDirName": "jupyter",
+  "slug": "/jupyter/remote_browser",
+  "permalink": "/jupyter/remote_browser",
+  "editUrl": "https://github.com/hamelsmu/notes/tree/master/notes/docs/jupyter/remote_browser.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "title": "Remote Browser For Jupyter"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "How To Learn",
+    "permalink": "/how-to-learn/lhtl"
+  },
+  "next": {
+    "title": "Linux & Bash Scripting",
+    "permalink": "/linux/"
+  }
+}
