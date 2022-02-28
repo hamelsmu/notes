@@ -1,0 +1,77 @@
+I"q-<p>How to make batch predictions in fastai:</p>
+
+<p>Add this method to learner:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre><span class="o">@</span><span class="n">patch</span>
+<span class="k">def</span> <span class="nf">predict_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span><span class="n">Learner</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">rm_type_tfms</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">with_input</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="n">dl</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">dls</span><span class="p">.</span><span class="n">test_dl</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">rm_type_tfms</span><span class="o">=</span><span class="n">rm_type_tfms</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">inp</span><span class="p">,</span><span class="n">preds</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">dec_preds</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">get_preds</span><span class="p">(</span><span class="n">dl</span><span class="o">=</span><span class="n">dl</span><span class="p">,</span> <span class="n">with_input</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">with_decoded</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">dls</span><span class="p">,</span> <span class="s">'n_inp'</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">inp</span> <span class="o">=</span> <span class="p">(</span><span class="n">inp</span><span class="p">,)</span> <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">1</span> <span class="k">else</span> <span class="n">tuplify</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+    <span class="n">dec_inp</span><span class="p">,</span> <span class="n">nm</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="p">.</span><span class="n">dls</span><span class="p">.</span><span class="n">decode_batch</span><span class="p">(</span><span class="n">inp</span> <span class="o">+</span> <span class="n">tuplify</span><span class="p">(</span><span class="n">dec_preds</span><span class="p">)))</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">preds</span><span class="p">,</span><span class="n">nm</span><span class="p">,</span><span class="n">dec_preds</span>
+    <span class="k">if</span> <span class="n">with_input</span><span class="p">:</span> <span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="n">dec_inp</span><span class="p">,)</span> <span class="o">+</span> <span class="n">res</span>
+    <span class="k">return</span> <span class="n">res</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>You can then use this method like so:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">fastai.text.all</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">predict_batch</span> <span class="kn">import</span> <span class="n">predict_batch</span> <span class="c1"># this file.  If you don't import just define in your script.
+</span><span class="o">&gt;&gt;&gt;</span> <span class="n">dls</span> <span class="o">=</span> <span class="n">TextDataLoaders</span><span class="p">.</span><span class="n">from_folder</span><span class="p">(</span><span class="n">untar_data</span><span class="p">(</span><span class="n">URLs</span><span class="p">.</span><span class="n">IMDB</span><span class="p">),</span> <span class="n">valid</span><span class="o">=</span><span class="s">'test'</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">learn</span> <span class="o">=</span> <span class="n">text_classifier_learner</span><span class="p">(</span><span class="n">dls</span><span class="p">,</span> <span class="n">AWD_LSTM</span><span class="p">,</span> <span class="n">drop_mult</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">accuracy</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">learn</span><span class="p">.</span><span class="n">fine_tune</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">learn</span><span class="p">.</span><span class="n">predict_batch</span><span class="p">([</span><span class="s">"hello world"</span><span class="p">]</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
+<span class="p">(</span><span class="n">TensorText</span><span class="p">([[</span><span class="mf">0.0029</span><span class="p">,</span> <span class="mf">0.9971</span><span class="p">],</span>
+         <span class="p">[</span><span class="mf">0.0029</span><span class="p">,</span> <span class="mf">0.9971</span><span class="p">],</span>
+         <span class="p">[</span><span class="mf">0.0029</span><span class="p">,</span> <span class="mf">0.9971</span><span class="p">],</span>
+         <span class="p">[</span><span class="mf">0.0029</span><span class="p">,</span> <span class="mf">0.9971</span><span class="p">]]),</span>
+ <span class="p">(</span><span class="s">'pos'</span><span class="p">,</span> <span class="s">'pos'</span><span class="p">,</span> <span class="s">'pos'</span><span class="p">,</span> <span class="s">'pos'</span><span class="p">),</span>
+ <span class="n">TensorText</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Alternatively, you can just patch the predict function so it works on batches:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">rm_type_tfms</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">with_input</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="n">dl</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">dls</span><span class="p">.</span><span class="n">test_dl</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">rm_type_tfms</span><span class="o">=</span><span class="n">rm_type_tfms</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">inp</span><span class="p">,</span><span class="n">preds</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">dec_preds</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">get_preds</span><span class="p">(</span><span class="n">dl</span><span class="o">=</span><span class="n">dl</span><span class="p">,</span> <span class="n">with_input</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">with_decoded</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">dls</span><span class="p">,</span> <span class="s">'n_inp'</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">inp</span> <span class="o">=</span> <span class="p">(</span><span class="n">inp</span><span class="p">,)</span> <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">1</span> <span class="k">else</span> <span class="n">tuplify</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+    <span class="n">dec</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">dls</span><span class="p">.</span><span class="n">decode_batch</span><span class="p">(</span><span class="n">inp</span> <span class="o">+</span> <span class="n">tuplify</span><span class="p">(</span><span class="n">dec_preds</span><span class="p">))</span>
+    <span class="n">dec_inp</span><span class="p">,</span><span class="n">dec_targ</span> <span class="o">=</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">detuplify</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">dec</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">:]))))</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">dec_targ</span><span class="p">,</span><span class="n">dec_preds</span><span class="p">,</span><span class="n">preds</span>
+    <span class="k">if</span> <span class="n">with_input</span><span class="p">:</span> <span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="n">dec_inp</span><span class="p">,)</span> <span class="o">+</span> <span class="n">res</span>
+    <span class="k">return</span> <span class="n">res</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+:ET
