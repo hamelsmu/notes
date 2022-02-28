@@ -25,7 +25,7 @@ const config = {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/hamelsmu/notes/tree/master/',
+          editUrl: 'https://github.com/hamelsmu/notes/edit/master/',
         },
         blog: false,
         theme: {
