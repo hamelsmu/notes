@@ -15,8 +15,8 @@
   },
   "sidebar": "tutorialSidebar",
   "previous": {
-    "title": "How To Learn",
-    "permalink": "/how-to-learn/lhtl"
+    "title": "programming languages",
+    "permalink": "/programming-languages/pl"
   },
   "next": {
     "title": "Linux & Bash Scripting",

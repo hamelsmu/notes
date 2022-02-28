@@ -57,26 +57,6 @@
       },
       {
         "type": "category",
-        "label": "fastai",
-        "collapsible": true,
-        "collapsed": true,
-        "items": [
-          {
-            "type": "link",
-            "label": "Book Chapters 1-4",
-            "href": "/fastai/fundamentals",
-            "docId": "fastai/fundamentals"
-          },
-          {
-            "type": "link",
-            "label": "Batch Predictions",
-            "href": "/fastai/batch_predicitions",
-            "docId": "fastai/batch_predicitions"
-          }
-        ]
-      },
-      {
-        "type": "category",
         "label": "how-to-learn",
         "collapsible": true,
         "collapsed": true,
@@ -86,6 +66,20 @@
             "label": "How To Learn",
             "href": "/how-to-learn/lhtl",
             "docId": "how-to-learn/lhtl"
+          }
+        ]
+      },
+      {
+        "type": "category",
+        "label": "programming-languages",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "link",
+            "label": "programming languages",
+            "href": "/programming-languages/pl",
+            "docId": "programming-languages/pl"
           }
         ]
       },
@@ -144,15 +138,21 @@
       },
       {
         "type": "category",
-        "label": "programming-languages",
+        "label": "fastai",
         "collapsible": true,
         "collapsed": true,
         "items": [
           {
             "type": "link",
-            "label": "programming languages",
-            "href": "/programming-languages/pl",
-            "docId": "programming-languages/pl"
+            "label": "Book Chapters 1-4",
+            "href": "/fastai/fundamentals",
+            "docId": "fastai/fundamentals"
+          },
+          {
+            "type": "link",
+            "label": "Batch Predictions",
+            "href": "/fastai/batch_predicitions",
+            "docId": "fastai/batch_predicitions"
           }
         ]
       }

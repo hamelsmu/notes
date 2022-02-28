@@ -15,11 +15,11 @@
   },
   "sidebar": "tutorialSidebar",
   "previous": {
-    "title": "Batch Predictions",
-    "permalink": "/fastai/batch_predicitions"
+    "title": "Docker",
+    "permalink": "/docker/Docker-In-Action"
   },
   "next": {
-    "title": "Remote Browser For Jupyter",
-    "permalink": "/jupyter/remote_browser"
+    "title": "programming languages",
+    "permalink": "/programming-languages/pl"
   }
 }

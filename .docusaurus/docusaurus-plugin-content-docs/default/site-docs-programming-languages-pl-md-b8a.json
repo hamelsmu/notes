@@ -17,7 +17,11 @@
   },
   "sidebar": "tutorialSidebar",
   "previous": {
-    "title": "Processes, Permissions and Moving Data",
-    "permalink": "/linux/permprocdata"
+    "title": "How To Learn",
+    "permalink": "/how-to-learn/lhtl"
+  },
+  "next": {
+    "title": "Remote Browser For Jupyter",
+    "permalink": "/jupyter/remote_browser"
   }
 }

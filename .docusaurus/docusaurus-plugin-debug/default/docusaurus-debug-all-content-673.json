@@ -148,8 +148,8 @@
                 "permalink": "/actions/resources"
               },
               "next": {
-                "title": "Book Chapters 1-4",
-                "permalink": "/fastai/fundamentals"
+                "title": "How To Learn",
+                "permalink": "/how-to-learn/lhtl"
               }
             },
             {
@@ -172,10 +172,6 @@
               "previous": {
                 "title": "Book Chapters 1-4",
                 "permalink": "/fastai/fundamentals"
-              },
-              "next": {
-                "title": "How To Learn",
-                "permalink": "/how-to-learn/lhtl"
               }
             },
             {
@@ -197,8 +193,8 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "Docker",
-                "permalink": "/docker/Docker-In-Action"
+                "title": "Processes, Permissions and Moving Data",
+                "permalink": "/linux/permprocdata"
               },
               "next": {
                 "title": "Batch Predictions",
@@ -222,12 +218,12 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "Batch Predictions",
-                "permalink": "/fastai/batch_predicitions"
+                "title": "Docker",
+                "permalink": "/docker/Docker-In-Action"
               },
               "next": {
-                "title": "Remote Browser For Jupyter",
-                "permalink": "/jupyter/remote_browser"
+                "title": "programming languages",
+                "permalink": "/programming-languages/pl"
               }
             },
             {
@@ -271,12 +267,12 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "How To Learn",
-                "permalink": "/how-to-learn/lhtl"
-              },
-              "next": {
                 "title": "programming languages",
                 "permalink": "/programming-languages/pl"
+              },
+              "next": {
+                "title": "Linux & Bash Scripting",
+                "permalink": "/linux/"
               }
             },
             {
@@ -349,8 +345,8 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "programming languages",
-                "permalink": "/programming-languages/pl"
+                "title": "Remote Browser For Jupyter",
+                "permalink": "/jupyter/remote_browser"
               },
               "next": {
                 "title": "Cheatsheet",
@@ -426,6 +422,10 @@
               "previous": {
                 "title": "OSX Shell Tips",
                 "permalink": "/linux/osx"
+              },
+              "next": {
+                "title": "Book Chapters 1-4",
+                "permalink": "/fastai/fundamentals"
               }
             },
             {
@@ -447,12 +447,12 @@
               },
               "sidebar": "tutorialSidebar",
               "previous": {
-                "title": "Remote Browser For Jupyter",
-                "permalink": "/jupyter/remote_browser"
+                "title": "How To Learn",
+                "permalink": "/how-to-learn/lhtl"
               },
               "next": {
-                "title": "Linux & Bash Scripting",
-                "permalink": "/linux/"
+                "title": "Remote Browser For Jupyter",
+                "permalink": "/jupyter/remote_browser"
               }
             }
           ],
@@ -500,22 +500,6 @@
               },
               {
                 "type": "category",
-                "label": "fastai",
-                "collapsible": true,
-                "collapsed": true,
-                "items": [
-                  {
-                    "type": "doc",
-                    "id": "fastai/fundamentals"
-                  },
-                  {
-                    "type": "doc",
-                    "id": "fastai/batch_predicitions"
-                  }
-                ]
-              },
-              {
-                "type": "category",
                 "label": "how-to-learn",
                 "collapsible": true,
                 "collapsed": true,
@@ -528,18 +512,6 @@
               },
               {
                 "type": "category",
-                "label": "jupyter",
-                "collapsible": true,
-                "collapsed": true,
-                "items": [
-                  {
-                    "type": "doc",
-                    "id": "jupyter/remote_browser"
-                  }
-                ]
-              },
-              {
-                "type": "category",
                 "label": "programming-languages",
                 "collapsible": true,
                 "collapsed": true,
@@ -547,6 +519,18 @@
                   {
                     "type": "doc",
                     "id": "programming-languages/pl"
+                  }
+                ]
+              },
+              {
+                "type": "category",
+                "label": "jupyter",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "jupyter/remote_browser"
                   }
                 ]
               },
@@ -581,6 +565,22 @@
                   "type": "doc",
                   "id": "linux/index"
                 }
+              },
+              {
+                "type": "category",
+                "label": "fastai",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "fastai/fundamentals"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "fastai/batch_predicitions"
+                  }
+                ]
               }
             ]
           },

@@ -17,8 +17,8 @@
   },
   "sidebar": "tutorialSidebar",
   "previous": {
-    "title": "Docker",
-    "permalink": "/docker/Docker-In-Action"
+    "title": "Processes, Permissions and Moving Data",
+    "permalink": "/linux/permprocdata"
   },
   "next": {
     "title": "Batch Predictions",
