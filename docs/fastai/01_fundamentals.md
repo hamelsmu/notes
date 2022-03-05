@@ -1,8 +1,8 @@
 ---
-title: Book Chapters 1-4
+title: 1_Fundamentals
 ---
 
-# fastai fundamentals from the Course/Book
+# fastai fundamentals
 
 import TOCInline from '@theme/TOCInline';
 
