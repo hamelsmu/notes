@@ -42,6 +42,10 @@ const config = {
         defaultMode: 'dark', 
         respectPrefersColorScheme: true,
       },
+      tableOfContents: {
+        minHeadingLevel: 2,
+        maxHeadingLevel: 5,
+      },
       algolia: {
         // The application ID provided by Algolia
         appId: 'N4X7RUH2CX',
