@@ -48,10 +48,11 @@ const config = {
       },
       algolia: {
         // The application ID provided by Algolia
-        appId: 'N4X7RUH2CX',
+        appId: 'RAKQU13XWU',
         // Public API key: it is safe to commit it
-        apiKey: 'c0bc0e84a6540a9356caa61a1d87cf90',
-        indexName: 'notes',
+        apiKey: 'bf306a105114621a6cd0a3b66a0d721d',
+        indexName: 'hamel',
+        searchPagePath: 'search',
       },
       navbar: {
         title: 'Notes',
