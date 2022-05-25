@@ -9,11 +9,7 @@ Two python packages
 - [panflute](http://scorreia.com/software/panflute/) - recommended
 - [pandocfilters](https://github.com/jgm/pandocfilters)
 
-The [tutorial](https://pandoc.org/filters.html) on pandoc filters can help you get setup.  If rolling your own filters, you probably want to use the JSON filters and make use of the `-t native` flag:
-
-```
-pandoc -s -t native test.txt
-```
+The [tutorial](https://pandoc.org/filters.html) on pandoc filters can help you get setup.  If rolling your own filters, you probably want to use the JSON filters.  Furthrmore you can understand the pandoc AST by using the `-t native` flag (an example is shown later).
 
 
 ## The minimal notebook
@@ -181,7 +177,7 @@ if __name__ == "__main__":
     main()
 ```
 
-Seeing the output:
+This is how we can use this filter and see the rendered output:
 
 ~~~
 $ pandoc --to gfm minimal.ipynb --filter "flute.py"
