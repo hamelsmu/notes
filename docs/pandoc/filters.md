@@ -9,7 +9,7 @@ Two python packages
 - [panflute](http://scorreia.com/software/panflute/) - recommended
 - [pandocfilters](https://github.com/jgm/pandocfilters)
 
-The [tutorial](https://pandoc.org/filters.html) on pandoc filters can help you get setup.  If rolling your own filters, you probably want to use the JSON filters.  Furthrmore you can understand the pandoc AST by using the `-t native` flag (an example is shown later).
+The [tutorial](https://pandoc.org/filters.html) on pandoc filters can help you get oriented to the general idea.  If rolling your own filters, you probably want to use the JSON filters.  Furthermore you can understand the pandoc AST by using the `-t native` flag (examples of this are shown later).
 
 
 ## The minimal notebook
