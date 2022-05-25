@@ -16,6 +16,73 @@ pandoc -s -t native test.txt
 ```
 
 
+## The minimal notebook
+
+Expand to show the json of the minimal notebook we are working with
+
+```json title="mininimal.ipynb"
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## A minimal notebook"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "<MyTag></MyTag>"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "2\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Do some arithmetic\n",
+    "print(1+1)"
+   ]
+  }
+ ],
+ "metadata": {
+  "interpreter": {
+   "hash": "42fd40e048e0585f88ec242f050f7ef0895cf845a8dd1159352394e5826cd102"
+  },
+  "kernelspec": {
+   "display_name": "Python 3.9.7 ('base')",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.7"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
+```
+
 ## Minimal ipynb to md converstion with pandoc
 
 ~~~
@@ -26,14 +93,20 @@ $ pandoc --to gfm minimal.ipynb
 
 </div>
 
+<div class="cell markdown">
+
+<MyTag></MyTag>
+
+</div>
+
 <div class="cell code" execution_count="1">
 
 ``` python
 # Do some arithmetic
-1+1
+print(1+1)
 ```
 
-<div class="output execute_result" execution_count="1">
+<div class="output stream stdout">
 
     2
 
@@ -62,20 +135,22 @@ This creates
 
 
 ~~~
+
 ## A minimal notebook
+
+<MyTag></MyTag>
 
 ``` python
 # Do some arithmetic
-1+1
+print(1+1)
 ```
 
     2
 ~~~
 
+Running Pandoc With those Extensions
 
-## Running Pandoc With those Extensions
-
-running pandoc with `--standalone --to gfm+footnotes+tex_math_dollars-yaml_metadata_block` creates the same result.
+running pandoc with `--standalone --to gfm+footnotes+tex_math_dollars-yaml_metadata_block` still adds the divs and looks different than quarto.  Somewhere, maybe quarto is removing the divs.  We can see the `Div` elements in the AST when we explore panflute in the sections below.
 
 ## How to use panflute
 
@@ -144,10 +219,10 @@ print(1+1)
 
 Note: we could probably replace the inner div with the `output` class with `<CodeOutput>` tag
 
-Just for completeness, this is the schema of the minimal notebook using the `--to native` flag:
+Just for completeness, this is the schema of the minimal notebook using the `--to native` flag **prior to** applying the filter:
 
 ```
-pandoc --to native minimal.ipynb
+$pandoc --to native minimal.ipynb
 [ Div
     ( "" , [ "cell" , "markdown" ] , [] )
     [ Header
@@ -176,3 +251,39 @@ pandoc --to native minimal.ipynb
     ]
 ]
 ````
+
+And **after applying the filter**:
+
+```
+$pandoc --to native minimal.ipynb --filter flute.py
+[ Div
+    ( "" , [ "cell" , "markdown" ] , [] )
+    [ Header
+        2
+        ( "a-minimal-notebook" , [] , [] )
+        [ Str "A" , Space , Str "minimal" , Space , Str "notebook" ]
+    ]
+, Div
+    ( "" , [ "cell" , "markdown" ] , [] )
+    [ Para
+        [ RawInline (Format "html") "<MyTag>"
+        , RawInline (Format "html") "</MyTag>"
+        ]
+    ]
+, Div
+    ( ""
+    , [ "cell" , "code" ]
+    , [ ( "execution_count" , "1" ) ]
+    )
+    [ CodeBlock
+        ( "" , [ "file=script.py" ] , [] )
+        "# Do some arithmetic\nprint(1+1)"
+    , Div
+        ( "" , [ "output" , "stream" , "stdout" ] , [] )
+        [ RawBlock (Format "html") "<CodeOutput>"
+        , CodeBlock ( "" , [] , [] ) "2\n"
+        , RawBlock (Format "html") "</CodeOutput>"
+        ]
+    ]
+]
+```
