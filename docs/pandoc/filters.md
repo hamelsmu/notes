@@ -14,7 +14,7 @@ The [tutorial](https://pandoc.org/filters.html) on pandoc filters can help you g
 
 ## The minimal notebook
 
-Expand to show the json of the minimal notebook we are working with
+Here is minimal notebook we are working with:
 
 ```json title="mininimal.ipynb"
 {
