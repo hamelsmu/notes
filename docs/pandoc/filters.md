@@ -16,7 +16,7 @@ The [tutorial](https://pandoc.org/filters.html) on pandoc filters can help you g
 
 Here is minimal notebook we are working with:
 
-```json title="mininimal.ipynb"
+```json title="minimal.ipynb"
 {
  "cells": [
   {
