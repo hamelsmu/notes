@@ -17,7 +17,7 @@ Jeremy Lewi:  Use Kustomize, not Helm, if you can.
 
 A helm chart parameterizes YAML and exposes the parameters and their defaults on the command line for you to edit. 
 
-![[Pasted image 20221213105720.png]]
+![](20221213105720.png)
 
 
 ## Add a repo

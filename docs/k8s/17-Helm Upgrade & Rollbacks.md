@@ -74,7 +74,7 @@ helm history ch10-web
 ```
 
 
-![[Pasted image 20221213124829.png]]
+![](20221213124829.png)
 
 To fix the failed update, I can manually set all the values in the upgrade command or use a values file with the same settings that are currently deployed. I don’t have that values file, but I can save the output of the get values command to a file and use that in the upgrade, which gives me all my previous settings plus the defaults in the chart for any new settings.
 

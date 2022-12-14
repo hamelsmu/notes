@@ -85,4 +85,4 @@ There are specific options for [[DaemonSets]] and [[StatefulSet]] but we will sk
 
 This is a paradigm that is different than rolling updates, where you have two versions of your app deployed, but only one is active.  You can flip the switch by updating the label selector in the Service to send the traffic to Pods in a different deployment. 
 
-![[Pasted image 20221213102708.png]]
+![](20221213102708.png)

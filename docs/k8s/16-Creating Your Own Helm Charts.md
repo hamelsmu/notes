@@ -9,7 +9,7 @@ You can reference a directory, vs a zip archive when developing locally.
 
 You can use `helm create` to generate boilerplate directory structure:
 
-![[Pasted image 20221213105720.png]]
+![](20221213105720.png)
 
 YAML is templated like this: 
 

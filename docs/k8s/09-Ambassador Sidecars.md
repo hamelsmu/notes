@@ -31,5 +31,5 @@ the app container uses localhost addresses for any services it consumes, and itâ
 
 You can also use Ambassador's for database connections, to query read-only copies when there are no db updates/writes:
 
-![[Pasted image 20221210204112.png]]
+![](20221210204112.png)
 

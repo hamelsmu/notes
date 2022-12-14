@@ -9,7 +9,7 @@ Below, I oultline some reasons why:
 
 # Nobody Is Coming To Save You
 
-![[Pasted image 20221212104110.png]]
+![](20221212104110.png)
 
 A common first experience as a data scientist or machine learning professional is that you don't have to the tools you need to get started.  This is incredibly frustrating, as it can be hard to make any progress without the proper tools.  This usually culminates in a conversation like this (DS = data scientist):
 
@@ -33,7 +33,7 @@ By learning some basic infra skills, you can unblock yourself and your team in m
 
 # Helm Charts Are the Modern OSS App Store
 
-![[Pasted image 20221212110053.png]]
+![](20221212110053.png)
 
 This is perhaps the most compelling reason for learning K8s.  So you can quickly install your favorite data science tools in the cloud.
 
@@ -52,7 +52,7 @@ You don't need to become an expert to deploy  in K8s to deploy these apps.  You 
 
 # ML Research is Crowded.  Compete on SWE Skills.
 
-![[Pasted image 20221212122136.png]]
+![](20221212122136.png)
 
 One of the best ways to set yourself apart as a data scientist are your skills.  Traditional DS education emphasizes learning the latest ML techniques.  Furthermore, the most successfull ML researchers enjoy visibility and high compensation.  However, Cutting-edge ML research is very competitive.  It also moves incredibly fast!  In the last 6 months, we have seen Stable Diffusion and ChatGPT, with more to come.  It's also an extremely crowded space.
 
@@ -60,7 +60,7 @@ In my experience, the bottleneck many teams face is not lack of knowledge of cut
 
 # You don't need to become an expert
 
-![[Pasted image 20221212115117.png]]
+![](20221212115117.png)
 
 K8s are complicated, but you don't need to become an expert.  I would focus on three  capabilities:
 
@@ -72,7 +72,7 @@ I'm not suggesting that data scientists become K8s adminstrators.  That is a ver
 
 # Your Company Likely Already Runs K8s
 
-![[Pasted image 20221212112039.png]]
+![](20221212112039.png)
 
 I believe that data scientists should have tools that meet them where they are.  This means allowing them to use tools that best suit their workflow, rather than adopt another disciplines workflow.  An example of an anti-pattern of not meeting data scientists where they are is not allowing development in Jupyter Notebooks.  
 
@@ -93,7 +93,7 @@ _Even if your company doesn't run K8s, you easily recruit generalists that can o
 
 When she says you should learn K8s, you should really pay attention:
 
-![[Pasted image 20221212131043.png]]
+![](20221212131043.png)
 https://twitter.com/vboykis/status/1596611044209983488
 
 # Isn't it Overkill?
