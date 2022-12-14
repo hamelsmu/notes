@@ -1,5 +1,6 @@
 ---
-title: Why Should Data Scientists Study K8s?
+title: Why Should Data Scientists Study Kubernetes?
+description: Learning Kubefrnetes basics can give you an unreasonable competitive advantage as a data scientist and unblock your teams.
 image: bellman_ds.jpeg
 ---
 
