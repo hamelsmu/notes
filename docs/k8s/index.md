@@ -70,7 +70,7 @@ You can install many data science tools with Helm:
 You don't need to become an expert in K8s to deploy and perform basic configuration of these tools.  You might need deeper exercise to maintain them over a long period; however, you can get quite far with basic knowledge of K8s. 
 
 
-## ML research is crowded.  Compete on SWE skills.
+## ML research is crowded. Compete on SWE skills.
 
 ![A crowded space of scientists frantically trying to do work](20221212122136.png)
 
@@ -79,7 +79,7 @@ One of the best ways to set yourself apart as a data scientist is through your s
 In my experience, the bottleneck many teams face is not a lack of knowledge of cutting-edge ML techniques, but software engineering skills and partners to help operationalize models.  If you take some time to learn how to stand up tools and infrastructure, you will be invaluable to your team.  
 
 
-## Your Company likely already runs K8s
+## Your company likely already runs K8s
 
 ![A scientist shaking hands with someone who runs infrastructure](shaking_hands.jpeg)
 
@@ -126,7 +126,7 @@ K8s are complicated, but you don't need to become an expert to unlock tons of va
 
 Furthermore, I'm not suggesting that data scientists become K8s administrators.  That is a very involved task and worthy of its own role. However, we can use managed cloud services and some basic knowledge to get far. That's why I'm teaching a course on this topic: [Kubernetes for Data Scientists](#course-k8s-for-data-scientists).
 
-## Course: K8s For Data Scientists
+## Course: K8s for Data Scientists
 
 TODO
 
