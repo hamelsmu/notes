@@ -1,5 +1,5 @@
 ---
-title: Why Should Data Scientists Study Kubernetes?
+title: Why Should Data Scientists Learn Kubernetes?
 description: Learning Kubefrnetes basics can give you an unreasonable competitive advantage as a data scientist and unblock your teams.
 image: https://user-images.githubusercontent.com/1483922/207669622-c20b0c6c-5721-473c-ba03-b831000ef0a8.jpeg
 ---
@@ -37,15 +37,15 @@ A common first experience as a data scientist or machine learning professional i
 
 ---
 
-DS: I'm really excited to join ACME company!  You've hired me to optimize marketing spend with predictive models.  The issue is that we don't have basic infrastructure or tools are necessary for me to work efficiently. 
+_DS: I'm really excited to join ACME company!  You've hired me to optimize marketing spend with predictive models.  The issue is that we don't have basic infrastructure or tools are necessary for me to work efficiently._
 
-Manager: I'm confused, can't you install the tools you need?  Isn't that what you are for?  I was expecting that you would figure it out. 
+_Manager: I'm confused, can't you install the tools you need?  Isn't that what you are for?  I was expecting that you would figure it out._
 
-DS:  No, I don't know how to setup and deploy infrastructure.  We need a special infrastrucuture or DevOps person for that.
+_DS:  No, I don't know how to setup and deploy infrastructure.  We need a special infrastrucuture or DevOps person for that._
 
-Manager: It will be hard to ask for more resources if we don't know the expected return on investment.  Can you do the ML project first, demonstrate some value, and then we can invest in infrastrucutre? 
+_Manager: It will be hard to ask for more resources if we don't know the expected return on investment.  Can you do the ML project first, demonstrate some value, and then we can invest in infrastrucutre?_
 
-DS:  I need some minimum tools to allow me to more quickly experiment and development proof of concepts.  Also I need tools that might help me collaborate better with my team...
+_DS:  I need some minimum tools to allow me to more quickly experiment and development proof of concepts.  Also I need tools that might help me collaborate better with my team..._
 
 ---
 
@@ -116,6 +116,7 @@ _Even if your company doesn't run K8s, you easily recruit generalists that can o
 When she says you should learn K8s, you should really pay attention:
 
 ![](20221212131043.png)
+
 https://twitter.com/vboykis/status/1596611044209983488
 
 # But Isn't it Overkill?
