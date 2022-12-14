@@ -9,7 +9,7 @@ I agree with [Chip Huyen](https://huyenchip.com/2021/09/13/data-science-infrastr
 Below, I oultline some reasons why:
 
 
-## You cannot always use managed services
+## Managed services are not always an option
 
 ![](bellman_ds.jpeg)
 
