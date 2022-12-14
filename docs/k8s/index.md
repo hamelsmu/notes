@@ -7,6 +7,26 @@ I agree with [Chip Huyen](https://huyenchip.com/2021/09/13/data-science-infrastr
 Below, I oultline some reasons why:
 
 
+# You cannot always use managed services
+
+![](bellman_ds.jpeg)
+
+You should avail yourselves of hosted cloud tools wherever possible.  For example, I do not recommend that data scientists administer their own data warehouses.  However, there are many important open source tools for which managed services do not exist.  For example, many clouds do not or only offer very narrow managed services for things like:
+
+- Airflow
+- JupyterHub
+- ML workflow and experiment tracking systems. [^1]
+- Dask
+- etc.
+
+Even if you can avail yourself of managed services in the cloud, in my experience there is always a gap that can be addressed by open source tools. **Therefore, it is a good idea to develop skills of installing and hosting open source data science tools yourself** (more to come on that topic next).  
+
+In addition to cloud managed services, there are also many third party vendors who offer great tools, but you often need basic minimal infrastructure knowledge to install self-hosted versions of these tools.  
+
+
+[^1]: The major clouds do have their own workflow systems (AWS - Sagemaker, Azure - AzureML, GCP - VertexAI), but these may not fit your teams needs.
+
+
 # Nobody Is Coming To Save You
 
 ![](20221212104110.png)
@@ -72,7 +92,7 @@ I'm not suggesting that data scientists become K8s adminstrators.  That is a ver
 
 # Your Company Likely Already Runs K8s
 
-![](20221212112039.png)
+![](shaking_hands.jpeg)
 
 I believe that data scientists should have tools that meet them where they are.  This means allowing them to use tools that best suit their workflow, rather than adopt another disciplines workflow.  An example of an anti-pattern of not meeting data scientists where they are is not allowing development in Jupyter Notebooks.  
 
@@ -96,7 +116,7 @@ When she says you should learn K8s, you should really pay attention:
 ![](20221212131043.png)
 https://twitter.com/vboykis/status/1596611044209983488
 
-# Isn't it Overkill?
+# But Isn't it Overkill?
 
 For simple apps that you want to quickly stand up or prototype, K8s could be overkill.  I'm advocating knowledge of K8s as something that is useful when you are working within a large company.  
 
