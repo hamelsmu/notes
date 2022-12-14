@@ -1,0 +1,11 @@
+{
+    "workbench.editor.showTabs": true,
+    "workbench.startupEditor": "none",
+    "workbench.statusBar.visible": true,
+    "workbench.activityBar.visible": true,
+    "editor.minimap.enabled": false,
+    "breadcrumbs.enabled": false,
+    "workbench.colorTheme": "Default Dark+",
+    "workbench.editor.limit.value": 10,
+    "workbench.commandPalette.history": 50
+}
