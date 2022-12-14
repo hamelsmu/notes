@@ -1,3 +1,14 @@
+---
+title: Basics
+---
+
+:::danger
+
+These are rough notes and not meant for consumption by others!  Any course material will be seperate and may or may not be related to these notes!
+
+:::
+
+
 Do stuff: `kubectl apply -f`
 
 Multiple resources in one yaml with `---`
