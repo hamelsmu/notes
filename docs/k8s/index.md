@@ -103,7 +103,9 @@ When she says you should learn K8s, you should really pay attention:
 
 https://twitter.com/vboykis/status/1596611044209983488
 
-## But Isn't it Overkill?
+## But isn't it overkill?
+
+![](orange_chainsaw.jpeg)
 
 For simple apps that you want to quickly stand up or prototype, K8s are likely overkill.  I'm advocating knowledge of K8s as something that is useful when you are working within the typical constraints and environments found in many companies.  For example, if you want to deploy production software it is often insufficient to host your data product on a single VM.  In fact, many companies have infrastrucutre that may block you from doing this with paved paths that only include Kuberenetes.
 
