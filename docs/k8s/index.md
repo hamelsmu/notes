@@ -20,7 +20,7 @@ Major clouds offer some data science infrastructure as managed services, but it 
 - Dask
 - etc.
 
-In my experience there is often a (large) gap between cloud offerings and what some open source tosl provide. In addition to open source tools, there are many third party vendors who are happy to install their software on your cloud.  However, to avail yourself of either of these options, you often need basic infrastructure skills.  **Therefore, it is a good idea to develop skills of installing and hosting data science tools yourself**. I've found that these basic skills often intersect with Kubernetes.
+In my experience there is often a (large) gap between cloud offerings and the needs of data science teams which are often filled by open source tools. In addition to open source tools, there are many third party vendors who are happy to install their software on your cloud.  However, to avail yourself of either of these options, you often need basic infrastructure skills.  **Therefore, it is a good idea to develop skills of installing and hosting data science tools yourself**. I've found that these basic skills often intersect with Kubernetes.
 
 [^1]: The major clouds do have their own workflow systems (AWS - Sagemaker, Azure - AzureML, GCP - VertexAI), but these may not fit your teams needs.
 
@@ -54,7 +54,7 @@ By learning some basic infra skills, you can unblock yourself and your team in m
 
 ![](20221212110053.png)
 
-[Helm](https://helm.sh/) is a package mansger for K8s.   It allows you to quickly install a wide variety of software in the cloud.  Sure, you can install software on your laptop with pip install, **but the whole point of many data science tools to enable better collaboration with your team**.  To properly evaluate these tools, you will want to install them in an environment that your whole team can observe and interact with.   
+[Helm](https://helm.sh/) is a package mansger for K8s.  It allows you to quickly install a wide variety of software in the cloud.  Sure, you can install software on your laptop with pip install, **but the whole point of many data science tools to enable better collaboration with your team**.  To properly evaluate these tools, you will want to install them in an environment that your whole team can observe and interact with.   
 
 Many data science tools can be installed with Helm:  
 
@@ -71,7 +71,7 @@ You don't need to become an expert in K8s to deploy and perform basic troublesho
 
 ![](20221212122136.png)
 
-One of the best ways to set yourself apart as a data scientist are your skills.  Traditional education often emphasizes learning the latest ML techniques.  Furthermore, the most successfull ML researchers enjoy visibility and high compensation.  However, Cutting-edge ML research is very competitive.  It also moves incredibly fast!  In the last 6 months, we have seen Stable Diffusion and ChatGPT, with more to come.  It's also an extremely crowded space.
+One of the best ways to set yourself apart as a data scientist are your skills.  Traditional education often emphasizes learning the latest ML techniques.  However, cutting-edge ML research is very competitive.  It also moves incredibly fast!  In the last 6 months, we have seen Stable Diffusion and ChatGPT, with more to come.  It's also an extremely crowded space.
 
 In my experience, the bottleneck many teams face is not lack of knowledge of cutting edge ML techniques, but software engineering skills and partners to help operationalize  models.  If you take some time to learn how to stand up tools and infrastructure, you will be invaluable to your team.  
 
@@ -119,7 +119,7 @@ K8s are complicated, but you don't need to become an expert.  I would focus on t
 2. Basic debugging 
 3. Familiarity with high level concepts
 
-I'm not suggesting that data scientists become K8s adminstrators.  That is a very involved task and worthy of it's own role.  We can use managed cloud services and some basic knowledge to get really far. That's why I'm teaching a course on this topic: [Kubernetes for Data Scientists](#course-k8s-for-data-scientists)
+I'm not suggesting that data scientists become K8s adminstrators.  That is a very involved task and worthy of it's own role.  We can use managed cloud services and some basic knowledge to get really far. That's why I'm teaching a course on this topic: [Kubernetes for Data Scientists](#course-k8s-for-data-scientists).
 
 ## Course: K8s For Data Scientists
 
