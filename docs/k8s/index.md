@@ -20,7 +20,7 @@ Major clouds offer some data science infrastructure as managed services, but it 
 - Dask
 - etc.
 
-In my experience there is often a (large) gap between cloud offerings and what some open source tosl provide. In addition to open source tools, there are many third party vendors who are happy to install their software on your cloud.  However, to avail yourself of either of these options, you often need basic infrastructure skills.  **Therefore, it is a good idea to develop skills of installing and hosting open source data science tools yourself**. I've found that these basic skills often intersect with Kubernetes.
+In my experience there is often a (large) gap between cloud offerings and what some open source tosl provide. In addition to open source tools, there are many third party vendors who are happy to install their software on your cloud.  However, to avail yourself of either of these options, you often need basic infrastructure skills.  **Therefore, it is a good idea to develop skills of installing and hosting data science tools yourself**. I've found that these basic skills often intersect with Kubernetes.
 
 [^1]: The major clouds do have their own workflow systems (AWS - Sagemaker, Azure - AzureML, GCP - VertexAI), but these may not fit your teams needs.
 
