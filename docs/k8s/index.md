@@ -9,7 +9,7 @@ I agree with [Chip Huyen](https://huyenchip.com/2021/09/13/data-science-infrastr
 Below, I oultline some reasons why:
 
 
-# You cannot always use managed services
+## You cannot always use managed services
 
 ![](bellman_ds.jpeg)
 
@@ -29,7 +29,7 @@ In addition to cloud managed services, there are also many third party vendors w
 [^1]: The major clouds do have their own workflow systems (AWS - Sagemaker, Azure - AzureML, GCP - VertexAI), but these may not fit your teams needs.
 
 
-# Nobody Is Coming To Save You
+## Nobody Is Coming To Save You
 
 ![](20221212104110.png)
 
@@ -53,7 +53,7 @@ _At this point the Manager and DS are stuck debating the chicken and the egg pro
 
 By learning some basic infra skills, you can unblock yourself and your team in many cases!
 
-# Helm Charts Are the Modern OSS App Store
+## Helm Charts Are the Modern OSS App Store
 
 ![](20221212110053.png)
 
@@ -72,7 +72,7 @@ Many data science tools can be installed with Helm:
 
 You don't need to become an expert to deploy  in K8s to deploy these apps.  You might need deeper exerptise to maintain them over a long period of time, however being dangerous enough to deploy these tools will often allow you to get over the initial hump to show enough value to get help!  Even when you do get help, its helpful to know how to perform basic troubleshooting.
 
-# ML Research is Crowded.  Compete on SWE Skills.
+## ML Research is Crowded.  Compete on SWE Skills.
 
 ![](20221212122136.png)
 
@@ -80,7 +80,7 @@ One of the best ways to set yourself apart as a data scientist are your skills. 
 
 In my experience, the bottleneck many teams face is not lack of knowledge of cutting edge ML techniques, but software engineering skills and partners to help operationalize your models.  If you take some time to learn how to stand up some tools and infrastructure, you will be invaluable to your team.  Knowing some cross functional skills like this is much less crowded compared to ML research, and also more stable over time.  
 
-# You don't need to become an expert
+## You don't need to become an expert
 
 ![](20221212115117.png)
 
@@ -92,7 +92,7 @@ K8s are complicated, but you don't need to become an expert.  I would focus on t
 
 I'm not suggesting that data scientists become K8s adminstrators.  That is a very involved task and worthy of it's own role.  We can use managed cloud services and some basic knowledge to get really far.  
 
-# Your Company Likely Already Runs K8s
+## Your Company Likely Already Runs K8s
 
 ![](shaking_hands.jpeg)
 
@@ -109,7 +109,7 @@ These factors make it much more likely that you will get the tools that meet you
 
 _Even if your company doesn't run K8s, you easily recruit generalists that can operate K8s for you, as opposed to trying to find a unicorn that specializes in ML Infrastructure._
 
-# Vicki Said So
+## Vicki Said So
 
 [Vicki](https://vickiboykis.com/) is the champion of data scientists on the ground.  Her views resonate with people in industry, especially those outside Silicon Valley about the realities of being a data scientist.  She is not someone who is impressed by flashy or new technologies, and is someone who takes a pragmatic approach to getting the job done.  
 
@@ -119,7 +119,7 @@ When she says you should learn K8s, you should really pay attention:
 
 https://twitter.com/vboykis/status/1596611044209983488
 
-# But Isn't it Overkill?
+## But Isn't it Overkill?
 
 For simple apps that you want to quickly stand up or prototype, K8s could be overkill.  I'm advocating knowledge of K8s as something that is useful when you are working within a large company.  
 
