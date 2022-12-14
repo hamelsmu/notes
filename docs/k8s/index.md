@@ -1,5 +1,6 @@
 ---
 title: Why Should Data Scientists Study K8s?
+image: bellman_ds.jpeg
 ---
 
 I agree with [Chip Huyen](https://huyenchip.com/2021/09/13/data-science-infrastructure.html) that Data Scientists **shouldn't need to** learn kubernetes (K8s).   However, the cold truth is:  **Even though you shouldn't have to, you should!**  I was convinced for the longest time that I had no business with K8s, but I have recently turned the corner.
