@@ -13,7 +13,7 @@ Below, I oultline some reasons why:
 
 ![](bellman_ds.jpeg)
 
-You should avail yourselves of hosted cloud tools wherever possible.  For example, I do not recommend that data scientists administer their own data warehouses.  However, there are many important open source tools for which managed services do not exist.  For example, many clouds do not or only offer very narrow managed services for things like:
+You should avail yourselves of hosted cloud tools wherever possible.  For example, I do not recommend that data scientists administer their own data warehouses.  However, there are many popular open source tools for which managed services do not exist.  For example, many clouds offer only limited or no managed services for things like:
 
 - Airflow
 - JupyterHub
@@ -21,9 +21,9 @@ You should avail yourselves of hosted cloud tools wherever possible.  For exampl
 - Dask
 - etc.
 
-Even if you can avail yourself of managed services in the cloud, in my experience there is always a gap that can be addressed by open source tools. **Therefore, it is a good idea to develop skills of installing and hosting open source data science tools yourself** (more to come on that topic next).  
+Even if you can avail yourself of some managed services, in my experience there is always a gap that can be addressed by open source tools. **Therefore, it is a good idea to develop skills of installing and hosting open source data science tools yourself**.  
 
-In addition to cloud managed services, there are also many third party vendors who offer great tools, but you often need basic minimal infrastructure knowledge to install self-hosted versions of these tools.  
+In addition to managed services, there are also many third party vendors who offer great tools, but you often need basic infrastructure knowledge to install self-hosted versions of these tools.  
 
 
 [^1]: The major clouds do have their own workflow systems (AWS - Sagemaker, Azure - AzureML, GCP - VertexAI), but these may not fit your teams needs.
