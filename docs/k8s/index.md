@@ -79,7 +79,7 @@ One of the best ways to set yourself apart as a data scientist is through your s
 In my experience, the bottleneck many teams face is not a lack of knowledge of cutting-edge ML techniques but software engineering skills and partners to help operationalize models.  If you take some time to learn how to stand up tools and infrastructure, you will be invaluable to your team.  
 
 
-## Your Company likely already runs on K8s
+## Your Company likely already runs K8s
 
 ![A scientist shaking hands with someone who runs infrastructure](shaking_hands.jpeg)
 
