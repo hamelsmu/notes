@@ -119,7 +119,7 @@ K8s are complicated, but you don't need to become an expert.  I would focus on t
 2. Basic debugging 
 3. Familiarity with high level concepts
 
-I'm not suggesting that data scientists become K8s adminstrators.  That is a very involved task and worthy of it's own role.  We can use managed cloud services and some basic knowledge to get really far. That's why I'm teaching a course on this topic: [TODO Kubernetes for Data Scientists]()
+I'm not suggesting that data scientists become K8s adminstrators.  That is a very involved task and worthy of it's own role.  We can use managed cloud services and some basic knowledge to get really far. That's why I'm teaching a course on this topic: [Kubernetes for Data Scientists](#course-k8s-for-data-scientists)
 
 ## Course: K8s For Data Scientists
 
