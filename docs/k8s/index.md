@@ -1,7 +1,7 @@
 ---
 title: Why Should Data Scientists Study Kubernetes?
 description: Learning Kubefrnetes basics can give you an unreasonable competitive advantage as a data scientist and unblock your teams.
-image: bellman_ds.jpeg
+image: https://user-images.githubusercontent.com/1483922/207669622-c20b0c6c-5721-473c-ba03-b831000ef0a8.jpeg
 ---
 
 I agree with [Chip Huyen](https://huyenchip.com/2021/09/13/data-science-infrastructure.html) that Data Scientists **shouldn't need to** learn kubernetes (K8s).   However, the cold truth is:  **Even though you shouldn't have to, you should!**  I was convinced for the longest time that I had no business with K8s, but I have recently turned the corner.
