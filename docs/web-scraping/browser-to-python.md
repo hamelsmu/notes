@@ -19,7 +19,7 @@ I learned this from Zachary Blackwood's 2022 [NormConf](https://normconf.com/) T
 
 ![](clear.png)
 
-4. Look for a network request that seems like it is getting data, in this case `GetLocations.ashx...` looks super promising.
+4. Type in a zipcode and search.  Look for a network request that seems like it is getting data, in this case `GetLocations.ashx...` looks super promising.
 
 ![](requests.png)
 
