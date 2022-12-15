@@ -33,4 +33,4 @@ I learned this from Zachary Blackwood's 2022 [NormConf](https://normconf.com/) T
 ![](curl-to-py.png)
 
 
-Viola :) Enjoy your python webscraping code!
+Enjoy your python code that uses this otherwise undocumented API :)
