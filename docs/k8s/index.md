@@ -57,7 +57,7 @@ By learning basic infra skills, you can unblock yourself and your team in many c
 
 ![App store, abstract](20221212110053.png)
 
-[Helm](https://helm.sh/) is a package mansger for K8s.  It allows you to install a wide variety of software in the cloud quickly.  Sure, you can install software on your laptop, **but the whole point of many data science tools to enable better collaboration with your team**.  To properly evaluate these tools, you will want to install them in an environment that your whole team can observe and interact with.   
+[Helm](https://helm.sh/) is a package mansger for K8s.  It allows you to install a wide variety of software in the cloud quickly.  Sure, you can install software on your laptop, **but the whole point of many data science tools is to enable better collaboration with your team**.  To properly evaluate these tools, you will want to install them in an environment that your whole team can observe and interact with.   
 
 You can install many data science tools with Helm:
 
