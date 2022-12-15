@@ -1,4 +1,4 @@
-# Helm Upgrading & Rollbacks
+# Helm Upgrades & Rollbacks
 
 Recommended pattern:
 
