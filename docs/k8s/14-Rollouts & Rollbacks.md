@@ -79,9 +79,11 @@ There are specific options for [[DaemonSets]] and [[StatefulSet]] but we will sk
 
 # Blue Green Deployments
 
-> [!Warning]
-> You can probably ignore this section
+:::warning
 
+You can probably ignore this section
+
+:::
 
 This is a paradigm that is different than rolling updates, where you have two versions of your app deployed, but only one is active.  You can flip the switch by updating the label selector in the Service to send the traffic to Pods in a different deployment. 
 

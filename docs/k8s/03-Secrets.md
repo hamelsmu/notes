@@ -42,9 +42,11 @@ If we apply this `kl apply -f sleep/sleep-with-secret.yaml` , we can see the sec
 KIAMOL_SECRET=shh...
 ```
 
-> [!Warning]
-> You shouldn't expose secrets as environment variables as that is not very secure.  You should store secrets in files that have restricted premissions. 
+:::danger
 
+You shouldn't expose secrets as environment variables as that is not very secure.  You should store secrets in files that have restricted premissions. 
+
+:::
 
 You can also store your secrets in plain text in a YAML file like so:
 

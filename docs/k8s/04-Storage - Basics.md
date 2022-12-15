@@ -74,8 +74,11 @@ metadata:
 
 ## Persistent Volumes and Claims
 
->[!Note]
->This section is largely pedagoical, you will want to use Dynamic volume provisioning in most cases.
+:::note
+
+This section is largely pedagoical, you will want to use Dynamic volume provisioning in most cases.
+
+:::
 
 
 You have to configure shared storage on your cloud provider.  For example, if you had a NFS server with the domain name `nfs.my.network` your PV resource would look like this:
@@ -158,9 +161,9 @@ when you run `kl get pv` you will see if the PV is unclaimed yet or not
 
 if you create a PVC that requests more than any PV, it will show a pending status instead of Bound.  
 
->[!Warning]
+:::warning
 If you try to deploy a pod that uses an unbound PVC, the Pod will stay in a Pending state until the PVC gets bound
-
+:::
 
 
 ### Binding To the PVC
@@ -207,8 +210,8 @@ spec:
 ```
 
 
->[!Note]
->In production, you want to replace the local volume PV with a distributed volume supported by your cloud provider or cluster.  
->
-> The PVC doesn't care about the implementation so you will just have to swap out the PV
+:::Note
+In production, you want to replace the local volume PV with a distributed volume supported by your cloud provider or cluster.  
 
+The PVC doesn't care about the implementation so you will just have to swap out the PV
+:::

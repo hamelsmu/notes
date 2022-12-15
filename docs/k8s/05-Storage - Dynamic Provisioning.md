@@ -28,9 +28,11 @@ So if we deploy ths, let's see what will happen!  `kl apply -f todo-list/postgre
 
 If you do `kl get pv` you will see a PV has been automatically created. 
 
-> [!Note]
-> Docker Desktop uses a HostPath volume in the default storage class for dynamically provisioned PVs; AKS uses Azure Files; **K3s uses HostPath but with a different configuration from Docker Desktop, which means you won’t see the PV because it is created only when a Pod that uses the PVC is created.**
+:::note
 
+Docker Desktop uses a HostPath volume in the default storage class for dynamically provisioned PVs; AKS uses Azure Files; **K3s uses HostPath but with a different configuration from Docker Desktop, which means you won’t see the PV because it is created only when a Pod that uses the PVC is created.**
+
+:::
 
 
 ## Storage Classes

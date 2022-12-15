@@ -1,6 +1,12 @@
-> [!Warning]
+---
+title: StatefulSet
+---
+
+:::warning
+
 Hamel: you probably don't need this. JUST SKIP THESE NOTES
 
+:::
 
 
 [[StatefulSet]] is a Pod controller, just like [[5. ReplicaSets]] or [[DaemonSets]]

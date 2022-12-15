@@ -1,7 +1,7 @@
 
-> [!Warning]
-> This is going to be really light, as we don't want to get too deep into this.  You can really just skip this if you like. 
-
+:::warning
+This is going to be really light, as we don't want to get too deep into this.  You can really just skip this if you like. 
+:::
 
 You can reference a directory, vs a zip archive when developing locally. 
 

@@ -1,4 +1,4 @@
-# Upgrading
+# Helm Upgrading & Rollbacks
 
 Recommended pattern:
 
@@ -56,14 +56,14 @@ The `--atomic` flag is important, always use this!
 helm upgrade --reuse-values --atomic ch10-vweb kiamol/vweb --version 2.0.0
 ```
 
->[!Important]
->Always use the `--atomic` flag!
+:::caution
+Always use the `--atomic` flag!
+:::
 
 
-
->[!Important]
->When you upgrade, the `--reuse-values` flag will often be handy.  However, this can cause things to break if the api changes between versions.  So use with extreme care!
-
+:::caution
+When you upgrade, the `--reuse-values` flag will often be handy.  However, this can cause things to break if the api changes between versions.  So use with extreme care!
+:::
 
 # Dealing With Failed Upgrades
 
@@ -90,7 +90,7 @@ Then you can edit `myvalues.yaml` and use it like this with the `-f` flag:
 helm upgrade -f myvalues.yaml ch10-vweb-v2 kiamol/vweb --version 2.0.0 --dry-run  # take out --dry-run when ready to deploy
 ```
 
->[!Note]
+:::Note]
 >It's usually a good idea to use the `--dry-run` flag to sanity check that the generated YAML looks reasonable. 
 >
 
