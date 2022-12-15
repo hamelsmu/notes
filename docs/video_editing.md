@@ -1,4 +1,6 @@
-
+---
+title: Video Editing
+---
 
 # Davinci Resolve
 
