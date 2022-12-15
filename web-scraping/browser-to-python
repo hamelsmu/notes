@@ -1,6 +1,6 @@
 ---
 title: Turn browser requests into reuseable python code
-description: An amazing hack for quickly getting ready-to-go python code for getting data from websites.
+description: An amazing hack for turning web requests in your browser into reusable python code.
 image: browser-to-py.png
 ---
 
@@ -31,3 +31,6 @@ I learned this from Zachary Blackwood's 2022 [NormConf](https://normconf.com/) T
 6. Go to [curlconverter.com](https://curlconverter.com/) and paste the curl command there.
 
 ![](curl-to-py.png)
+
+
+Viola :) Enjoy your python webscraping code!
