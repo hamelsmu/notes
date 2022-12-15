@@ -6,18 +6,16 @@ image: https://user-images.githubusercontent.com/1483922/207669622-c20b0c6c-5721
 
 For the uninitiated [Kubernetes](https://kubernetes.io/), also known as K8s, is "an open-source system for automating deployment, scaling, and management of containerized applications."
 
-I agree with [Chip Huyen](https://huyenchip.com/2021/09/13/data-science-infrastructure.html) that Data Scientists **shouldn't need to** learn K8s.   However, the cold truth is:  **Even though you shouldn't have to, you should anyway!**  Even [Vicki Boykis](https://twitter.com/vboykis/status/1596611044209983488) seems to agree[^1]:
+I agree with [Chip Huyen](https://huyenchip.com/2021/09/13/data-science-infrastructure.html) that Data Scientists **shouldn't need to** learn K8s.   However, the cold truth is:  **Even though you shouldn't have to, you should anyway!**  Even [Vicki Boykis](https://twitter.com/vboykis/status/1596610600511102976) seems to agree[^1]:
 
-![](20221212131043.png)
+![Sage wisdom from Vicki](20221212131043.png)
 
 
-Below, I outline some reasons why [^2].  But if you are already convinced, read about my free course [K8s For Data Scientists](#course-k8s-for-data-scientists).
+Below, I outline reasons why I think learning K8s is a good idea for data scientists[^2].  But if you are already convinced, feel free to jump ahead and read about my free course: [K8s For Data Scientists](#course-k8s-for-data-scientists).
 
 ## Managed services are not always an option
 
-
 ![A robot concierge helping a data scientist](bellman_ds.jpeg)
-
 
 Major clouds offer some data science infrastructure as managed services, but it usually doesn't cover everything you need. There are many popular open source infrastructure tools which data scienists consider to be staples or must-haves in their workflow.  For example, many clouds offer only limited or no managed services for things like:
 
