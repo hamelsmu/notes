@@ -1,5 +1,5 @@
 ---
-title: Turn browser requests into reuseable python code
+title: Turn browser requests into python code
 description: An amazing hack for turning web requests in your browser into reusable python code.
 image: https://user-images.githubusercontent.com/1483922/207928666-20107276-3803-42df-b0b1-55df93d15e43.png
 ---
