@@ -46,6 +46,7 @@ const config = {
         minHeadingLevel: 2,
         maxHeadingLevel: 5,
       },
+      image: 'img/magician_ds.png',
       algolia: {
         // The application ID provided by Algolia
         appId: 'RAKQU13XWU',
